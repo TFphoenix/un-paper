@@ -8,22 +8,22 @@ import { MsalInterceptorConfiguration, MsalGuardConfiguration } from '@azure/msa
  */
 export const b2cPolicies = {
   names: {
-    signUpSignIn: 'b2c_1_susi',
-    forgotPassword: 'b2c_1_reset',
-    editProfile: 'b2c_1_edit_profile'
+    signUpSignIn: 'B2C_1_test_signup_signin',
+    forgotPassword: '',
+    editProfile: ''
   },
   authorities: {
     signUpSignIn: {
-      authority: 'https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_susi'
+      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_test_signup_signin'
     },
     forgotPassword: {
-      authority: 'https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_reset'
+      authority: ''
     },
     editProfile: {
-      authority: 'https://fabrikamb2c.b2clogin.com/fabrikamb2c.onmicrosoft.com/b2c_1_edit_profile'
+      authority: ''
     }
   },
-  authorityDomain: 'fabrikamb2c.b2clogin.com'
+  authorityDomain: 'unpaper2020.b2clogin.com'
 };
 
 /**
@@ -43,7 +43,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
-      clientId: '9067c884-9fa6-414f-9aa4-a565b1cb46be',
+      clientId: '955582f2-1f42-4be1-a73a-c1443f28034c',
       authority: b2cPolicies.authorities.signUpSignIn.authority,
       redirectUri: 'http://localhost:4200',
       postLogoutRedirectUri: 'http://localhost:4200',

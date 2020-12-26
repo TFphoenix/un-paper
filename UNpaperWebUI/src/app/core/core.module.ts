@@ -6,7 +6,7 @@ import { MaterialModule } from '../modules/material/material.module';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { EmptyLayoutComponent } from './layouts/empty-layout/empty-layout.component';
 import { RouterModule } from '@angular/router';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {
   MsalGuard,
   MsalInterceptor,
@@ -18,11 +18,32 @@ import {
   MsalModule
 } from '@azure/msal-angular';
 import { MSALGuardConfigFactory, MSALInstanceFactory, MSALInterceptorConfigFactory } from '../configs/b2c-config';
+import { APP_INITIALIZER } from '@angular/core';
+import { AppInitializerService } from './services/app-initializer/app-initializer.service';
+import { Optional } from '@angular/core';
+import { SkipSelf } from '@angular/core';
 
 @NgModule({
   declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent],
   providers: [
+    // services
     ConfigService,
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService,
+
+    // etc
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: ConfigService) =>
+        function () {
+          // if AppInitializerService is created with dependency injection then Angular will return some errors
+          const appInitializerService = new AppInitializerService(configService);
+          return appInitializerService.load();
+        },
+      multi: true,
+      deps: [ConfigService]
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,
@@ -39,12 +60,15 @@ import { MSALGuardConfigFactory, MSALInstanceFactory, MSALInterceptorConfigFacto
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useFactory: MSALInterceptorConfigFactory
-    },
-    MsalService,
-    MsalGuard,
-    MsalBroadcastService
+    }
   ],
-  imports: [CommonModule, MaterialModule, RouterModule, MsalModule],
-  exports: []
+  imports: [CommonModule, MaterialModule, RouterModule, MsalModule, HttpClientModule],
+  exports: [HttpClientModule, MaterialModule]
 })
-export class CoreModule {}
+export class CoreModule {
+  constructor(@Optional() @SkipSelf() core: CoreModule) {
+    if (core) {
+      throw new Error('Core module should be imported only in the root module');
+    }
+  }
+}

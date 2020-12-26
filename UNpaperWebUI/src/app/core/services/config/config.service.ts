@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ConfigService {
-  private readonly _configRelativeUrl = 'configs/';
+  private readonly _configRelativeUrl = './assets/config/';
   private readonly _productionConfig = 'config.json';
   private readonly _developmentConfig = 'config.local.json';
   private _configObj: Config;

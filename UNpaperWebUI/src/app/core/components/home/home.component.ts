@@ -18,23 +18,23 @@ interface IdTokenClaims extends AuthenticationResult {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  private isIframe = false;
+  private _isIframe = false;
   private readonly _destroying$ = new Subject<void>();
 
   public loggedIn = false;
 
   constructor(
-    @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
-    private authService: MsalService,
-    private msalBroadcastService: MsalBroadcastService
+    @Inject(MSAL_GUARD_CONFIG) private _msalGuardConfig: MsalGuardConfiguration,
+    private _msalAuthService: MsalService,
+    private _msalBroadcastService: MsalBroadcastService
   ) {}
 
   ngOnInit() {
-    this.isIframe = window !== window.parent && !window.opener;
+    this._isIframe = window !== window.parent && !window.opener;
 
     this.checkAccount();
 
-    this.msalBroadcastService.msalSubject$
+    this._msalBroadcastService.msalSubject$
       .pipe(
         filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS || msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS),
         takeUntil(this._destroying$)
@@ -48,17 +48,17 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         if (payload.idTokenClaims?.acr === b2cPolicies.names.forgotPassword) {
           window.alert('Password has been reset successfully. \nPlease sign-in with your new password.');
-          return this.authService.logout();
+          return this._msalAuthService.logout();
         } else if (payload.idTokenClaims['acr'] === b2cPolicies.names.editProfile) {
           window.alert('Profile has been updated successfully. \nPlease sign-in again.');
-          return this.authService.logout();
+          return this._msalAuthService.logout();
         }
 
         this.checkAccount();
         return result;
       });
 
-    this.msalBroadcastService.msalSubject$
+    this._msalBroadcastService.msalSubject$
       .pipe(
         filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_FAILURE || msg.eventType === EventType.ACQUIRE_TOKEN_FAILURE),
         takeUntil(this._destroying$)
@@ -81,28 +81,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   checkAccount() {
-    this.loggedIn = this.authService.instance.getAllAccounts().length > 0;
+    this.loggedIn = this._msalAuthService.instance.getAllAccounts().length > 0;
   }
 
   login(userFlowRequest?: RedirectRequest | PopupRequest) {
-    this.msalGuardConfig;
-    if (this.msalGuardConfig.interactionType === InteractionType.Popup) {
-      if (this.msalGuardConfig.authRequest) {
-        this.authService.loginPopup({ ...this.msalGuardConfig.authRequest, ...userFlowRequest }).subscribe(() => this.checkAccount());
+    this._msalGuardConfig;
+    if (this._msalGuardConfig.interactionType === InteractionType.Popup) {
+      if (this._msalGuardConfig.authRequest) {
+        this._msalAuthService.loginPopup({ ...this._msalGuardConfig.authRequest, ...userFlowRequest }).subscribe(() => this.checkAccount());
       } else {
-        this.authService.loginPopup(userFlowRequest).subscribe(() => this.checkAccount());
+        this._msalAuthService.loginPopup(userFlowRequest).subscribe(() => this.checkAccount());
       }
     } else {
-      if (this.msalGuardConfig.authRequest) {
-        this.authService.loginRedirect({ ...this.msalGuardConfig.authRequest, ...userFlowRequest });
+      if (this._msalGuardConfig.authRequest) {
+        this._msalAuthService.loginRedirect({ ...this._msalGuardConfig.authRequest, ...userFlowRequest });
       } else {
-        this.authService.loginRedirect(userFlowRequest);
+        this._msalAuthService.loginRedirect(userFlowRequest);
       }
     }
   }
 
   logout() {
-    this.authService.logout();
+    this._msalAuthService.logout();
   }
 
   editProfile() {
