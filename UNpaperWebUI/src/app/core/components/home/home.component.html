@@ -1,14 +1,5 @@
-<mat-card class="card-section">
-  <mat-card-title>Sign-in with Microsoft Azure AD B2C</mat-card-title>
-  <mat-card-subtitle>Getting an access token with Azure AD B2C and calling a Web API</mat-card-subtitle>
-  <mat-card-content>
-    This simple sample demonstrates how to use the Microsoft Authentication Library for JavaScript (msal.js) to get an access token and call
-    an API secured by Azure AD B2C.
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-raised-button *ngIf="loggedIn" (click)="editProfile()">Edit Profile</button>
-    <button mat-raised-button *ngIf="!loggedIn" (click)="login()">Login</button>
-    <button mat-raised-button color="warn" *ngIf="loggedIn" (click)="logout()">Logout</button>
-    <a mat-raised-button>Call API</a>
-  </mat-card-actions>
-</mat-card>
+<p class="welcome">Welcome to the MSAL.js Angular Quickstart!</p>
+<p>
+  This sample demonstrates how to configure MSAL Angular to login, logout, protect a route, and acquire an access token for a protected
+  resource such as the Microsoft Graph.
+</p>

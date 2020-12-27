@@ -40,37 +40,19 @@ export const apiConfig: { scopes: string[]; uri: string } = {
  */
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
-export function MSALInstanceFactory(): IPublicClientApplication {
-  return new PublicClientApplication({
-    auth: {
-      clientId: '955582f2-1f42-4be1-a73a-c1443f28034c',
-      authority: b2cPolicies.authorities.signUpSignIn.authority,
-      redirectUri: 'http://localhost:4200',
-      postLogoutRedirectUri: 'http://localhost:4200',
-      knownAuthorities: [b2cPolicies.authorityDomain]
-    },
-    cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage,
-      storeAuthStateInCookie: isIE // set to true for IE 11
-    }
-  });
-}
-
-export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  const protectedResourceMap = new Map<string, Array<string>>();
-  protectedResourceMap.set(apiConfig.uri, apiConfig.scopes);
-
-  return {
-    interactionType: InteractionType.Redirect,
-    protectedResourceMap
-  };
-}
-
-export function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return {
-    interactionType: InteractionType.Redirect,
-    authRequest: {
-      scopes: [...apiConfig.scopes]
-    }
-  };
-}
+/**
+ * B2C APP CONFIG
+ */
+export const appConfig = {
+  auth: {
+    clientId: '955582f2-1f42-4be1-a73a-c1443f28034c',
+    authority: b2cPolicies.authorities.signUpSignIn.authority,
+    redirectUri: 'http://localhost:4200',
+    postLogoutRedirectUri: 'http://localhost:4200',
+    knownAuthorities: [b2cPolicies.authorityDomain]
+  },
+  cache: {
+    cacheLocation: BrowserCacheLocation.LocalStorage,
+    storeAuthStateInCookie: isIE // set to true for IE 11
+  }
+};

@@ -15,22 +15,45 @@ import {
   MSAL_GUARD_CONFIG,
   MSAL_INSTANCE,
   MSAL_INTERCEPTOR_CONFIG,
-  MsalModule
+  MsalModule,
+  MsalGuardConfiguration,
+  MsalInterceptorConfiguration
 } from '@azure/msal-angular';
-import { MSALGuardConfigFactory, MSALInstanceFactory, MSALInterceptorConfigFactory } from '../configs/b2c-config';
 import { APP_INITIALIZER } from '@angular/core';
 import { AppInitializerService } from './services/app-initializer/app-initializer.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
+import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
+import { appConfig, apiConfig } from '../configs/b2c-config';
+
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication(appConfig);
+}
+
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string>>();
+  protectedResourceMap.set(apiConfig.uri, apiConfig.scopes);
+
+  return {
+    interactionType: InteractionType.Redirect,
+    protectedResourceMap
+  };
+}
+
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
+    interactionType: InteractionType.Redirect,
+    authRequest: {
+      scopes: [...apiConfig.scopes]
+    }
+  };
+}
 
 @NgModule({
   declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent],
   providers: [
     // services
     ConfigService,
-    MsalService,
-    MsalGuard,
-    MsalBroadcastService,
 
     // etc
     {
@@ -60,10 +83,13 @@ import { SkipSelf } from '@angular/core';
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useFactory: MSALInterceptorConfigFactory
-    }
+    },
+    MsalService,
+    MsalGuard,
+    MsalBroadcastService
   ],
   imports: [CommonModule, MaterialModule, RouterModule, MsalModule, HttpClientModule],
-  exports: [HttpClientModule, MaterialModule]
+  exports: [MaterialModule]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() core: CoreModule) {
