@@ -18,7 +18,7 @@ interface IdTokenClaims extends AuthenticationResult {
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
-  title = 'MSAL Angular v2 B2C Sample';
+  title = 'UNpaper';
   isIframe = false;
   loggedIn = false;
   private readonly _destroying$ = new Subject<void>();
