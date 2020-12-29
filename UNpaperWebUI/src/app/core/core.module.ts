@@ -25,6 +25,7 @@ import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
 import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
 import { appConfig, apiConfig } from '../configs/b2c-config';
+import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(appConfig);
@@ -50,7 +51,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 }
 
 @NgModule({
-  declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent],
+  declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent, AuthCallbackComponent],
   providers: [
     // services
     ConfigService,
@@ -89,7 +90,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalBroadcastService
   ],
   imports: [CommonModule, MaterialModule, RouterModule, MsalModule, HttpClientModule],
-  exports: [MaterialModule]
+  exports: [MaterialModule, AuthCallbackComponent]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() core: CoreModule) {

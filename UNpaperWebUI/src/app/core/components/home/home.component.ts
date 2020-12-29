@@ -10,10 +10,10 @@ export class HomeComponent implements OnInit {
   constructor(private authService: MsalService) {}
 
   ngOnInit(): void {
-    // handle auth response
+    // It needs this to prevent interaction_in_progress exception
     this.authService.handleRedirectObservable().subscribe({
-      next: result => console.log(result),
-      error: error => console.log(error)
+      next: result => console.log('Home: ' + result),
+      error: error => console.log('Home: ' + error)
     });
   }
 }
