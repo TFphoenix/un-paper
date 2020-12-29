@@ -30,7 +30,7 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
   }
 
   private authComplete() {
-    //TODO
+    console.log('Auth completed');
   }
 
   ngOnDestroy(): void {

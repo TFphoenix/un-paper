@@ -26,6 +26,7 @@ import { SkipSelf } from '@angular/core';
 import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
 import { appConfig, apiConfig } from '../configs/b2c-config';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
+import { AuthService } from './services/auth/auth.service';
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(appConfig);
@@ -55,6 +56,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   providers: [
     // services
     ConfigService,
+    AuthService,
 
     // etc
     {
@@ -68,6 +70,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
       multi: true,
       deps: [ConfigService]
     },
+    // MSAL
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,

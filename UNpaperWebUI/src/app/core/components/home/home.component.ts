@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MsalService } from '@azure/msal-angular';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -7,13 +7,9 @@ import { MsalService } from '@azure/msal-angular';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(private authService: MsalService) {}
+  constructor(private readonly _authService: AuthService) {}
 
   ngOnInit(): void {
-    // It needs this to prevent interaction_in_progress exception
-    this.authService.handleRedirectObservable().subscribe({
-      next: result => console.log('Home: ' + result),
-      error: error => console.log('Home: ' + error)
-    });
+    this._authService.handleRedirectShallow();
   }
 }
