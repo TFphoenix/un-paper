@@ -1,21 +1,4 @@
 {
-  "B2CSignUpSignInPolicy": {
-    "name": "B2C_1_test_signup_signin",
-    "authority": "https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_test_signup_signin"
-  },
-  "B2CResetPasswordPolicy": {
-    "name": "",
-    "authority": ""
-  },
-  "B2CEditProfilePolicy": {
-    "name": "",
-    "authority": ""
-  },
-
-  "B2CWebUiClientID": "955582f2-1f42-4be1-a73a-c1443f28034c",
-  "B2CRedirectUri": "http://localhost:4200/",
-  "B2CPostLogoutRedirectUri": "http://localhost:4200/",
-
   "registryAPI": "",
   "functionsAPI": ""
 }
