@@ -5,30 +5,30 @@ import { BrowserCacheLocation } from '@azure/msal-browser';
  */
 export const b2cPolicies = {
   names: {
-    signUpSignIn: '',
-    forgotPassword: '',
-    editProfile: ''
+    signUpSignIn: 'B2C_1_signup_signin',
+    forgotPassword: 'B2C_1_password_reset',
+    editProfile: 'B2C_1_edit_profile'
   },
   authorities: {
     signUpSignIn: {
-      authority: ''
+      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_signup_signin'
     },
     forgotPassword: {
-      authority: ''
+      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_password_reset'
     },
     editProfile: {
-      authority: ''
+      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_edit_profile'
     }
   },
-  authorityDomain: ''
+  authorityDomain: 'unpaper2020.b2clogin.com'
 };
 
 /**
  * B2C API CONFIG//TODO
  */
 export const apiConfig: { scopes: string[]; uri: string } = {
-  scopes: [''],
-  uri: ''
+  scopes: ['https://unpaper2020.onmicrosoft.com/api/demo.read', 'https://unpaper2020.onmicrosoft.com/api/demo.write'],
+  uri: 'https://unpaper-api-management-service.azure-api.net/v1'
 };
 
 /**
@@ -41,10 +41,10 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
  */
 export const appConfig = {
   auth: {
-    clientId: '',
+    clientId: '955582f2-1f42-4be1-a73a-c1443f28034c',
     authority: b2cPolicies.authorities.signUpSignIn.authority,
-    redirectUri: '',
-    postLogoutRedirectUri: '',
+    redirectUri: 'https://unpaper-webui.azurewebsites.net/auth-callback',
+    postLogoutRedirectUri: 'https://unpaper-webui.azurewebsites.net/auth-callback',
     knownAuthorities: [b2cPolicies.authorityDomain]
   },
   cache: {
