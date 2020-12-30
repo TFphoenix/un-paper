@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { AuthenticationResult } from '@azure/msal-browser';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-auth-callback',
@@ -8,13 +9,13 @@ import { AuthenticationResult } from '@azure/msal-browser';
   styleUrls: ['./auth-callback.component.scss']
 })
 export class AuthCallbackComponent implements OnInit, OnDestroy {
-  constructor(private authService: MsalService) {}
+  constructor(private _msalAuthService: MsalService, private readonly _authService: AuthService) {}
 
   ngOnInit(): void {
     console.log('Entered AuthCallback');
 
     // handle auth response
-    this.authService.handleRedirectObservable().subscribe({
+    this._msalAuthService.handleRedirectObservable().subscribe({
       next: this.authNext,
       error: this.authError,
       complete: this.authComplete

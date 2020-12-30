@@ -27,8 +27,8 @@ export const b2cPolicies = {
  * B2C API CONFIG
  */
 export const apiConfig: { scopes: string[]; uri: string } = {
-  scopes: ['https://fabrikamb2c.onmicrosoft.com/helloapi/demo.read'],
-  uri: 'https://fabrikamb2chello.azurewebsites.net/hello'
+  scopes: ['https://unpaper2020.onmicrosoft.com/api/demo.read', 'https://unpaper2020.onmicrosoft.com/api/demo.write'],
+  uri: 'https://localhost:44343'
 };
 
 /**
