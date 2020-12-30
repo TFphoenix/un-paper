@@ -1,6 +1,8 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthenticationResult } from '@azure/msal-common';
 import { AuthService } from '../../services/auth/auth.service';
+import { ConfigService } from '../../services/config/config.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -15,7 +17,11 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     return this._authService.loggedIn;
   }
 
-  constructor(private readonly _authService: AuthService) {}
+  constructor(
+    private readonly _authService: AuthService,
+    private readonly _configService: ConfigService,
+    private readonly _http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.isIframe = window !== window.parent && !window.opener;
@@ -33,6 +39,14 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   editProfile() {
     this._authService.editProfile();
+  }
+
+  //TODO: Delete test
+  private headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+  testAPI() {
+    this._http
+      .get(this._configService.config.registryAPI + '/WeatherForecast', { headers: this.headers })
+      .subscribe((data: any) => console.log(data));
   }
 
   ngOnDestroy(): void {

@@ -93,7 +93,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalBroadcastService
   ],
   imports: [CommonModule, MaterialModule, RouterModule, MsalModule, HttpClientModule],
-  exports: [MaterialModule, AuthCallbackComponent]
+  exports: [MaterialModule, AuthCallbackComponent, HomeComponent]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() core: CoreModule) {
