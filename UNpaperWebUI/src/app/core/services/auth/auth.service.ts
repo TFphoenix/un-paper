@@ -9,7 +9,7 @@ import {
   EventMessage,
   EventType
 } from '@azure/msal-browser';
-import { ErrorObserver, NextObserver, Subject } from 'rxjs';
+import { ErrorObserver, NextObserver, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { b2cPolicies } from 'src/app/configs/b2c-config';
 
@@ -123,5 +123,9 @@ export class AuthService {
   public handleRedirectShallow(): void {
     // It needs this to prevent interaction_in_progress exception
     this._msalAuthService.handleRedirectObservable();
+  }
+
+  public handleRedirect(): Observable<AuthenticationResult> {
+    return this._msalAuthService.handleRedirectObservable();
   }
 }

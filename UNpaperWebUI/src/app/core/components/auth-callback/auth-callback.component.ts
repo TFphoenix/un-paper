@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MsalService } from '@azure/msal-angular';
 import { AuthenticationResult } from '@azure/msal-browser';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -9,7 +8,7 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./auth-callback.component.scss']
 })
 export class AuthCallbackComponent implements OnInit, OnDestroy {
-  constructor(private _msalAuthService: MsalService, private readonly _authService: AuthService) {}
+  constructor(private readonly _authService: AuthService) {}
 
   ngOnInit(): void {
     console.log('Entered AuthCallback');
@@ -17,7 +16,7 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
     this._authService.init();
 
     // handle auth response
-    this._msalAuthService.handleRedirectObservable().subscribe({
+    this._authService.handleRedirect().subscribe({
       next: this.authNext,
       error: this.authError,
       complete: this.authComplete
@@ -30,6 +29,7 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
 
   private authError(error: any) {
     console.log(error);
+    //TODO: Handle Profile edit cancel and password forgot errors here (maybe remove init())
   }
 
   private authComplete() {
