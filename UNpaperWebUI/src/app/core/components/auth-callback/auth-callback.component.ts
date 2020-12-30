@@ -14,6 +14,8 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('Entered AuthCallback');
 
+    this._authService.init();
+
     // handle auth response
     this._msalAuthService.handleRedirectObservable().subscribe({
       next: this.authNext,
@@ -32,6 +34,8 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
 
   private authComplete() {
     console.log('Auth completed');
+    //TODO: Password successfully reset, you will be redirected to the homepage soon
+    window.location.href = '/';
   }
 
   ngOnDestroy(): void {

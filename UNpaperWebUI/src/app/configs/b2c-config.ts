@@ -5,19 +5,19 @@ import { BrowserCacheLocation } from '@azure/msal-browser';
  */
 export const b2cPolicies = {
   names: {
-    signUpSignIn: 'B2C_1_test_signup_signin',
-    forgotPassword: '',
-    editProfile: ''
+    signUpSignIn: 'B2C_1_signup_signin',
+    forgotPassword: 'B2C_1_password_reset',
+    editProfile: 'B2C_1_edit_profile'
   },
   authorities: {
     signUpSignIn: {
-      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_test_signup_signin'
+      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_signup_signin'
     },
     forgotPassword: {
-      authority: ''
+      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_password_reset'
     },
     editProfile: {
-      authority: ''
+      authority: 'https://unpaper2020.b2clogin.com/unpaper2020.onmicrosoft.com/B2C_1_edit_profile'
     }
   },
   authorityDomain: 'unpaper2020.b2clogin.com'
@@ -44,7 +44,7 @@ export const appConfig = {
     clientId: '955582f2-1f42-4be1-a73a-c1443f28034c',
     authority: b2cPolicies.authorities.signUpSignIn.authority,
     redirectUri: 'http://localhost:4200/auth-callback',
-    postLogoutRedirectUri: 'http://localhost:4200/auth-callback',
+    postLogoutRedirectUri: 'http://localhost:4200/auth-callback', //TODO: Logout page
     knownAuthorities: [b2cPolicies.authorityDomain]
   },
   cache: {

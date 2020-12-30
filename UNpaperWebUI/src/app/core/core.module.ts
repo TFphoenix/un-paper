@@ -28,6 +28,7 @@ import { appConfig, apiConfig } from '../configs/b2c-config';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { AuthService } from './services/auth/auth.service';
 
+//TODO: Find a cleaner approach to MSAL & B2c config
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(appConfig);
 }
