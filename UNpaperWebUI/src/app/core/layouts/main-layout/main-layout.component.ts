@@ -1,9 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthenticationResult } from '@azure/msal-common';
 import { apiConfig } from 'src/app/configs/b2c-config';
 import { AuthService } from '../../services/auth/auth.service';
 import { ConfigService } from '../../services/config/config.service';
+import { RequestService } from '../../services/request/request.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -21,7 +20,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   constructor(
     private readonly _authService: AuthService,
     private readonly _configService: ConfigService,
-    private readonly _http: HttpClient
+    private readonly _requestService: RequestService
   ) {}
 
   ngOnInit(): void {
@@ -43,12 +42,8 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   }
 
   //TODO: Delete test
-  private headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
   testAPI() {
-    // this._http
-    //   .get(this._configService.config.registryAPI + '/WeatherForecast', { headers: this.headers })
-    //   .subscribe((data: any) => console.log(data));
-    this._http.get(apiConfig.uri + '/WeatherForecast').subscribe(weather => {
+    this._requestService.get(apiConfig.uri + '/WeatherForecast').subscribe(weather => {
       console.log(weather);
     });
   }
