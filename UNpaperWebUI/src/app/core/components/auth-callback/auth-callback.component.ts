@@ -30,6 +30,7 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
   private authError(error: any) {
     console.log(error);
     //TODO: Handle Profile edit cancel and password forgot errors here (maybe remove init())
+    window.location.href = '/';
   }
 
   private authComplete() {
