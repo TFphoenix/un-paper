@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ConfigService {
+  //TODO: Fix 404 (can't find config.json) error in deployment mode
   private readonly _configRelativeUrl = './assets/config/';
   private readonly _productionConfig = 'config.json';
   private readonly _developmentConfig = 'config.local.json';
@@ -26,6 +27,10 @@ export class ConfigService {
       .then(configObj => {
         this._configObj = new Config();
         Object.assign(this._configObj, configObj);
+      })
+      .catch(() => {
+        console.log("Couldn't load config files data");
+        return null;
       });
   }
 }
