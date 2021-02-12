@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { apiConfig } from 'src/app/configs/b2c-config';
 import { AuthService } from '../../services/auth/auth.service';
@@ -43,9 +44,14 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   //TODO: Delete test
   testAPI() {
-    this._requestService.get(apiConfig.uri + '/WeatherForecast').subscribe(weather => {
-      console.log(weather);
-    });
+    this._requestService
+      .get(
+        apiConfig.uri + '/WeatherForecast',
+        new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8', 'Ocp-Apim-Subscription-Key': apiConfig.apimSubscriptionKey })
+      )
+      .subscribe(weather => {
+        console.log(weather);
+      });
   }
 
   ngOnDestroy(): void {

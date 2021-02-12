@@ -26,9 +26,10 @@ export const b2cPolicies = {
 /**
  * B2C API CONFIG//TODO
  */
-export const apiConfig: { scopes: string[]; uri: string } = {
+export const apiConfig: { scopes: string[]; uri: string; apimSubscriptionKey: string } = {
   scopes: ['https://unpaper2020.onmicrosoft.com/api/demo.read', 'https://unpaper2020.onmicrosoft.com/api/demo.write'],
-  uri: 'https://unpaper-api-management-service.azure-api.net/v1'
+  uri: 'https://unpaper-api-management-service.azure-api.net/v1',
+  apimSubscriptionKey: '52a65edcbefd49bd8d478da6b90fbcce'
 };
 
 /**
