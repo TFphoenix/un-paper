@@ -42,7 +42,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     this._authService.editProfile();
   }
 
-  //TODO: Delete test
+  //TEST: Delete this communication test
   testAPI() {
     this._requestService
       .get(

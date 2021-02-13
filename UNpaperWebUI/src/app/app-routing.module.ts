@@ -10,7 +10,7 @@ const ROUTES: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
-    canActivateChild: [], //TODO: Here will general guards be declared (like EULA, SIGN-UP, etc.)
+    canActivateChild: [], //REMEMBER: Here will general guards be declared (like EULA, SIGN-UP, etc.)
     children: [{ path: '', component: HomeComponent, pathMatch: 'full' }]
   },
   // empty layout routes

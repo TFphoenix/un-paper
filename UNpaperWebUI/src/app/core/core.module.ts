@@ -27,6 +27,9 @@ import { IPublicClientApplication, PublicClientApplication, InteractionType } fr
 import { appConfig, apiConfig } from '../configs/b2c-config';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { AuthService } from './services/auth/auth.service';
+import { RequestService } from './services/request/request.service';
+import { UserService } from './services/user/user.service';
+import { SharedModule } from '../shared/shared.module';
 
 //TODO: Find a cleaner approach to MSAL & B2c config
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -58,6 +61,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     // services
     ConfigService,
     AuthService,
+    RequestService,
+    UserService,
 
     // etc
     {
@@ -93,7 +98,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalGuard,
     MsalBroadcastService
   ],
-  imports: [CommonModule, MaterialModule, RouterModule, MsalModule, HttpClientModule],
+  imports: [CommonModule, SharedModule, MaterialModule, RouterModule, MsalModule, HttpClientModule],
   exports: [MaterialModule, AuthCallbackComponent, HomeComponent]
 })
 export class CoreModule {

@@ -16,15 +16,18 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
     this._authService.init();
 
     // handle auth response
-    this._authService.handleRedirect().subscribe({
-      next: this.authNext,
-      error: this.authError,
-      complete: this.authComplete
+    const redirectObservable = this._authService.handleRedirect();
+
+    // subscribe to redirect response
+    redirectObservable.subscribe({
+      next: this.authNext.bind(this),
+      error: this.authError.bind(this),
+      complete: this.authComplete.bind(this)
     });
   }
 
   private authNext(result: AuthenticationResult) {
-    console.log(result);
+    this._authService.processAuthResult(result);
   }
 
   private authError(error: any) {
