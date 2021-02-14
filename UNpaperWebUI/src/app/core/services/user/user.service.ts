@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { SignInTokenClaims } from 'src/app/shared/models/sign-in-token-claims.model';
+import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
 import { RequestService } from '../request/request.service';
 
 @Injectable({
@@ -7,7 +9,11 @@ import { RequestService } from '../request/request.service';
 export class UserService {
   constructor(private readonly _requestService: RequestService) {}
 
-  signUp() {}
+  signUp(tokenClaims: SignUpTokenClaims) {
+    // TODO
+  }
 
-  signIn() {}
+  signIn(tokenClaims: SignInTokenClaims) {
+    // TODO
+  }
 }

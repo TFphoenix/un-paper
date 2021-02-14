@@ -13,6 +13,9 @@ import { ErrorObserver, NextObserver, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { b2cPolicies } from 'src/app/configs/b2c-config';
 import { TokenClaims } from 'src/app/shared/interfaces/token-claims.interface';
+import { SignInTokenClaims } from 'src/app/shared/models/sign-in-token-claims.model';
+import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
+import { UserService } from '../user/user.service';
 
 interface IdTokenClaims extends AuthenticationResult {
   idTokenClaims: {
@@ -33,7 +36,8 @@ export class AuthService {
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private _msalGuardConfig: MsalGuardConfiguration,
     private _msalAuthService: MsalService,
-    private _msalBroadcastService: MsalBroadcastService
+    private _msalBroadcastService: MsalBroadcastService,
+    private _userService: UserService
   ) {}
 
   init(): void {
@@ -133,12 +137,10 @@ export class AuthService {
   processAuthResult(result: AuthenticationResult): void {
     const tokenClaims = result.idTokenClaims as TokenClaims;
 
-    //DOING
-    console.log(tokenClaims);
     if (tokenClaims.newUser) {
-      console.log('New user');
+      this._userService.signUp(new SignUpTokenClaims(tokenClaims));
     } else {
-      console.log('Old user');
+      this._userService.signIn(new SignInTokenClaims(tokenClaims));
     }
   }
 }

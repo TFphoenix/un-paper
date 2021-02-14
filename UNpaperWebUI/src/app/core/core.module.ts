@@ -30,6 +30,7 @@ import { AuthService } from './services/auth/auth.service';
 import { RequestService } from './services/request/request.service';
 import { UserService } from './services/user/user.service';
 import { SharedModule } from '../shared/shared.module';
+import { RegistryApiRequestService } from './services/request/registry-api-request.service';
 
 //TODO: Find a cleaner approach to MSAL & B2c config
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -59,9 +60,10 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent, AuthCallbackComponent],
   providers: [
     // services
-    ConfigService,
     AuthService,
+    ConfigService,
     RequestService,
+    RegistryApiRequestService,
     UserService,
 
     // etc
