@@ -2,11 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MonoTypeOperatorFunction, of, throwError } from 'rxjs';
 import { concatMap, delay, retryWhen } from 'rxjs/operators';
+import { RequestMethods } from './request-methods.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RequestService {
+export class RequestService implements RequestMethods {
   private readonly _maxRetries = 3;
   private readonly _msBetweenRetries = 2000;
   private readonly _defaultHeaders: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });

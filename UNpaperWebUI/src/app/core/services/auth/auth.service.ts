@@ -12,6 +12,10 @@ import {
 import { ErrorObserver, NextObserver, Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { b2cPolicies } from 'src/app/configs/b2c-config';
+import { TokenClaims } from 'src/app/shared/interfaces/token-claims.interface';
+import { SignInTokenClaims } from 'src/app/shared/models/sign-in-token-claims.model';
+import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
+import { UserService } from '../user/user.service';
 
 interface IdTokenClaims extends AuthenticationResult {
   idTokenClaims: {
@@ -24,7 +28,7 @@ interface IdTokenClaims extends AuthenticationResult {
 })
 export class AuthService {
   private _loggedIn = false;
-  public get loggedIn(): boolean {
+  get loggedIn(): boolean {
     return this._loggedIn;
   }
   private readonly _destroying$ = new Subject<void>();
@@ -32,10 +36,11 @@ export class AuthService {
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private _msalGuardConfig: MsalGuardConfiguration,
     private _msalAuthService: MsalService,
-    private _msalBroadcastService: MsalBroadcastService
+    private _msalBroadcastService: MsalBroadcastService,
+    private _userService: UserService
   ) {}
 
-  public init(): void {
+  init(): void {
     this.checkAccount();
 
     this._msalBroadcastService.msalSubject$
@@ -84,11 +89,11 @@ export class AuthService {
       });
   }
 
-  public checkAccount(): void {
+  checkAccount(): void {
     this._loggedIn = this._msalAuthService.instance.getAllAccounts().length > 0;
   }
 
-  public login(userFlowRequest?: RedirectRequest | PopupRequest): void {
+  login(userFlowRequest?: RedirectRequest | PopupRequest): void {
     this._msalGuardConfig;
     if (this._msalGuardConfig.interactionType === InteractionType.Popup) {
       if (this._msalGuardConfig.authRequest) {
@@ -105,11 +110,11 @@ export class AuthService {
     }
   }
 
-  public logout(): void {
+  logout(): void {
     this._msalAuthService.logout();
   }
 
-  public editProfile(): void {
+  editProfile(): void {
     let editProfileFlowRequest = {
       scopes: ['openid'],
       authority: b2cPolicies.authorities.editProfile.authority
@@ -118,14 +123,24 @@ export class AuthService {
     this.login(editProfileFlowRequest);
   }
 
-  public destroy(): void {}
+  destroy(): void {}
 
-  public handleRedirectShallow(): void {
+  handleRedirectShallow(): void {
     // It needs this to prevent interaction_in_progress exception
     this._msalAuthService.handleRedirectObservable();
   }
 
-  public handleRedirect(): Observable<AuthenticationResult> {
+  handleRedirect(): Observable<AuthenticationResult> {
     return this._msalAuthService.handleRedirectObservable();
+  }
+
+  processAuthResult(result: AuthenticationResult): void {
+    const tokenClaims = result.idTokenClaims as TokenClaims;
+
+    if (tokenClaims.newUser) {
+      this._userService.signUp(new SignUpTokenClaims(tokenClaims));
+    } else {
+      this._userService.signIn(new SignInTokenClaims(tokenClaims));
+    }
   }
 }

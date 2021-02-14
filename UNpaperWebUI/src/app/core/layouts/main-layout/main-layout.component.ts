@@ -1,9 +1,7 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { apiConfig } from 'src/app/configs/b2c-config';
 import { AuthService } from '../../services/auth/auth.service';
 import { ConfigService } from '../../services/config/config.service';
-import { RequestService } from '../../services/request/request.service';
+import { RegistryApiRequestService } from '../../services/request/registry-api-request.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -18,11 +16,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     return this._authService.loggedIn;
   }
 
-  constructor(
-    private readonly _authService: AuthService,
-    private readonly _configService: ConfigService,
-    private readonly _requestService: RequestService
-  ) {}
+  constructor(private readonly _authService: AuthService, private readonly _requestService: RegistryApiRequestService) {}
 
   ngOnInit(): void {
     this.isIframe = window !== window.parent && !window.opener;
@@ -42,16 +36,11 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     this._authService.editProfile();
   }
 
-  //TODO: Delete test
+  //TEST: Delete this communication test
   testAPI() {
-    this._requestService
-      .get(
-        apiConfig.uri + '/WeatherForecast',
-        new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8', 'Ocp-Apim-Subscription-Key': apiConfig.apimSubscriptionKey })
-      )
-      .subscribe(weather => {
-        console.log(weather);
-      });
+    this._requestService.get('/WeatherForecast').subscribe(weather => {
+      console.log(weather);
+    });
   }
 
   ngOnDestroy(): void {
