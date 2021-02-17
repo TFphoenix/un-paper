@@ -13,15 +13,23 @@ namespace UNpaper.Registry.Data
 {
     public static class BootstrapData
     {
-        public static IServiceCollection ConfigureApplicationData(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ConfigureApplicationData(this IServiceCollection services,
+            IConfiguration configuration, bool isDevEnv)
         {
-            //services.AddDbContext<UNpaperDbContext>(optionsAction =>
-            //    optionsAction.UseSqlServer(configuration.GetConnectionString("MsSql"), options => options.EnableRetryOnFailure())
-            //);
-            services.AddDbContext<UNpaperDbContext>(optionsAction =>
-                optionsAction.UseSqlServer(configuration.GetConnectionString("MsSql"))
-                    .EnableSensitiveDataLogging()
-            );
+            if (isDevEnv)
+            {
+                services.AddDbContext<UNpaperDbContext>(optionsAction =>
+                    optionsAction.UseSqlServer(configuration.GetConnectionString("MsSql"))
+                        .EnableSensitiveDataLogging()
+                );
+            }
+            else
+            {
+                services.AddDbContext<UNpaperDbContext>(optionsAction =>
+                    optionsAction.UseSqlServer(configuration.GetConnectionString("MsSql"),
+                        options => options.EnableRetryOnFailure())
+                );
+            }
 
             //AddRepositories(services);
 
