@@ -29,15 +29,18 @@ namespace UNpaper.Registry.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Authentication configuration
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAdB2C"));
 
+            // API configuration
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UNpaper.Registry.API", Version = "v1" });
             });
 
+            // CORS configuration
             //TODO: Add specific CORS
             services.AddCors(options =>
             {
@@ -47,15 +50,16 @@ namespace UNpaper.Registry.API
                         .AllowAnyHeader());
             });
 
-            // Configure Data
+            // Data configuration
             services.ConfigureApplicationData(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors("CorsPolicy");
+            app.UseCors("CorsPolicy");// use CORS policy
 
+            // development environment configuration
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,6 +71,7 @@ namespace UNpaper.Registry.API
 
             app.UseRouting();
 
+            // Authentication & authorization configuration
             app.UseAuthentication();
             app.UseAuthorization();
 
