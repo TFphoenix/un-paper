@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using UNpaper.Registry.Data;
 
 namespace UNpaper.Registry.API
 {
@@ -45,6 +46,9 @@ namespace UNpaper.Registry.API
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });
+
+            // Configure Data
+            services.ConfigureApplicationData(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
