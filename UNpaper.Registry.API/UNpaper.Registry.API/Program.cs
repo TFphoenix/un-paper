@@ -17,6 +17,7 @@ namespace UNpaper.Registry.API
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            // uncomment this if in need of auxiliary steps
             //BuildHost(args).Run();
         }
 
@@ -31,18 +32,9 @@ namespace UNpaper.Registry.API
         //{
         //    IHost host = CreateHostBuilder(args).Build();
 
-        //    UpdateDatabase(host.Services);
+        //    // insert auxiliary steps here
 
         //    return host;
-        //}
-
-        //private static void UpdateDatabase(IServiceProvider serviceProvider)
-        //{
-        //    using (IServiceScope scope = serviceProvider.CreateScope())
-        //    {
-        //        UNpaperDbContext dbc = scope.ServiceProvider.GetRequiredService<UNpaperDbContext>();
-        //        dbc.Database.Migrate();
-        //    }
         //}
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using UNpaper.Registry.Data.Extensions;
 using UNpaper.Registry.Interface.Entities;
 
 namespace UNpaper.Registry.Data
@@ -21,9 +20,6 @@ namespace UNpaper.Registry.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Load all EntityConfiguration classes in the current assembly
-            //this.ApplyEntityConfigurations(modelBuilder);
-
             // Add tables prefix
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
             {
