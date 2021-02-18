@@ -8,10 +8,13 @@ namespace UNpaper.Registry.Data
 {
     public class UNpaperDbContext : DbContext
     {
-        private const string TABLE_NAME_PREFIX = "UNp_";
-
+        // DbSets
         public DbSet<User> Users { get; set; }
 
+        // Other
+        private const string TABLE_NAME_PREFIX = "UNp_";
+
+        // Ctor
         public UNpaperDbContext(DbContextOptions<UNpaperDbContext> options) : base(options)
         {
         }

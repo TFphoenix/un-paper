@@ -17,8 +17,7 @@ namespace UNpaper.Registry.Data.Repositories
         public UserRepository(UNpaperDbContext context)
         {
             _context = context;
-
-            _users = context.Set<User>();
+            _users = context.Users;
         }
 
         public void Add(User user)
@@ -28,7 +27,12 @@ namespace UNpaper.Registry.Data.Repositories
             _context.SaveChanges();
         }
 
-        public Task<User> GetAsync(Guid id)
+        public IQueryable<User> GetAsQueryable()
+        {
+            return _users;
+        }
+
+        public async Task<User> GetAsync(Guid id)
         {
             throw new NotImplementedException();
         }

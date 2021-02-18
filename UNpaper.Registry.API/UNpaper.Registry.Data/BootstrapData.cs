@@ -16,6 +16,7 @@ namespace UNpaper.Registry.Data
         public static IServiceCollection ConfigureApplicationData(this IServiceCollection services,
             IConfiguration configuration, bool isDevEnv)
         {
+            // Add DbContext
             if (isDevEnv)
             {
                 services.AddDbContext<UNpaperDbContext>(optionsAction =>
@@ -31,14 +32,15 @@ namespace UNpaper.Registry.Data
                 );
             }
 
-            //AddRepositories(services);
+            // Add Repositories
+            AddRepositories(services);
 
             return services;
         }
 
-        //private static void AddRepositories(this IServiceCollection services)
-        //{
-        //    services.AddScoped<IUserRepository, UserRepository>();
-        //}
+        private static void AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
+        }
     }
 }
