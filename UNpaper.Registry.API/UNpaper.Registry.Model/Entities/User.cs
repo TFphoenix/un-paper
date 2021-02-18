@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UNpaper.Registry.Interface.Entities
+namespace UNpaper.Registry.Model.Entities
 {
     public sealed class User : EntityBase
     {

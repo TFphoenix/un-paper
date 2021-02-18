@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using UNpaper.Registry.Interface.Entities;
+using UNpaper.Registry.Model.Entities;
 
 namespace UNpaper.Registry.Data
 {

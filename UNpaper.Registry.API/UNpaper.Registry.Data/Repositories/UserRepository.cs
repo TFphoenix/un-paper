@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using UNpaper.Registry.Interface.Entities;
+using UNpaper.Registry.Model.Entities;
 using UNpaper.Registry.Interface.Repositories;
 
 namespace UNpaper.Registry.Data.Repositories

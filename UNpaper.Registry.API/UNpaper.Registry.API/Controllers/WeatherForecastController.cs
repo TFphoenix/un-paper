@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Identity.Web.Resource;
-using UNpaper.Registry.Interface.Entities;
+using UNpaper.Registry.Model.Entities;
 using UNpaper.Registry.Interface.Repositories;
 
 namespace UNpaper.Registry.API.Controllers
