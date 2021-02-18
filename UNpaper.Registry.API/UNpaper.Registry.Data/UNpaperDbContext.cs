@@ -8,7 +8,7 @@ namespace UNpaper.Registry.Data
 {
     public class UNpaperDbContext : DbContext
     {
-        //private const string TABLE_NAME_PREFIX = "UNp_";
+        private const string TABLE_NAME_PREFIX = "UNp_";
 
         public DbSet<User> Users { get; set; }
 
@@ -18,26 +18,19 @@ namespace UNpaper.Registry.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().ToTable("UNp_User");
+            // Load all EntityConfiguration classes in the current assembly
+            //this.ApplyEntityConfigurations(modelBuilder);
+
+            // Add tables prefix
+            foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                string tableName = entityType.GetTableName();
+
+                if (!tableName.StartsWith(TABLE_NAME_PREFIX))
+                {
+                    entityType.SetTableName(TABLE_NAME_PREFIX + tableName);
+                }
+            }
         }
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-
-        //    // Load all EntityConfiguration classes in the current assembly
-        //    //this.ApplyEntityConfigurations(modelBuilder);
-
-        //    // Add tables prefix
-        //    foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
-        //    {
-        //        string tableName = entityType.GetTableName();
-
-        //        if (!tableName.StartsWith(TABLE_NAME_PREFIX))
-        //        {
-        //            entityType.SetTableName(TABLE_NAME_PREFIX + tableName);
-        //        }
-        //    }
-        //}
     }
 }
