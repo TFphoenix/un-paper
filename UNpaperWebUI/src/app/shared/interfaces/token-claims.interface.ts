@@ -18,6 +18,7 @@ export interface TokenClaims {
   // user info
   city: string; // The city in which the user is located.
   country: string; // The country in which the user is located.
+  emails: string[]; // Email addresses of the user. These are mutable and might change over time. Therefore, they are not suitable for identifying the user in other databases or applications. The oid or sub claim should be used instead.
   family_name: string; // The user's surname (also known as last name).
   given_name: string; // The user's given name (also known as first name).
   name: string; // The user's full name in displayable form including all name parts, possibly including titles and suffixes.
