@@ -19,24 +19,27 @@ export class RegistryApiRequestService implements RequestMethods {
     'Content-Type': 'application/json; charset=utf-8'
   });
 
+  // api prefix
+  private readonly _apiPrefix = '/api';
+
   // ctor
   constructor(private readonly _requestService: RequestService) {}
 
   // methods
   get<T = any>(url: string, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
-    return this._requestService.get(apiConfig.uri + url, headers);
+    return this._requestService.get(apiConfig.uri + this._apiPrefix + url, headers);
   }
   post<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
-    return this._requestService.post(apiConfig.uri + url, body, headers);
+    return this._requestService.post(apiConfig.uri + this._apiPrefix + url, body, headers);
   }
   put<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
-    return this._requestService.put(apiConfig.uri + url, body, headers);
+    return this._requestService.put(apiConfig.uri + this._apiPrefix + url, body, headers);
   }
   patch<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
-    return this._requestService.patch(apiConfig.uri + url, body, headers);
+    return this._requestService.patch(apiConfig.uri + this._apiPrefix + url, body, headers);
   }
   delete<T = any>(url: string, ids: string[], headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
-    return this._requestService.delete(apiConfig.uri + url, ids, headers);
+    return this._requestService.delete(apiConfig.uri + this._apiPrefix + url, ids, headers);
   }
 
   // returns http headers depending on the environment

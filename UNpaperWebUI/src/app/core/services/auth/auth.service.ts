@@ -9,11 +9,10 @@ import {
   EventMessage,
   EventType
 } from '@azure/msal-browser';
-import { ErrorObserver, NextObserver, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { b2cPolicies } from 'src/app/configs/b2c-config';
 import { TokenClaims } from 'src/app/shared/interfaces/token-claims.interface';
-import { SignInTokenClaims } from 'src/app/shared/models/sign-in-token-claims.model';
 import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
 import { UserService } from '../user/user.service';
 
@@ -134,13 +133,17 @@ export class AuthService {
     return this._msalAuthService.handleRedirectObservable();
   }
 
-  processAuthResult(result: AuthenticationResult): void {
+  async processAuthResult(result: AuthenticationResult) {
     const tokenClaims = result.idTokenClaims as TokenClaims;
 
     if (tokenClaims.newUser) {
-      this._userService.signUp(new SignUpTokenClaims(tokenClaims));
+      // Sign Up
+      await this._userService.registerUser(new SignUpTokenClaims(tokenClaims));
     } else {
-      this._userService.signIn(new SignInTokenClaims(tokenClaims));
+      // Sign In
+      this._userService.getCurrentUser().subscribe(user => {
+        console.log(user); // TEST
+      });
     }
   }
 }

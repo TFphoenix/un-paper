@@ -9,7 +9,8 @@ namespace UNpaper.Registry.Interface.Repositories
 {
     public interface IUserRepository : IRepository
     {
-        void Add(User user);
+        int Add(User user);
+        Task<int> AddAsync(User user);
         IQueryable<User> GetAsQueryable();
         Task<User> GetAsync(Guid id);
     }

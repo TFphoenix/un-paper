@@ -20,11 +20,18 @@ namespace UNpaper.Registry.Data.Repositories
             _users = context.Users;
         }
 
-        public void Add(User user)
+        public int Add(User user)
         {
             _users.Add(user);
 
-            _context.SaveChanges();
+            return _context.SaveChanges();
+        }
+
+        public async Task<int> AddAsync(User user)
+        {
+            await _users.AddAsync(user);
+
+            return await _context.SaveChangesAsync();
         }
 
         public IQueryable<User> GetAsQueryable()
@@ -34,7 +41,9 @@ namespace UNpaper.Registry.Data.Repositories
 
         public async Task<User> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _users
+                .Where(x => x.IsDeleted == false)
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
     }
 }

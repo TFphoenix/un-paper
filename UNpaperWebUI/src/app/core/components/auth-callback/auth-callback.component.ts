@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationResult } from '@azure/msal-browser';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -8,7 +9,7 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./auth-callback.component.scss']
 })
 export class AuthCallbackComponent implements OnInit, OnDestroy {
-  constructor(private readonly _authService: AuthService) {}
+  constructor(private readonly _authService: AuthService, private readonly _router: Router) {}
 
   ngOnInit(): void {
     console.log('Entered AuthCallback');
@@ -26,20 +27,21 @@ export class AuthCallbackComponent implements OnInit, OnDestroy {
     });
   }
 
-  private authNext(result: AuthenticationResult) {
-    this._authService.processAuthResult(result);
+  private async authNext(result: AuthenticationResult) {
+    await this._authService.processAuthResult(result);
   }
 
   private authError(error: any) {
     console.log(error);
     //TODO: Handle Profile edit cancel and password forgot errors here (maybe remove init())
-    window.location.href = '/';
+    // window.location.href = '/';
   }
 
   private authComplete() {
     console.log('Auth completed');
-    //TODO: Password successfully reset, you will be redirected to the homepage soon
-    window.location.href = '/';
+    //TODO: Find a way to call the auth API
+    this._router.navigate(['/']);
+    // window.location.href = '/';
   }
 
   ngOnDestroy(): void {
