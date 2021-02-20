@@ -14,7 +14,7 @@ namespace UNpaper.Registry.API.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -32,7 +32,7 @@ namespace UNpaper.Registry.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IActionResult Get()
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
 
@@ -44,7 +44,21 @@ namespace UNpaper.Registry.API.Controllers
             //    Summary = Summaries[rng.Next(Summaries.Length)]
             //})
             //.ToArray();
-            return _userRepository.GetAsQueryable().ToList();
+            try
+            {
+                return Ok(_userRepository.GetAsQueryable().ToArray());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("Test succeded");
         }
     }
 }
