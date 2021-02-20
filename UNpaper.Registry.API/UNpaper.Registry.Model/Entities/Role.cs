@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace UNpaper.Registry.Model.Entities
 {
-    public class EntityBase
+    public class Role : EntityBase
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

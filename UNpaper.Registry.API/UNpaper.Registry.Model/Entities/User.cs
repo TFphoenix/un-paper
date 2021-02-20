@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UNpaper.Registry.Model.Entities
 {
-    public sealed class User : EntityBase
+    public sealed class User : TrackedEntity
     {
         public string Email { get; set; }
         public string FirstName { get; set; }
