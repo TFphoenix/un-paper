@@ -1,39 +1,45 @@
+@import 'theme';
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
+// Colors (primary)
+$unpPink1: #f72585;
+$unpPink2: #b5179e;
+$unpPink3: #7209b7;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
+// Colors (secondary)
+$unpPurple1: #560bad;
+$unpPurple2: #480ca8;
+$unpPurple3: #3a0ca3;
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$UNpaperWebUI-primary: mat-palette($mat-indigo);
-$UNpaperWebUI-accent: mat-palette($mat-pink, A200, A100, A400);
+// Colors (accent)
+$unpBlue1: #3f37c9;
+$unpBlue2: #4361ee;
+$unpBlue3: #4895ef;
+$unpBlue4: #4cc9f0;
 
-// The warn palette is optional (defaults to red).
-$UNpaperWebUI-warn: mat-palette($mat-red);
+// Colors (neutral)
+$white: #ffffff;
+$unpNeuLight1: #f8f9fa;
+$unpNeuLight2: #e9ecef;
+$unpNeuLight3: #dee2e6;
+$unpNeuLight4: #ced4da;
+$unpNeuMid1: #adb5bd;
+$unpNeuMid2: #6c757d;
+$unpNeuMid3: #495057;
+$unpNeuMid4: #343a40;
+$unpNeuDark1: #212529;
+$unpNeuDark2: #171a1c;
+$unpNeuDark3: #0a0b0c;
+$unpNeuDark4: #040505;
+$black: #000000;
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$UNpaperWebUI-theme: mat-light-theme((
-  color: (
-    primary: $UNpaperWebUI-primary,
-    accent: $UNpaperWebUI-accent,
-    warn: $UNpaperWebUI-warn,
-  )
-));
+/*------------ Start general section -----------------*/
+html,
+body {
+  height: 100%;
+  background: $unpNeuLight1;
+}
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($UNpaperWebUI-theme);
-
-/* You can add global styles to this file, and also import other style files */
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

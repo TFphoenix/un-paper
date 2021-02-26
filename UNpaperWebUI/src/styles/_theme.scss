@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+@import 'theme-colors';
+@import 'theme-typography';
+
+// read more on https://material.angular.io/guide/theming
+// and https://medium.com/@tomastrajan/the-complete-guide-to-angular-material-themes-4d165a9d24d1
+// pallettes were generated with http://mcg.mbitson.com
+
+@include mat-core($typography);
+
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
