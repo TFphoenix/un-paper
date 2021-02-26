@@ -53,7 +53,15 @@
 
       <!-- User Menu -->
       <div class="m-h-10px">
-        <button mat-icon-button color="primary" aria-label="User Details" [matMenuTriggerFor]="userMenu">
+        <button
+          class="user-menu-button"
+          [matMenuTriggerFor]="userMenu"
+          #trigger="matMenuTrigger"
+          [ngClass]="{ active: trigger.menuOpen }"
+          mat-icon-button
+          color="primary"
+          aria-label="User Details"
+        >
           <mat-icon>arrow_drop_down</mat-icon>
         </button>
         <mat-menu #userMenu="matMenu">

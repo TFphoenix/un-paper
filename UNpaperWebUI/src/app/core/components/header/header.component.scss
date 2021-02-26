@@ -64,6 +64,14 @@
           font-size: 0.7em;
         }
       }
+
+      .user-menu-button {
+        transition-duration: 0.2s;
+      }
+
+      .user-menu-button.active {
+        transform: rotate(180deg);
+      }
     }
   }
 
