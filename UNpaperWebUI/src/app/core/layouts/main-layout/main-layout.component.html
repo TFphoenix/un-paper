@@ -10,7 +10,7 @@
   <app-header></app-header>
 </header>
 
-<div class="container">
+<app-sidenav>
   <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
   <router-outlet *ngIf="!isIframe"></router-outlet>
-</div>
+</app-sidenav>

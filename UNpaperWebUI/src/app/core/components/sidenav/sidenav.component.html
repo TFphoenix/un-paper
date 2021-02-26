@@ -1,0 +1,41 @@
+<mat-sidenav-container class="unp-sidenav-container">
+  <!-- Sidenav -->
+  <mat-sidenav class="unp-sidenav box-shadow-right" mode="side" opened>
+    <mat-nav-list>
+      <!-- Organizations -->
+      <mat-list-item class="unp-nav-list-item">
+        <a matLine href="/">
+          <div class="unp-nav-item">
+            <img class="mr-10px nav-icon" src="./assets/icons/organization.svg" alt="" />
+            <span>Organizations</span>
+          </div>
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <!-- Batches -->
+      <mat-list-item class="unp-nav-list-item">
+        <a matLine href="/">
+          <div class="unp-nav-item">
+            <img class="mr-10px nav-icon" src="./assets/icons/batch.svg" alt="" />
+            <span>Batches</span>
+          </div>
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <!-- Quick Upload -->
+      <mat-list-item class="unp-nav-list-item">
+        <a matLine href="/">
+          <div class="unp-nav-item">
+            <img class="mr-10px nav-icon" src="./assets/icons/bolt.svg" alt="" />
+            <span>Quick Upload</span>
+          </div>
+        </a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Content -->
+  <mat-sidenav-content class="unp-sidenav-content">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

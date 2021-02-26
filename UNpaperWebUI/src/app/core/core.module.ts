@@ -32,6 +32,7 @@ import { UserService } from './services/user/user.service';
 import { SharedModule } from '../shared/shared.module';
 import { RegistryApiRequestService } from './services/request/registry-api-request.service';
 import { HeaderComponent } from './components/header/header.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 //TODO: Find a cleaner approach to MSAL & B2c config
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -58,7 +59,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 }
 
 @NgModule({
-  declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent, AuthCallbackComponent, HeaderComponent],
+  declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent, AuthCallbackComponent, HeaderComponent, SidenavComponent],
   providers: [
     // services
     AuthService,

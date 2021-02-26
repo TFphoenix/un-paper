@@ -2,12 +2,12 @@
 
 .unp-header {
   background: $white;
-  height: auto;
+  height: 80px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   .unp-header-col {
     height: 100%;
@@ -68,7 +68,7 @@
   }
 
   .unp-divider {
-    height: 80px;
+    height: 100%;
     border-color: $unpNeuLight2;
   }
 
