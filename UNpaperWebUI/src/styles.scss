@@ -1,37 +1,5 @@
 @import 'theme';
 
-// Colors (primary)
-$unpPink1: #f72585;
-$unpPink2: #b5179e;
-$unpPink3: #7209b7;
-
-// Colors (secondary)
-$unpPurple1: #560bad;
-$unpPurple2: #480ca8;
-$unpPurple3: #3a0ca3;
-
-// Colors (accent)
-$unpBlue1: #3f37c9;
-$unpBlue2: #4361ee;
-$unpBlue3: #4895ef;
-$unpBlue4: #4cc9f0;
-
-// Colors (neutral)
-$white: #ffffff;
-$unpNeuLight1: #f8f9fa;
-$unpNeuLight2: #e9ecef;
-$unpNeuLight3: #dee2e6;
-$unpNeuLight4: #ced4da;
-$unpNeuMid1: #adb5bd;
-$unpNeuMid2: #6c757d;
-$unpNeuMid3: #495057;
-$unpNeuMid4: #343a40;
-$unpNeuDark1: #212529;
-$unpNeuDark2: #171a1c;
-$unpNeuDark3: #0a0b0c;
-$unpNeuDark4: #040505;
-$black: #000000;
-
 /*------------ Start general section -----------------*/
 html,
 body {
@@ -42,4 +10,38 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// Margins
+.m-h-20px {
+  margin: 0 20px;
+}
+
+.m-h-10px {
+  margin: 0 10px;
+}
+
+// Shadows
+.box-shadow-bot {
+  -webkit-box-shadow: 0px 10px 40px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 10px 40px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 10px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.box-shadow-right {
+  -webkit-box-shadow: 10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.box-shadow-left {
+  -webkit-box-shadow: -10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: -10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: -10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.box-shadow-center {
+  -webkit-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
 }

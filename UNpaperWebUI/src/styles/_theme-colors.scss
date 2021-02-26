@@ -1,5 +1,38 @@
 @import '~@angular/material/theming';
 
+// Colors (primary)
+$unpPink1: #f72585;
+$unpPink2: #b5179e;
+$unpPink3: #7209b7;
+
+// Colors (secondary)
+$unpPurple1: #560bad;
+$unpPurple2: #480ca8;
+$unpPurple3: #3a0ca3;
+
+// Colors (accent)
+$unpBlue1: #3f37c9;
+$unpBlue2: #4361ee;
+$unpBlue3: #4895ef;
+$unpBlue4: #4cc9f0;
+
+// Colors (neutral)
+$white: #ffffff;
+$unpNeuLight1: #f8f9fa;
+$unpNeuLight2: #e9ecef;
+$unpNeuLight3: #dee2e6;
+$unpNeuLight4: #ced4da;
+$unpNeuMid1: #adb5bd;
+$unpNeuMid2: #6c757d;
+$unpNeuMid3: #495057;
+$unpNeuMid4: #343a40;
+$unpNeuDark1: #212529;
+$unpNeuDark2: #171a1c;
+$unpNeuDark3: #0a0b0c;
+$unpNeuDark4: #040505;
+$black: #000000;
+
+// Material primary palette
 $mat-unp-primary: (
   50: #f6e3f3,
   100: #e9b9e2,
@@ -32,6 +65,8 @@ $mat-unp-primary: (
     A700: #040505
   )
 );
+
+// Material accent palette
 $mat-unp-accent: (
   50: #eaf9fd,
   100: #c9effb,
