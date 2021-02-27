@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthCallbackComponent } from './core/components/auth-callback/auth-callback.component';
 import { HomeComponent } from './core/components/home/home.component';
+import { LandingComponent } from './core/components/landing/landing.component';
+import { AuthGuard } from './core/guards/auth/auth.guard';
+import { HomeGuard } from './core/guards/home/home.guard';
+import { LandingGuard } from './core/guards/landing/landing.guard';
 import { EmptyLayoutComponent } from './core/layouts/empty-layout/empty-layout.component';
 import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 
@@ -10,14 +14,31 @@ const ROUTES: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
-    canActivateChild: [], //REMEMBER: Here will general guards be declared (like EULA, SIGN-UP, etc.)
-    children: [{ path: '', component: HomeComponent, pathMatch: 'full' }]
+    canActivateChild: [AuthGuard], //REMEMBER: Here will general guards be declared (like EULA, SIGN-UP, etc.)
+    children: [
+      {
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full',
+        canActivate: [HomeGuard]
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+      }
+    ]
   },
   // empty layout routes
   {
     path: '',
     component: EmptyLayoutComponent,
     children: [
+      {
+        path: 'landing',
+        component: LandingComponent,
+        pathMatch: 'full',
+        canActivate: [LandingGuard]
+      },
       {
         // Needed for hash routing
         path: 'error',

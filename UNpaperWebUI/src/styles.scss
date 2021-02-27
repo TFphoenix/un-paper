@@ -1,5 +1,30 @@
 @import 'theme';
 
+// Fonts
+@font-face {
+  font-family: poppinsFont;
+  src: url('./assets/fonts/Poppins/Poppins-ExtraLight.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: poppinsFont;
+  src: url('./assets/fonts/Poppins/Poppins-Light.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: latoFont;
+  src: url('./assets/fonts/Lato/Lato-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+$fontPoppins: 'Poppins, "Open Sans", Arial, sans-serif';
+$fontLato: 'Lato, "Open Sans", Arial, sans-serif';
+
 /*------------ Start general section -----------------*/
 html,
 body {
@@ -48,4 +73,13 @@ body {
   -webkit-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
+}
+
+// Fonts
+.f-poppins {
+  font-family: poppinsFont !important;
+}
+
+.f-lato {
+  font-family: latoFont !important;
 }

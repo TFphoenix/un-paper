@@ -65,11 +65,11 @@
           <mat-icon>arrow_drop_down</mat-icon>
         </button>
         <mat-menu #userMenu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="editProfile()">
             <mat-icon>create</mat-icon>
             <span>Edit</span>
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Log out</span>
           </button>

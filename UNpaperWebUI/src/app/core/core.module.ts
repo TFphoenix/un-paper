@@ -33,6 +33,10 @@ import { SharedModule } from '../shared/shared.module';
 import { RegistryApiRequestService } from './services/request/registry-api-request.service';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { HomeGuard } from './guards/home/home.guard';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { LandingGuard } from './guards/landing/landing.guard';
 
 //TODO: Find a cleaner approach to MSAL & B2c config
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -59,7 +63,15 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
 }
 
 @NgModule({
-  declarations: [HomeComponent, MainLayoutComponent, EmptyLayoutComponent, AuthCallbackComponent, HeaderComponent, SidenavComponent],
+  declarations: [
+    HomeComponent,
+    MainLayoutComponent,
+    EmptyLayoutComponent,
+    AuthCallbackComponent,
+    HeaderComponent,
+    SidenavComponent,
+    LandingComponent
+  ],
   providers: [
     // services
     AuthService,
@@ -67,6 +79,11 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     RequestService,
     RegistryApiRequestService,
     UserService,
+
+    // guards
+    HomeGuard,
+    AuthGuard,
+    LandingGuard,
 
     // etc
     {
@@ -103,7 +120,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     MsalBroadcastService
   ],
   imports: [CommonModule, SharedModule, MaterialModule, RouterModule, MsalModule, HttpClientModule],
-  exports: [MaterialModule, AuthCallbackComponent, HomeComponent]
+  exports: [MaterialModule, AuthCallbackComponent, HomeComponent, LandingComponent]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() core: CoreModule) {
