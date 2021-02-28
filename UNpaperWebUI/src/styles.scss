@@ -1,39 +1,85 @@
+@import 'theme';
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
+// Fonts
+@font-face {
+  font-family: poppinsFont;
+  src: url('./assets/fonts/Poppins/Poppins-ExtraLight.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
+@font-face {
+  font-family: poppinsFont;
+  src: url('./assets/fonts/Poppins/Poppins-Light.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$UNpaperWebUI-primary: mat-palette($mat-indigo);
-$UNpaperWebUI-accent: mat-palette($mat-pink, A200, A100, A400);
+@font-face {
+  font-family: latoFont;
+  src: url('./assets/fonts/Lato/Lato-Light.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
-// The warn palette is optional (defaults to red).
-$UNpaperWebUI-warn: mat-palette($mat-red);
+$fontPoppins: 'Poppins, "Open Sans", Arial, sans-serif';
+$fontLato: 'Lato, "Open Sans", Arial, sans-serif';
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$UNpaperWebUI-theme: mat-light-theme((
-  color: (
-    primary: $UNpaperWebUI-primary,
-    accent: $UNpaperWebUI-accent,
-    warn: $UNpaperWebUI-warn,
-  )
-));
+/*------------ Start general section -----------------*/
+html,
+body {
+  height: 100%;
+  background: $unpNeuLight1;
+}
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($UNpaperWebUI-theme);
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
-/* You can add global styles to this file, and also import other style files */
+// Margins
+.m-h-20px {
+  margin: 0 20px;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.m-h-10px {
+  margin: 0 10px;
+}
+
+.mr-10px {
+  margin-right: 10px;
+}
+
+// Shadows
+.box-shadow-bot {
+  -webkit-box-shadow: 0px 10px 40px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 10px 40px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 10px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.box-shadow-right {
+  -webkit-box-shadow: 10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.box-shadow-left {
+  -webkit-box-shadow: -10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: -10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: -10px 0px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+.box-shadow-center {
+  -webkit-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
+}
+
+// Fonts
+.f-poppins {
+  font-family: poppinsFont !important;
+}
+
+.f-lato {
+  font-family: latoFont !important;
+}

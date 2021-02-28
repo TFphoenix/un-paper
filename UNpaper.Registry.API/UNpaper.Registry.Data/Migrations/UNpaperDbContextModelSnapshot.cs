@@ -19,6 +19,23 @@ namespace UNpaper.Registry.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("UNpaper.Registry.Model.Entities.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UNp_Role");
+                });
+
             modelBuilder.Entity("UNpaper.Registry.Model.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -63,7 +80,7 @@ namespace UNpaper.Registry.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UNp_Users");
+                    b.ToTable("UNp_User");
                 });
 #pragma warning restore 612, 618
         }

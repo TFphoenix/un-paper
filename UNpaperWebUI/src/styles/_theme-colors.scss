@@ -1,0 +1,113 @@
+@import '~@angular/material/theming';
+
+// Colors (primary)
+$unpPink1: #f72585;
+$unpPink2: #b5179e;
+$unpPink3: #7209b7;
+
+// Colors (secondary)
+$unpPurple1: #560bad;
+$unpPurple2: #480ca8;
+$unpPurple3: #3a0ca3;
+
+// Colors (accent)
+$unpBlue1: #3f37c9;
+$unpBlue2: #4361ee;
+$unpBlue3: #4895ef;
+$unpBlue4: #4cc9f0;
+
+// Colors (neutral)
+$white: #ffffff;
+$unpNeuLight1: #f8f9fa;
+$unpNeuLight2: #e9ecef;
+$unpNeuLight3: #dee2e6;
+$unpNeuLight4: #ced4da;
+$unpNeuMid1: #adb5bd;
+$unpNeuMid2: #6c757d;
+$unpNeuMid3: #495057;
+$unpNeuMid4: #343a40;
+$unpNeuDark1: #212529;
+$unpNeuDark2: #171a1c;
+$unpNeuDark3: #0a0b0c;
+$unpNeuDark4: #040505;
+$black: #000000;
+
+// Material primary palette
+$mat-unp-primary: (
+  50: #f6e3f3,
+  100: #e9b9e2,
+  200: #da8bcf,
+  300: #cb5dbb,
+  400: #c03aad,
+  500: #b5179e,
+  600: #ae1496,
+  700: #a5118c,
+  800: #9d0d82,
+  900: #8d0770,
+  A100: #ffbbee,
+  A200: #ff88e2,
+  A400: #ff55d5,
+  A700: #ff3bcf,
+  contrast: (
+    50: #040505,
+    100: #040505,
+    200: #040505,
+    300: #040505,
+    400: #f8f9fa,
+    500: #f8f9fa,
+    600: #f8f9fa,
+    700: #f8f9fa,
+    800: #f8f9fa,
+    900: #f8f9fa,
+    A100: #040505,
+    A200: #040505,
+    A400: #040505,
+    A700: #040505
+  )
+);
+
+// Material accent palette
+$mat-unp-accent: (
+  50: #eaf9fd,
+  100: #c9effb,
+  200: #a6e4f8,
+  300: #82d9f5,
+  400: #67d1f2,
+  500: #4cc9f0,
+  600: #45c3ee,
+  700: #3cbcec,
+  800: #33b5e9,
+  900: #24a9e5,
+  A100: #ffffff,
+  A200: #ebf9ff,
+  A400: #b8e8ff,
+  A700: #9fdfff,
+  contrast: (
+    50: #040505,
+    100: #040505,
+    200: #040505,
+    300: #040505,
+    400: #040505,
+    500: #040505,
+    600: #040505,
+    700: #040505,
+    800: #040505,
+    900: #040505,
+    A100: #040505,
+    A200: #040505,
+    A400: #040505,
+    A700: #040505
+  )
+);
+
+// define the palettes for your theme
+// for each palette, you can optionally specify a default, lighter, and darker
+// e.g. $unp-app-accent: mat-palette($mat-unp-orange, 500, 100, 700);
+$primary: mat-palette($mat-unp-primary);
+$accent: mat-palette($mat-unp-accent, 600, 100, 900);
+// the warn palette is optional (defaults to red).
+$warn: mat-palette($mat-red);
+
+$primary-color: mat-color($primary, default);
+$accent-color: mat-color($accent, default);
+$warn-color: mat-color($warn, default);

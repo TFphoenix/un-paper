@@ -1,0 +1,36 @@
+@import 'theme-colors';
+
+.unp-sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  margin-top: 80px;
+
+  .unp-sidenav {
+    width: 230px;
+    padding-top: 48px;
+    border-right: none;
+    border-top: 1px solid $unpNeuLight2;
+
+    .unp-nav-list-item {
+      height: 80px;
+      .unp-nav-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .nav-icon {
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+  }
+
+  .unp-sidenav-content {
+    // empty
+  }
+}

@@ -12,9 +12,20 @@ using UNpaper.Registry.Interface.Repositories;
 
 namespace UNpaper.Registry.API.Controllers
 {
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+        public string Summary { get; set; }
+    }
+
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -32,19 +43,33 @@ namespace UNpaper.Registry.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IActionResult Get()
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
 
             //var rng = new Random();
-            //return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            //return Ok(Enumerable.Range(1, 5).Select(index => new WeatherForecast
             //{
             //    Date = DateTime.Now.AddDays(index),
             //    TemperatureC = rng.Next(-20, 55),
             //    Summary = Summaries[rng.Next(Summaries.Length)]
             //})
-            //.ToArray();
-            return _userRepository.GetAsQueryable().ToList();
+            //.ToArray());
+            try
+            {
+                return Ok(_userRepository.GetAsQueryable().ToArray());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("Test succeded");
         }
     }
 }

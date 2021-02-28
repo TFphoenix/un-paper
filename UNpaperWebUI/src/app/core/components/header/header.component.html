@@ -1,0 +1,80 @@
+<!-- Header -->
+<mat-toolbar class="unp-header box-shadow-bot">
+  <!-- Logo & version -->
+  <div class="unp-header-col">
+    <a routerLink="/">
+      <img src="./assets/logo/UNpaper-Logo-white.svg" alt="UNpaper Logo" class="unp-logo" />
+    </a>
+    <div class="unp-version m-h-20px">v 0.1.0 (alpha)</div>
+    <mat-divider class="unp-divider" [vertical]="true"></mat-divider>
+  </div>
+
+  <!-- Search -->
+  <div class="unp-header-col">
+    <form class="unp-search-form m-h-20px">
+      <mat-form-field class="search-field">
+        <input matInput placeholder="Search for a document, organization or batch ..." />
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="search-button">
+        <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
+      </button>
+    </form>
+  </div>
+
+  <!-- Actions & User -->
+  <div class="unp-header-col">
+    <!-- Due Date -->
+    <div class="m-h-10px">
+      <button mat-icon-button color="primary" aria-label="Due Dates">
+        <mat-icon>calendar_today</mat-icon>
+      </button>
+    </div>
+
+    <!-- Notifications -->
+    <div class="m-h-10px">
+      <button class="m-h-10px" mat-icon-button color="primary" aria-label="Notifications">
+        <mat-icon>notifications</mat-icon>
+      </button>
+    </div>
+
+    <!-- User -->
+    <mat-divider class="unp-divider" [vertical]="true"></mat-divider>
+    <div class="unp-user-data m-h-10px">
+      <!-- User Image -->
+      <div class="user-frame">
+        <img class="user-image" src="./assets/images/user-mockup.jpg" />
+      </div>
+
+      <!-- User Details -->
+      <div class="user-data m-h-10px">
+        <span class="user-name">User Name</span>
+        <span class="user-email">email@address.com</span>
+      </div>
+
+      <!-- User Menu -->
+      <div class="m-h-10px">
+        <button
+          class="user-menu-button"
+          [matMenuTriggerFor]="userMenu"
+          #trigger="matMenuTrigger"
+          [ngClass]="{ active: trigger.menuOpen }"
+          mat-icon-button
+          color="primary"
+          aria-label="User Details"
+        >
+          <mat-icon>arrow_drop_down</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="editProfile()">
+            <mat-icon>create</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Log out</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

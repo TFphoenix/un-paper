@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./empty-layout.component.scss']
 })
 export class EmptyLayoutComponent implements OnInit {
+  isIframe = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
+    this.isIframe = window !== window.parent && !window.opener;
   }
-
 }

@@ -9,6 +9,7 @@ namespace UNpaper.Registry.Data
     {
         // DbSets
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         // Other
         private const string TABLE_NAME_PREFIX = "UNp_";
@@ -27,7 +28,7 @@ namespace UNpaper.Registry.Data
 
                 if (!tableName.StartsWith(TABLE_NAME_PREFIX))
                 {
-                    entityType.SetTableName(TABLE_NAME_PREFIX + tableName);
+                    entityType.SetTableName(TABLE_NAME_PREFIX + entityType.DisplayName());
                 }
             }
         }
