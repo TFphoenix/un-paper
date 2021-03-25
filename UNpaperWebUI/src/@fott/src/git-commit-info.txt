@@ -1,5 +1,5 @@
-commit 8439699e34b688542c77bd339faca903882f3a14
-Author: SimoTw <36868079+SimoTw@users.noreply.github.com>
-Date:   Thu Mar 18 17:00:32 2021 +0800
+commit ab5d1a50f5064877a367e3fe2880e074b422df02
+Author: Teodor <teodor@mihaescu.info>
+Date:   Thu Mar 25 08:30:41 2021 +0200
 
-    Change array type ChevronRight display. (#901)
+    UWU: Added @fott
