@@ -1,5 +1,5 @@
-commit ab5d1a50f5064877a367e3fe2880e074b422df02
+commit 01a9932ae9697c86fc537cd0134b39d3460841a9
 Author: Teodor <teodor@mihaescu.info>
-Date:   Thu Mar 25 08:30:41 2021 +0200
+Date:   Thu Mar 25 11:08:38 2021 +0200
 
-    UWU: Added @fott
+    UWU: Added additional @fott dependencies
