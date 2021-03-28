@@ -25,6 +25,18 @@ const ROUTES: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'organizations',
+        loadChildren: () => import('./modules/organizations/organizations.module').then(m => m.OrganizationsModule)
+      },
+      {
+        path: 'batches',
+        loadChildren: () => import('./modules/batches/batches.module').then(m => m.BatchesModule)
+      },
+      {
+        path: 'layout',
+        loadChildren: () => import('./modules/layout-analyze/layout-analyze.module').then(m => m.LayoutAnalyzeModule)
       }
     ]
   },
