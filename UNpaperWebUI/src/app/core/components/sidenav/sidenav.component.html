@@ -4,7 +4,7 @@
     <mat-nav-list>
       <!-- Organizations -->
       <mat-list-item class="unp-nav-list-item">
-        <a matLine href="/">
+        <a matLine routerLink="/organizations">
           <div class="unp-nav-item">
             <img class="mr-10px nav-icon" src="./assets/icons/organization.svg" alt="" />
             <span>Organizations</span>
@@ -14,7 +14,7 @@
       <mat-divider></mat-divider>
       <!-- Batches -->
       <mat-list-item class="unp-nav-list-item">
-        <a matLine href="/">
+        <a matLine routerLink="/batches">
           <div class="unp-nav-item">
             <img class="mr-10px nav-icon" src="./assets/icons/batch.svg" alt="" />
             <span>Batches</span>
@@ -24,10 +24,20 @@
       <mat-divider></mat-divider>
       <!-- Quick Upload -->
       <mat-list-item class="unp-nav-list-item">
-        <a matLine href="/">
+        <a matLine routerLink="/">
           <div class="unp-nav-item">
             <img class="mr-10px nav-icon" src="./assets/icons/bolt.svg" alt="" />
             <span>Quick Upload</span>
+          </div>
+        </a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <!-- Layout Analyze -->
+      <mat-list-item class="unp-nav-list-item">
+        <a matLine routerLink="/layout">
+          <div class="unp-nav-item">
+            <img class="mr-10px nav-icon" src="./assets/icons/layout.svg" alt="" />
+            <span>Layout Analyze</span>
           </div>
         </a>
       </mat-list-item>
