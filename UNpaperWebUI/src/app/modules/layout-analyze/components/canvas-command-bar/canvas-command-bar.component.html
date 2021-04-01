@@ -1,0 +1,22 @@
+<mat-toolbar class="unp-bar" color="primary">
+  <mat-form-field class="unp-layers">
+    <mat-label>Layers</mat-label>
+    <mat-select [formControl]="layers" multiple>
+      <mat-option *ngFor="let layer of layersList" [value]="layer">{{ layer }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span class="unp-full-spacer"></span>
+  <button mat-icon-button>
+    <mat-icon>rotate_left</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>rotate_right</mat-icon>
+  </button>
+  <span class="unp-semi-spacer"></span>
+  <button mat-icon-button>
+    <mat-icon>zoom_out</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>zoom_in</mat-icon>
+  </button>
+</mat-toolbar>

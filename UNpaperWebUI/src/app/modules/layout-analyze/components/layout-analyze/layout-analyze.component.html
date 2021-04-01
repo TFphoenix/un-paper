@@ -1,1 +1,47 @@
-<p>layout-analyze works!</p>
+<div class="unp-layout-container">
+  <app-canvas-command-bar></app-canvas-command-bar>
+  <!-- handleZoomIn={this.handleCanvasZoomIn}
+        handleZoomOut={this.handleCanvasZoomOut}
+        handleRotateImage={this.handleRotateCanvas}
+        handleLayerChange={this.handleLayerChange}
+        showLayerMenu={true}
+        layers={this.state.layers}
+    /> -->
+  <app-image-map></app-image-map>
+  <!-- ref={(ref) => {
+            this.imageMap = ref;
+            this.layoutHelper.setImageMap(ref);
+            this.tableHelper.setImageMap(ref);
+        }}
+        imageUri={this.state.imageUri || ""}
+        imageWidth={this.state.imageWidth}
+        imageHeight={this.state.imageHeight}
+        imageAngle={this.state.imageAngle}
+        initLayoutMap={true}
+        hoveringFeature={this.state.hoveringFeature}
+        onMapReady={this.noOp}
+        featureStyler={this.featureStyler}
+        tableBorderFeatureStyler={this.tableHelper.tableBorderFeatureStyler}
+        tableIconFeatureStyler={this.tableHelper.tableIconFeatureStyler}
+        tableIconBorderFeatureStyler={this.tableHelper.tableIconBorderFeatureStyler}
+        handleTableToolTipChange={this.tableHelper.handleTableToolTipChange}
+    /> -->
+  <!-- <TooltipHost
+        content={"rows: " + this.state.tableIconTooltip.rows +
+            " columns: " + this.state.tableIconTooltip.columns}
+        id="tableInfo"
+        styles={hostStyles}
+    >
+        <div
+            aria-describedby="tableInfo"
+            className="tooltip-container"
+            onClick={this.handleTableIconFeatureSelect}
+        />
+    </TooltipHost>
+    {this.state.tableToView !== null &&
+        <TableView
+            handleTableViewClose={this.handleTableViewClose}
+            tableToView={this.state.tableToView}
+        />
+    } -->
+</div>
