@@ -16,8 +16,8 @@
   grid-template-columns: 24px auto;
   grid-template-rows: 24px 8px;
   grid-template-areas:
-    "icon text"
-    "icon secondaryText";
+    'icon text'
+    'icon secondaryText';
 }
 
 .cost-warning-message .ms-ContextualMenu-icon {

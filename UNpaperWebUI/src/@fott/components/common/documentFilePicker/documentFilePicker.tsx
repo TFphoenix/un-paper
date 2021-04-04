@@ -2,7 +2,7 @@ import { Dropdown, IDropdownOption, PrimaryButton, TextField } from '@fluentui/r
 import * as React from 'react';
 import { getGreenWithWhiteBackgroundTheme, getPrimaryGreenTheme } from 'src/@fott/common/themes';
 
-import './DocumentFilePicker.scss';
+import './documentFilePicker.scss';
 
 interface IDocumentFilePickerProps {
   disabled: boolean;

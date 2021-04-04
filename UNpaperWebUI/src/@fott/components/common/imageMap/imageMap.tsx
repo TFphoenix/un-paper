@@ -21,7 +21,7 @@ import VectorSource from 'ol/source/Vector';
 import * as React from 'react';
 import Utils from './utils';
 
-import './ImageMap.scss';
+import './imageMap.scss';
 import { FeatureCategory, IRegion } from 'src/@fott/models/applicationState';
 
 interface IImageMapProps {
