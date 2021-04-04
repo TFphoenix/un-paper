@@ -23,7 +23,7 @@ const containerElementName = 'fottLayoutPredictPageContainer';
   template: `
     <span #${containerElementName}></span>
   `,
-  styleUrls: ['./LayoutPredictPage.scss'],
+  styleUrls: ['./LayoutPredictPage.scss', '../../../fott.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class LayoutPredictPageAngular implements OnChanges, OnDestroy, AfterViewInit {

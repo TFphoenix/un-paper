@@ -123,21 +123,9 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
     layoutData: null,
     imageAngle: 0,
 
-    layers: {
-      text: true,
-      tables: true,
-      checkboxes: true,
-      label: true,
-      drawnRegions: true
-    },
+    layers: { text: true, tables: true, checkboxes: true, label: true, drawnRegions: true },
 
-    tableIconTooltip: {
-      display: 'none',
-      width: 0,
-      height: 0,
-      top: 0,
-      left: 0
-    },
+    tableIconTooltip: { display: 'none', width: 0, height: 0, top: 0, left: 0 },
     hoveringFeature: null,
     tableToView: null,
     tableToViewId: null,
@@ -210,11 +198,14 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         }
       ]
     };
+    console.log(this.state); // TEST
     return (
       <>
         <div className="predict skipToMainContent" id="pagePredict" style={{ display: 'flex' }}>
           <div className="predict-main">
-            {this.state.file && this.state.imageUri && this.renderImageMap()}
+            {/* BUG: Fix ImageMap render on file/source change */}
+            {/* {this.state.file && this.state.imageUri && this.renderImageMap()} */}
+            {this.renderImageMap()}
             {this.renderPrevPageButton()}
             {this.renderNextPageButton()}
             {this.renderPageIndicator()}
@@ -225,11 +216,10 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                 <FontIcon className="mr-1" iconName="KeyPhraseExtraction" />
                 <span>{strings.layoutPredict.layout}</span>
               </h6>
-              {/* <PrebuiltSetting
-                prebuiltSettings={this.props.prebuiltSettings}
-                disabled={this.state.isFetching || this.state.isAnalyzing}
-                actions={this.props.actions}
-              /> */}
+              {/* <PrebuiltSetting prebuiltSettings={this.props.prebuiltSettings}
+                                disabled={this.state.isFetching || this.state.isAnalyzing}
+                                actions={this.props.actions}
+                            /> */}
               <div className="p-3">
                 <h5>{strings.layoutPredict.selectFileAndRunLayout}</h5>
                 <DocumentFilePicker
@@ -239,6 +229,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                   onError={err => this.onFileLoadError(err)}
                 />
                 <div className="page-range-section">
+                  {/* BUG: Fix PageRange not updating on file/source change */}
                   <PageRange
                     disabled={this.state.isFetching || this.state.isAnalyzing}
                     withPageRange={this.state.withPageRange}
@@ -252,9 +243,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                 <div className="container-items-end predict-button">
                   <PrimaryButton
                     theme={getPrimaryWhiteTheme()}
-                    iconProps={{
-                      iconName: 'KeyPhraseExtraction'
-                    }}
+                    iconProps={{ iconName: 'KeyPhraseExtraction' }}
                     text={strings.layoutPredict.runLayout}
                     aria-label={!this.state.analyzationLoaded ? strings.layoutPredict.inProgress : ''}
                     allowDisabledFocus
@@ -304,9 +293,9 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
             }
           />
           {/* <PreventLeaving
-            when={this.state.isAnalyzing}
-            message={'A prediction operation is currently in progress, are you sure you want to leave?'}
-          /> */}
+                        when={this.state.isAnalyzing}
+                        message={"A prediction operation is currently in progress, are you sure you want to leave?"}
+                    /> */}
         </div>
       </>
     );
@@ -407,6 +396,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         display: this.state.tableIconTooltip.display
       }
     };
+
     return (
       <div style={{ width: '100%', height: '100%' }}>
         <CanvasCommandBar
@@ -420,8 +410,8 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         <ImageMap
           ref={ref => {
             this.imageMap = ref;
-            this.layoutHelper.setImageMap(ref as any);
-            this.tableHelper.setImageMap(ref as any);
+            this.layoutHelper.setImageMap(ref);
+            this.tableHelper.setImageMap(ref);
           }}
           imageUri={this.state.imageUri || ''}
           imageWidth={this.state.imageWidth}
@@ -444,6 +434,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
           <div aria-describedby="tableInfo" className="tooltip-container" onClick={this.handleTableIconFeatureSelect} />
         </TooltipHost>
         {this.state.tableToView !== null && (
+          // BUG: Fix TableView click event
           <TableView handleTableViewClose={this.handleTableViewClose} tableToView={this.state.tableToView} />
         )}
       </div>
