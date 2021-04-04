@@ -3,7 +3,7 @@
 
 import { Feature } from 'ol';
 import Polygon from 'ol/geom/Polygon';
-import { ImageMap } from '../../common/image-map/ImageMap';
+import { ImageMap } from '../../common/imageMap/ImageMap';
 
 export interface ILayoutHelper {
   setImageMap(imageMap: ImageMap): void;

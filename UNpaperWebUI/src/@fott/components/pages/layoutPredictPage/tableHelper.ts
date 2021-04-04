@@ -9,7 +9,7 @@ import Icon from 'ol/style/Icon';
 import Stroke from 'ol/style/Stroke';
 import Style from 'ol/style/Style';
 import { Component } from 'react';
-import { ImageMap } from '../../common/image-map/ImageMap';
+import { ImageMap } from '../../common/imageMap/ImageMap';
 
 export interface ITableHelper {
   setImageMap(imageMap: ImageMap): void;

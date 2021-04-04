@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { LayoutPredictPageAngular } from './components/pages/layout-predict-page/LayoutPredictPageAngular';
+import { LayoutPredictPageAngular } from './components/pages/layoutPredictPage/LayoutPredictPageAngular';
 import { CommonModule } from '@angular/common';
 
 @NgModule({

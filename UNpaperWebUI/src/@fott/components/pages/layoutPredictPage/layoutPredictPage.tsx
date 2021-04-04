@@ -36,13 +36,16 @@ import { constants } from 'src/@fott/common/constants';
 
 // component imports
 import Alert from '../../common/alert/alert';
-import { DocumentFilePicker } from '../../common/document-file-picker/DocumentFilePicker';
-import { ImageMap } from '../../common/image-map/ImageMap';
-// import { PageRange } from "../../common/pageRange/pageRange";
+import { DocumentFilePicker } from '../../common/documentFilePicker/documentFilePicker';
+import { ImageMap } from '../../common/imageMap/ImageMap';
+import { PageRange } from '../../common/pageRange/pageRange';
+// REMEMBER: Not using PrebuiltSetting because apiKey and endpoint are fixed
 // import { PrebuiltSetting } from "../../common/prebuiltSetting/prebuiltSetting";
-// import PreventLeaving from "../../common/preventLeaving/preventLeaving";
-import { CanvasCommandBar } from '../../common/canvas-command-bar/CanvasCommandBar';
-// import { TableView } from "../editorPage/tableView";
+// REMEMBER: Not using PreventLeaving because it generates ERROR: Can't use outside Router
+// TODO: Find another way to alert user on leaving during analyzation process
+// import PreventLeaving from '../../common/preventLeaving/preventLeaving';
+import { CanvasCommandBar } from '../../common/canvasCommandBar/canvasCommandBar';
+import { TableView } from '../../common/tableView/tableView';
 import { ILayoutHelper, LayoutHelper } from './layoutHelper';
 import { ILoadFileHelper, LoadFileHelper } from './LoadFileHelper';
 import { ITableHelper, ITableState, TableHelper } from './tableHelper';
@@ -211,7 +214,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
       <>
         <div className="predict skipToMainContent" id="pagePredict" style={{ display: 'flex' }}>
           <div className="predict-main">
-            {this.renderImageMap()}
+            {this.state.file && this.state.imageUri && this.renderImageMap()}
             {this.renderPrevPageButton()}
             {this.renderNextPageButton()}
             {this.renderPageIndicator()}
@@ -236,12 +239,12 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                   onError={err => this.onFileLoadError(err)}
                 />
                 <div className="page-range-section">
-                  {/* <PageRange
+                  <PageRange
                     disabled={this.state.isFetching || this.state.isAnalyzing}
                     withPageRange={this.state.withPageRange}
                     pageRange={this.state.pageRange}
                     onPageRangeChange={this.onPageRangeChange}
-                  /> */}
+                  />
                 </div>
               </div>
               <Separator className="separator-right-pane-main">{strings.layoutPredict.analysis}</Separator>
@@ -302,9 +305,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
           />
           {/* <PreventLeaving
             when={this.state.isAnalyzing}
-            message={
-              "A prediction operation is currently in progress, are you sure you want to leave?"
-            }
+            message={'A prediction operation is currently in progress, are you sure you want to leave?'}
           /> */}
         </div>
       </>
@@ -442,12 +443,9 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         >
           <div aria-describedby="tableInfo" className="tooltip-container" onClick={this.handleTableIconFeatureSelect} />
         </TooltipHost>
-        {/* {this.state.tableToView !== null && (
-          <TableView
-            handleTableViewClose={this.handleTableViewClose}
-            tableToView={this.state.tableToView}
-          />
-        )} */}
+        {this.state.tableToView !== null && (
+          <TableView handleTableViewClose={this.handleTableViewClose} tableToView={this.state.tableToView} />
+        )}
       </div>
     );
   };

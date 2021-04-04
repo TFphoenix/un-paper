@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { registerIcons } from 'src/@fott/common/registerIcons';
 import { ConfigService } from '../config/config.service';
 
 @Injectable({
@@ -21,5 +22,7 @@ export class AppInitializerService {
    */
   onLoaded() {
     console.log('Config data loaded');
+    // Register icons for @fott
+    registerIcons();
   }
 }

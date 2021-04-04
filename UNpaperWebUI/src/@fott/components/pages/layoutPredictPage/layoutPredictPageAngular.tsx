@@ -11,10 +11,10 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { LayoutPredictPage } from './LayoutPredictPage';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { registerIcons } from 'src/@fott/common/registerIcons';
+import { LayoutPredictPage } from './LayoutPredictPage';
 
 const containerElementName = 'fottLayoutPredictPageContainer';
 
@@ -29,9 +29,7 @@ const containerElementName = 'fottLayoutPredictPageContainer';
 export class LayoutPredictPageAngular implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
 
-  constructor() {
-    registerIcons();
-  }
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.render();
