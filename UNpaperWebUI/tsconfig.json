@@ -6,7 +6,9 @@
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": false, // TODO: not recommended
+    "strictNullChecks": false, // TODO: not recommended
+    "noImplicitAny": false, // TODO: not recommended
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -17,10 +19,8 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"],
+    "jsx": "react"
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
