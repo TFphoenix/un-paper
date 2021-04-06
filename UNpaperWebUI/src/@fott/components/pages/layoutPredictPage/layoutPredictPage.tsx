@@ -203,9 +203,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
       <>
         <div className="predict skipToMainContent" id="pagePredict" style={{ display: 'flex' }}>
           <div className="predict-main">
-            {/* BUG: Fix ImageMap render on file/source change */}
-            {/* {this.state.file && this.state.imageUri && this.renderImageMap()} */}
-            {this.renderImageMap()}
+            {this.state.file && this.state.imageUri && this.renderImageMap()}
             {this.renderPrevPageButton()}
             {this.renderNextPageButton()}
             {this.renderPageIndicator()}
@@ -229,7 +227,6 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                   onError={err => this.onFileLoadError(err)}
                 />
                 <div className="page-range-section">
-                  {/* BUG: Fix PageRange not updating on file/source change */}
                   <PageRange
                     disabled={this.state.isFetching || this.state.isAnalyzing}
                     withPageRange={this.state.withPageRange}
