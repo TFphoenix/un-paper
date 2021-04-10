@@ -14,6 +14,7 @@ import {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { environment } from 'src/environments/environment';
 import { LayoutPredictPage } from './LayoutPredictPage';
 
 const containerElementName = 'fottLayoutPredictPageContainer';
@@ -81,10 +82,7 @@ export class LayoutPredictPageAngular implements OnChanges, OnDestroy, AfterView
           //     isExact: true,
           //     params: {}
           // }
-          prebuiltSettings={{
-            serviceURI: 'https://unpaper-form-recognizer.cognitiveservices.azure.com/',
-            apiKey: '04c151ae65344c4fb1df1c59e1d22f47'
-          }}
+          prebuiltSettings={environment.formRecognizer}
           appTitleActions={{
             setTitle: (title: string): void => {}
           }}

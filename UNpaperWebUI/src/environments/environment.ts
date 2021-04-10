@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  formRecognizer: {
+    serviceURI: 'https://unpaper-form-recognizer.cognitiveservices.azure.com/',
+    apiKey: '04c151ae65344c4fb1df1c59e1d22f47'
+  }
 };
 
 /*
