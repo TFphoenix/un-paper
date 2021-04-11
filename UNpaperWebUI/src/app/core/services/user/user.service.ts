@@ -13,14 +13,13 @@ export class UserService {
   constructor(private readonly _requestService: RegistryApiRequestService, private readonly _authService: MsalService) {}
 
   async registerUser(tokenClaims: SignUpTokenClaims) {
-    await this._requestService.post('/auth/user', JSON.stringify(new UserRequest(tokenClaims))).subscribe(response => {
+    await this._requestService.post('/auth/user', {}).subscribe(response => {
       console.log(response); // TEST
     });
   }
 
   getCurrentUser(): Observable<UserRequest> {
-    const tokenClaims = this.getAuthenticatedAccountTokenClaims();
-    return this._requestService.get('/auth/user/' + tokenClaims.oid);
+    return this._requestService.get('/auth/user');
   }
 
   private getAuthenticatedAccountTokenClaims() {

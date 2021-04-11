@@ -6,7 +6,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using UNpaper.Registry.Business.Services;
 using UNpaper.Registry.Data;
+using UNpaper.Registry.Interface.Services;
 
 namespace UNpaper.Registry.API
 {
@@ -47,6 +49,9 @@ namespace UNpaper.Registry.API
 
             // Data configuration
             services.ConfigureApplicationData(Configuration, Environment.IsDevelopment());
+
+            // Register services
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

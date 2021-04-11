@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web.Resource;
 using UNpaper.Registry.API.Parameters;
 using UNpaper.Registry.Interface.Repositories;
+using UNpaper.Registry.Interface.Services;
 using UNpaper.Registry.Model.Entities;
 
 namespace UNpaper.Registry.API.Controllers
@@ -21,36 +23,39 @@ namespace UNpaper.Registry.API.Controllers
     {
         private readonly ILogger<AuthController> _logger;
         private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public AuthController(ILogger<AuthController> logger, IUserRepository userRepository)
+        public AuthController(ILogger<AuthController> logger, IUserRepository userRepository, IUserService userService)
         {
             _logger = logger;
             _userRepository = userRepository;
+            _userService = userService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         [ActionName(Routes.UserAction)]
-        public async Task<User> GetUserById(string id)
+        public async Task<User> LoginUser()
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
 
-            return await _userRepository.GetAsync(new Guid(id));
+            return await _userService.GetLoggedInUser(User);
         }
 
         [HttpPost]
         [ActionName(Routes.UserAction)]
-        public async Task<IActionResult> RegisterUser(User user)
+        public async Task<IActionResult> RegisterUser()
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadWriteScope);
 
-            int changes = await _userRepository.AddAsync(user);
+            User registeredUser = await _userService.RegisterUser(User);
 
-            if (changes == 0)
+            if (registeredUser == null)
             {
-                return StatusCode(409, new { message = "User already registered", registeredUser = user });
+                var alreadyRegisteredUser = await _userService.GetLoggedInUser(User);
+                return StatusCode(409, new { message = "User already registered", registeredUser = alreadyRegisteredUser });
             }
 
-            return Ok(new { message = "User succesfully registered", registeredUser = user });
+            return Ok(new { message = "User succesfully registered", registeredUser = registeredUser });
         }
     }
 }
