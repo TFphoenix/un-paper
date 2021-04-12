@@ -35,6 +35,10 @@ const ROUTES: Routes = [
         loadChildren: () => import('./modules/batches/batches.module').then(m => m.BatchesModule)
       },
       {
+        path: 'prebuilt',
+        loadChildren: () => import('./modules/prebuilt-analyze/prebuilt-analyze.module').then(m => m.PrebuiltAnalyzeModule)
+      },
+      {
         path: 'layout',
         loadChildren: () => import('./modules/layout-analyze/layout-analyze.module').then(m => m.LayoutAnalyzeModule)
       }
