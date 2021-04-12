@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UNpaper.Registry.Business\UNpaper.Registry.Business.csproj" />
     <ProjectReference Include="..\UNpaper.Registry.Data\UNpaper.Registry.Data.csproj" />
     <ProjectReference Include="..\UNpaper.Registry.Interface\UNpaper.Registry.Interface.csproj" />
   </ItemGroup>
