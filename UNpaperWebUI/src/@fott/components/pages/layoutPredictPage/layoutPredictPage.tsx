@@ -44,7 +44,7 @@ import { PageRange } from '../../common/pageRange/pageRange';
 // REMEMBER: Not using PrebuiltSetting because apiKey and endpoint are fixed
 // import { PrebuiltSetting } from "../../common/prebuiltSetting/prebuiltSetting";
 // REMEMBER: Not using PreventLeaving because it generates ERROR: Can't use outside Router
-// TODO: Find another way to alert user on leaving during analyzation process
+// TODO: Find another way to alert user on leaving during analysis process
 // import PreventLeaving from '../../common/preventLeaving/preventLeaving';
 import { CanvasCommandBar } from '../../common/canvasCommandBar/canvasCommandBar';
 import { TableView } from '../../common/tableView/tableView';
@@ -424,18 +424,12 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         />
         <TooltipHost
           content={'rows: ' + this.state.tableIconTooltip.rows + ' columns: ' + this.state.tableIconTooltip.columns}
-          // content={
-          //   <>
-          //     <div aria-describedby="tableInfo" className="tooltip-container" onClick={this.handleTableIconFeatureSelect} />
-          //   </>
-          // }
           id="tableInfo"
           styles={hostStyles}
         >
           <div aria-describedby="tableInfo" className="tooltip-container" onClick={this.handleTableIconFeatureSelect} />
         </TooltipHost>
         {this.state.tableToView !== null && (
-          // BUG: Fix TableView click event
           <TableView handleTableViewClose={this.handleTableViewClose} tableToView={this.state.tableToView} />
         )}
       </div>
