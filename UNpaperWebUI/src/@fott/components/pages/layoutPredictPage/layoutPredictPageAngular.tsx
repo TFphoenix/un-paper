@@ -27,8 +27,8 @@ const containerElementName = 'fottLayoutPredictPageContainer';
   styleUrls: [
     './layoutPredictPage.scss',
     '../../../fott.scss',
-    '../../../common/canvas.scss',
-    '../../../common/condensedList.scss',
+    '../../../common/scss/canvas.scss',
+    '../../../common/scss/condensedList.scss',
     '../../common/documentFilePicker/documentFilePicker.scss',
     '../../common/imageMap/imageMap.scss',
     '../../common/canvasCommandBar/canvasCommandBar.scss',

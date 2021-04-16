@@ -732,10 +732,7 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
     );
   };
 
-  // BUG: Prediction Failed: "Object(...) is not a function"
   private handlePredictionError = error => {
-    console.log(error);
-
     let alertMessage = '';
     if (error?.errorCode === ErrorCode.PredictWithoutTrainForbidden) {
       alertMessage = strings.errors.predictWithoutTrainForbidden.message;

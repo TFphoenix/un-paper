@@ -198,7 +198,6 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         }
       ]
     };
-    console.log(this.state); // TEST
     return (
       <>
         <div className="predict skipToMainContent" id="pagePredict" style={{ display: 'flex' }}>
@@ -393,8 +392,6 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         display: this.state.tableIconTooltip.display
       }
     };
-
-    console.log(this.handleTableIconFeatureSelect);
 
     return (
       <div style={{ width: '100%', height: '100%' }}>
