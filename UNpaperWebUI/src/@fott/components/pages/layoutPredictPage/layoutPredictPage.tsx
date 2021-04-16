@@ -394,6 +394,8 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
       }
     };
 
+    console.log(this.handleTableIconFeatureSelect);
+
     return (
       <div style={{ width: '100%', height: '100%' }}>
         <CanvasCommandBar
@@ -425,6 +427,11 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         />
         <TooltipHost
           content={'rows: ' + this.state.tableIconTooltip.rows + ' columns: ' + this.state.tableIconTooltip.columns}
+          // content={
+          //   <>
+          //     <div aria-describedby="tableInfo" className="tooltip-container" onClick={this.handleTableIconFeatureSelect} />
+          //   </>
+          // }
           id="tableInfo"
           styles={hostStyles}
         >

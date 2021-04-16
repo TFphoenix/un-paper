@@ -28,6 +28,8 @@ const containerElementName = 'fottPrebuiltPredictPageContainer';
     './prebuiltPredictPage.scss',
     './predictPage.scss',
     '../../../fott.scss',
+    '../../../common/canvas.scss',
+    '../../../common/condensedList.scss',
     '../../common/documentFilePicker/documentFilePicker.scss',
     '../../common/predictionFilePicker/predictionFilePicker.scss',
     '../../common/imageMap/imageMap.scss',

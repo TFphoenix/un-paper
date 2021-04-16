@@ -14,6 +14,14 @@
       flex-grow: 1;
       height: 100%;
       justify-content: center;
+
+      .map-wrapper {
+        height: calc(100% - 44px) !important;
+      }
+
+      > i {
+        font-size: 36pt;
+      }
     }
 
     .predict-sidebar {
