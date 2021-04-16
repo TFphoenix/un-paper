@@ -15,27 +15,30 @@ import {
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { environment } from 'src/environments/environment';
-import { LayoutPredictPage } from './layoutPredictPage';
+import { PrebuiltPredictPage } from './prebuiltPredictPage';
 
-const containerElementName = 'fottLayoutPredictPageContainer';
+const containerElementName = 'fottPrebuiltPredictPageContainer';
 
 @Component({
-  selector: 'fott-layout-predict-page',
+  selector: 'fott-prebuilt-predict-page',
   template: `
     <span #${containerElementName}></span>
   `,
   styleUrls: [
-    './LayoutPredictPage.scss',
+    './prebuiltPredictPage.scss',
+    './predictPage.scss',
     '../../../fott.scss',
     '../../common/documentFilePicker/documentFilePicker.scss',
+    '../../common/predictionFilePicker/predictionFilePicker.scss',
     '../../common/imageMap/imageMap.scss',
-    '../../common/canvasCommandBar/canvasCommandBar.scss',
     '../../common/pageRange/pageRange.scss',
-    '../../common/tableView/tableView.scss'
+    '../../common/canvasCommandBar/canvasCommandBar.scss',
+    '../../common/tableView/tableView.scss',
+    '../../common/predictResult/predictResult.scss'
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class LayoutPredictPageAngular implements OnChanges, OnDestroy, AfterViewInit {
+export class PrebuiltPredictPageAngular implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
 
   constructor() {}
@@ -54,8 +57,8 @@ export class LayoutPredictPageAngular implements OnChanges, OnDestroy, AfterView
 
   private render() {
     ReactDOM.render(
-      <div className={'fott-layout-predict-page'}>
-        <LayoutPredictPage
+      <div className={'fott-prebuilt-predict-page'}>
+        <PrebuiltPredictPage
           prebuiltSettings={environment.formRecognizer}
           appTitleActions={{
             setTitle: (title: string): void => {}

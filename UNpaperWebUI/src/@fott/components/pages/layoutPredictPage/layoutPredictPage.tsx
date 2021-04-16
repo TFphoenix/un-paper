@@ -31,13 +31,15 @@ import { IPrebuiltSettings, ErrorCode } from 'src/@fott/models/applicationState'
 import IAppTitleActions, * as appTitleActions from '../../../redux/actions/appTitleActions';
 import IAppPrebuiltSettingsActions, * as appPrebuiltSettingsActions from '../../../redux/actions/prebuiltSettingsActions';
 import ServiceHelper from '../../../services/serviceHelper';
+import { ILoadFileHelper, LoadFileHelper } from 'src/@fott/common/LoadFileHelper';
+import { ITableHelper, ITableState, TableHelper } from 'src/@fott/common/tableHelper';
+import { ILayoutHelper, LayoutHelper } from 'src/@fott/common/layoutHelper';
 import { interpolate, strings } from 'src/@fott/common/strings';
 import { constants } from 'src/@fott/common/constants';
 
 // component imports
 import Alert from '../../common/alert/alert';
 import { DocumentFilePicker } from '../../common/documentFilePicker/documentFilePicker';
-import { ImageMap } from '../../common/imageMap/ImageMap';
 import { PageRange } from '../../common/pageRange/pageRange';
 // REMEMBER: Not using PrebuiltSetting because apiKey and endpoint are fixed
 // import { PrebuiltSetting } from "../../common/prebuiltSetting/prebuiltSetting";
@@ -46,9 +48,7 @@ import { PageRange } from '../../common/pageRange/pageRange';
 // import PreventLeaving from '../../common/preventLeaving/preventLeaving';
 import { CanvasCommandBar } from '../../common/canvasCommandBar/canvasCommandBar';
 import { TableView } from '../../common/tableView/tableView';
-import { ILayoutHelper, LayoutHelper } from './layoutHelper';
-import { ILoadFileHelper, LoadFileHelper } from './LoadFileHelper';
-import { ITableHelper, ITableState, TableHelper } from './tableHelper';
+import { ImageMap } from '../../common/imageMap/imageMap';
 
 interface ILayoutPredictPageProps extends RouteComponentProps {
   prebuiltSettings: IPrebuiltSettings;
@@ -635,7 +635,11 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
       const operationLocation = response.headers['operation-location'];
 
       // Make the second REST API call and get the response.
-      return poll(() => ServiceHelper.getWithAutoRetry(operationLocation, { headers }, apiKey as string), 120000, 500);
+      return poll(
+        () => ServiceHelper.getWithAutoRetry(operationLocation, { headers }, apiKey as string),
+        constants.analyzeRequestTimeout,
+        constants.analyzeRequestInterval
+      );
     } catch (err) {
       ServiceHelper.handleServiceError({ ...err, endpoint: endpointURL });
     }

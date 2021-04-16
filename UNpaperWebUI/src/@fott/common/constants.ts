@@ -13,11 +13,11 @@ const enablePredictionResultUpload = appInfo.enablePredictionResultUpload;
 const apiVersion = 'v2.1-preview.3';
 const supportedFieldsSchemas = new Set([
   'http://www.azure.com/schema/formrecognizer/fields.json',
-  'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/fields.json',
+  'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/fields.json'
 ]);
 const supportedLabelsSchemas = new Set([
   'http://www.azure.com/schema/formrecognizer/labels.json',
-  'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/labels.json',
+  'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/labels.json'
 ]);
 
 /**
@@ -43,7 +43,9 @@ export const constants = {
   statusCodeInvalid: 'invalid',
   apiKeyHeader: 'Ocp-Apim-Subscription-Key',
   maxRetry: 8,
-  initialRetryInterval: 500, // ms
+  initialRetryInterval: 1000, // ms
+  analyzeRequestTimeout: 120000, // ms
+  analyzeRequestInterval: 2000, // ms
   convertedImageFormat: 'image/jpeg',
   convertedImageQuality: 0.7,
   convertedThumbnailQuality: 0.2,
@@ -53,10 +55,8 @@ export const constants = {
   autoLabelBatchSizeMax: 10,
   autoLabelBatchSizeMin: 3,
   showOriginLabelsByDefault: true,
-  fieldsSchema:
-    'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/fields.json',
-  labelsSchema:
-    'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/labels.json',
+  fieldsSchema: 'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/fields.json',
+  labelsSchema: 'https://schema.cognitiveservices.azure.com/formrecognizer/2021-03-01/labels.json',
   supportedFieldsSchemas,
   supportedLabelsSchemas,
   enableMultiPageField: false,
@@ -69,5 +69,5 @@ export const constants = {
   },
   insightsKey: '',
   prebuiltServiceVersion: 'v2.1-preview.3',
-  pages: 'pages',
+  pages: 'pages'
 };
