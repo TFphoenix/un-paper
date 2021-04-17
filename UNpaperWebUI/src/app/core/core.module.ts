@@ -38,6 +38,7 @@ import { HomeGuard } from './guards/home/home.guard';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LandingGuard } from './guards/landing/landing.guard';
 import { environment } from 'src/environments/environment';
+import { FunctionsApiRequestService } from './services/request/functions-api-request.service';
 
 // MSAL FACTORIES
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -46,8 +47,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
 
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
-  protectedResourceMap.set(environment.services.registryApi.uri, environment.services.registryApi.scopes);
-  protectedResourceMap.set(environment.services.functionsApi.uri, environment.services.functionsApi.scopes);
+  protectedResourceMap.set(environment.services.registryApi, environment.b2cScopes);
+  protectedResourceMap.set(environment.services.functionsApi, environment.b2cScopes);
 
   return {
     interactionType: InteractionType.Redirect,
@@ -59,7 +60,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     authRequest: {
-      scopes: [...environment.services.registryApi.scopes, ...environment.services.functionsApi.scopes]
+      scopes: [...environment.b2cScopes]
     }
   };
 }
@@ -80,6 +81,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ConfigService,
     RequestService,
     RegistryApiRequestService,
+    FunctionsApiRequestService,
     UserService,
 
     // guards

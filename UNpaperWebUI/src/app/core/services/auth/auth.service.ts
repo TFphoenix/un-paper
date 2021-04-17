@@ -92,6 +92,10 @@ export class AuthService {
     this._loggedIn = this._msalAuthService.instance.getAllAccounts().length > 0;
   }
 
+  // getToken(): string {
+  //   this._msalAuthService.acquireTokenSilent()
+  // }
+
   login(userFlowRequest?: RedirectRequest | PopupRequest): void {
     this._msalGuardConfig;
     if (this._msalGuardConfig.interactionType === InteractionType.Popup) {

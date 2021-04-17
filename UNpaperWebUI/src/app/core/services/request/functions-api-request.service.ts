@@ -1,26 +1,26 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RequestService } from './request.service';
-import { RequestMethods } from './request-methods.interface';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { RequestMethods } from './request-methods.interface';
+import { RequestService } from './request.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RegistryApiRequestService implements RequestMethods {
+export class FunctionsApiRequestService implements RequestMethods {
   // headers
   private readonly _prodHeaders: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json; charset=utf-8',
     'Ocp-Apim-Subscription-Key': environment.apimSubscriptionKey
   });
   private readonly _localHeaders: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json; charset=utf-8'
+    'Content-Type': 'application/json; charset=utf-8',
+    'Ocp-Apim-Subscription-Key': environment.apimSubscriptionKey
   });
 
   // uri
-  private readonly _apiPrefix = '/api';
-  private readonly _baseUri = environment.services.registryApi;
+  private readonly _baseUri = environment.services.functionsApi;
 
   // ctor
   constructor(private readonly _requestService: RequestService) {}
@@ -46,13 +46,15 @@ export class RegistryApiRequestService implements RequestMethods {
    * @returns prefixed url
    */
   private getUrl(url: string): string {
-    return this._baseUri + this._apiPrefix + url;
+    return this._baseUri + url;
   }
 
   /**
    * @returns http headers depending on the environment
    */
   private getHeadersByEnvironment(): HttpHeaders {
-    return environment.production ? this._prodHeaders : this._localHeaders;
+    const headers = environment.production ? this._prodHeaders : this._localHeaders;
+    // headers.set('Authorization', `Bearer ${}`)
+    return headers;
   }
 }
