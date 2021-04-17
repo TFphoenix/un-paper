@@ -7,12 +7,7 @@ import { FunctionsApiRequestService } from 'src/app/core/services/request/functi
   styleUrls: ['./organizations.component.scss']
 })
 export class OrganizationsComponent implements OnInit {
-  constructor(private readonly _requestService: FunctionsApiRequestService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this._requestService.get('/TestFunction?name=Teodor').subscribe(result => {
-      // console.log(result);
-      console.log('Recieved response');
-    });
-  }
+  ngOnInit(): void {}
 }

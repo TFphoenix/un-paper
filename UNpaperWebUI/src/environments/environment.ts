@@ -4,10 +4,6 @@
 
 export const environment = {
   production: false,
-  formRecognizer: {
-    serviceURI: 'https://unpaper-form-recognizer.cognitiveservices.azure.com/',
-    apiKey: '04c151ae65344c4fb1df1c59e1d22f47'
-  },
   apimSubscriptionKey: '52a65edcbefd49bd8d478da6b90fbcce',
   b2cScopes: [
     'https://unpaper2020.onmicrosoft.com/api/demo.read',

@@ -14,6 +14,7 @@ import {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { IPrebuiltSettings } from 'src/@fott/models/applicationState';
 import { environment } from 'src/environments/environment';
 import { PrebuiltPredictPage } from './prebuiltPredictPage';
 
@@ -42,6 +43,7 @@ const containerElementName = 'fottPrebuiltPredictPageContainer';
 })
 export class PrebuiltPredictPageAngular implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
+  @Input() serviceCredentials: IPrebuiltSettings;
 
   constructor() {}
 
@@ -58,10 +60,14 @@ export class PrebuiltPredictPageAngular implements OnChanges, OnDestroy, AfterVi
   }
 
   private render() {
+    // REMEMBER: Necessary because of @Input()
+    if (!this.containerRef) {
+      return;
+    }
     ReactDOM.render(
       <div className={'fott-prebuilt-predict-page'}>
         <PrebuiltPredictPage
-          prebuiltSettings={environment.formRecognizer}
+          prebuiltSettings={this.serviceCredentials}
           appTitleActions={{
             setTitle: (title: string): void => {}
           }}

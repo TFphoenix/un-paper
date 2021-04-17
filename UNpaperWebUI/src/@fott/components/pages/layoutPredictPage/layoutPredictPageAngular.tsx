@@ -6,6 +6,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -14,6 +15,9 @@ import {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { IPrebuiltSettings } from 'src/@fott/models/applicationState';
+import { ConfigService } from 'src/app/core/services/config/config.service';
+import { FunctionsApiRequestService } from 'src/app/core/services/request/functions-api-request.service';
 import { environment } from 'src/environments/environment';
 import { LayoutPredictPage } from './layoutPredictPage';
 
@@ -39,6 +43,7 @@ const containerElementName = 'fottLayoutPredictPageContainer';
 })
 export class LayoutPredictPageAngular implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
+  @Input() serviceCredentials: IPrebuiltSettings;
 
   constructor() {}
 
@@ -55,10 +60,14 @@ export class LayoutPredictPageAngular implements OnChanges, OnDestroy, AfterView
   }
 
   private render() {
+    // REMEMBER: Necessary because of @Input()
+    if (!this.containerRef) {
+      return;
+    }
     ReactDOM.render(
       <div className={'fott-layout-predict-page'}>
         <LayoutPredictPage
-          prebuiltSettings={environment.formRecognizer}
+          prebuiltSettings={this.serviceCredentials}
           appTitleActions={{
             setTitle: (title: string): void => {}
           }}
