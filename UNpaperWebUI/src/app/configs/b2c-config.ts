@@ -24,15 +24,6 @@ export const b2cPolicies = {
 };
 
 /**
- * B2C API CONFIG
- */
-export const apiConfig: { scopes: string[]; uri: string; apimSubscriptionKey: string } = {
-  scopes: ['https://unpaper2020.onmicrosoft.com/api/demo.read', 'https://unpaper2020.onmicrosoft.com/api/demo.write'],
-  uri: 'https://localhost:44343',
-  apimSubscriptionKey: '52a65edcbefd49bd8d478da6b90fbcce'
-};
-
-/**
  * B2C IE CONFIG
  */
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;

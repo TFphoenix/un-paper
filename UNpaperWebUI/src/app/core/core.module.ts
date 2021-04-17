@@ -24,7 +24,7 @@ import { AppInitializerService } from './services/app-initializer/app-initialize
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
 import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
-import { appConfig, apiConfig } from '../configs/b2c-config';
+import { appConfig } from '../configs/b2c-config';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { AuthService } from './services/auth/auth.service';
 import { RequestService } from './services/request/request.service';
@@ -37,15 +37,17 @@ import { LandingComponent } from './components/landing/landing.component';
 import { HomeGuard } from './guards/home/home.guard';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LandingGuard } from './guards/landing/landing.guard';
+import { environment } from 'src/environments/environment';
 
-//TODO: Find a cleaner approach to MSAL & B2c config
+// MSAL FACTORIES
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(appConfig);
 }
 
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
-  protectedResourceMap.set(apiConfig.uri, apiConfig.scopes);
+  protectedResourceMap.set(environment.services.registryApi.uri, environment.services.registryApi.scopes);
+  protectedResourceMap.set(environment.services.functionsApi.uri, environment.services.functionsApi.scopes);
 
   return {
     interactionType: InteractionType.Redirect,
@@ -57,7 +59,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     authRequest: {
-      scopes: [...apiConfig.scopes]
+      scopes: [...environment.services.registryApi.scopes, ...environment.services.functionsApi.scopes]
     }
   };
 }

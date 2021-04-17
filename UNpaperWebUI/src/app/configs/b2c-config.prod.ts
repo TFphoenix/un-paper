@@ -1,7 +1,7 @@
 import { BrowserCacheLocation } from '@azure/msal-browser';
 
 /**
- * B2C POLICIES CONFIG//TODO
+ * B2C POLICIES CONFIG
  */
 export const b2cPolicies = {
   names: {
@@ -24,21 +24,12 @@ export const b2cPolicies = {
 };
 
 /**
- * B2C API CONFIG//TODO
- */
-export const apiConfig: { scopes: string[]; uri: string; apimSubscriptionKey: string } = {
-  scopes: ['https://unpaper2020.onmicrosoft.com/api/demo.read', 'https://unpaper2020.onmicrosoft.com/api/demo.write'],
-  uri: 'https://unpaper-api-management-service.azure-api.net/v1',
-  apimSubscriptionKey: '52a65edcbefd49bd8d478da6b90fbcce'
-};
-
-/**
  * B2C IE CONFIG
  */
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 /**
- * B2C APP CONFIG//TODO
+ * B2C APP CONFIG
  */
 export const appConfig = {
   auth: {
