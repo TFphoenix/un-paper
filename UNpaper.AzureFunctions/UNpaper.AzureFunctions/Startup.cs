@@ -1,7 +1,9 @@
-﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UNpaper.AzureFunctions.Models;
+using UNpaper.AzureFunctions.Services;
 
 [assembly: FunctionsStartup(typeof(UNpaper.AzureFunctions.Startup))]
 namespace UNpaper.AzureFunctions
@@ -18,9 +20,13 @@ namespace UNpaper.AzureFunctions
                 });
 
             // Register services
-            //builder.Services.AddSingleton<IMyService>((s) => {
-            //    return new MyService();
-            //});
+            builder.Services.AddSingleton<BlobStorageService>((provider) =>
+            {
+                //var blobStorageConnectionString = Environment.GetEnvironmentVariable("AzureStorage");
+                var blobStorageConnectionString =
+                    builder.GetContext().Configuration.GetConnectionString("AzureStorage");
+                return new BlobStorageService(blobStorageConnectionString);
+            });
         }
     }
 }

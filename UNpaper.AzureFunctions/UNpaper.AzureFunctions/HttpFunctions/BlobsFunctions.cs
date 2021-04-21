@@ -8,17 +8,29 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Azure.Storage.Blobs;
+using UNpaper.AzureFunctions.Common;
+using UNpaper.AzureFunctions.Services;
 
 namespace UNpaper.AzureFunctions.HttpFunctions
 {
-    public static class BlobsFunctions
+    public class BlobsFunctions
     {
+        private readonly BlobStorageService _storageService;
+
+        public BlobsFunctions(BlobStorageService storageService)
+        {
+            _storageService = storageService;
+        }
+
         [FunctionName("Blobs")]
-        public static async Task<IActionResult> ListAllBlobs(
+        public async Task<IActionResult> ListAllBlobs(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
+
+            //_storageService.ListBlobs("unpaper-");
+            await _storageService.CreateContainer(BlobConstants.OrganizationPrefix + Guid.NewGuid());
 
             //string name = req.Query["name"];
 
@@ -34,7 +46,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         }
 
         [FunctionName("BlobsUpload")]
-        public static async Task<IActionResult> UploadDocument(
+        public async Task<IActionResult> UploadDocument(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
@@ -42,7 +54,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         }
 
         [FunctionName("BlobsGet")]
-        public static async Task<IActionResult> GetDocument(
+        public async Task<IActionResult> GetDocument(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log)
         {
@@ -50,7 +62,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         }
 
         [FunctionName("BlobsDelete")]
-        public static async Task<IActionResult> DeleteDocument(
+        public async Task<IActionResult> DeleteDocument(
             [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
             ILogger log)
         {
@@ -58,7 +70,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         }
 
         [FunctionName("BlobsUpdate")]
-        public static async Task<IActionResult> UpdateDocument(
+        public async Task<IActionResult> UpdateDocument(
             [HttpTrigger(AuthorizationLevel.Function, "put", Route = null)] HttpRequest req,
             ILogger log)
         {
