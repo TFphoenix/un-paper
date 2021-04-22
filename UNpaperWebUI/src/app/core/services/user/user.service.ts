@@ -10,16 +10,19 @@ import { RegistryApiRequestService } from '../request/registry-api-request.servi
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private readonly _requestService: RegistryApiRequestService, private readonly _authService: MsalService) {}
+  constructor(
+    private readonly _requestService: RegistryApiRequestService,
+    private readonly _authService: MsalService
+  ) {}
 
   async registerUser(tokenClaims: SignUpTokenClaims) {
-    await this._requestService.post('/auth/user', {}).subscribe(response => {
+    await this._requestService.post('/user/auth', {}).subscribe(response => {
       console.log(response); // TEST
     });
   }
 
   getCurrentUser(): Observable<UserRequest> {
-    return this._requestService.get('/auth/user');
+    return this._requestService.get('/user/auth');
   }
 
   private getAuthenticatedAccountTokenClaims() {

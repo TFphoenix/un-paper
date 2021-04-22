@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Constants } from 'src/app/shared/constants';
 import { AuthService } from '../../services/auth/auth.service';
 import { RegistryApiRequestService } from '../../services/request/registry-api-request.service';
 import { UserService } from '../../services/user/user.service';
@@ -9,6 +10,9 @@ import { UserService } from '../../services/user/user.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  userName: string = Constants.Strings.userDataPlaceholder;
+  userEmail: string = Constants.Strings.userDataPlaceholder;
+
   constructor(
     private readonly _authService: AuthService,
     private readonly _requestService: RegistryApiRequestService,
@@ -18,6 +22,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this._authService.init();
     this._authService.handleRedirect();
+    this.populateUserData();
   }
 
   logout() {
@@ -28,9 +33,15 @@ export class HeaderComponent implements OnInit {
     this._authService.editProfile();
   }
 
-  testAPI() {
+  onNotificationClick() {}
+
+  onCalendarClick() {}
+
+  private populateUserData() {
     this._userService.getCurrentUser().subscribe(user => {
-      console.log(user);
+      console.log(user); // TEST
+      this.userName = user.name;
+      this.userEmail = user.email;
     });
   }
 }

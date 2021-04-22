@@ -9,6 +9,8 @@ import icEdit from '@iconify/icons-ic/edit';
 import icDelete from '@iconify/icons-ic/delete';
 import icOrganization from '@iconify/icons-ic/round-business';
 import icBatch from '@iconify/icons-ic/round-widgets';
+import icClose from '@iconify/icons-ic/twotone-close';
+import icUnknown from '@iconify/icons-ic/help-outline';
 
 export const appIcons = {
   icArtifacts,
@@ -21,5 +23,7 @@ export const appIcons = {
   icEdit,
   icDelete,
   icOrganization,
-  icBatch
+  icBatch,
+  icClose,
+  icUnknown
 };

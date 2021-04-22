@@ -1,0 +1,85 @@
+<form (ngSubmit)="save()" [formGroup]="form" spellcheck="false" autocomplete="off">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 *ngIf="form.get('projectName').value" class="headline m-0" fxFlex="auto">
+      {{ form.get('projectName').value }}
+    </h2>
+    <h2 *ngIf="!form.get('projectName').value" class="headline m-0" fxFlex="auto">New Project</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon icIcon="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <div class="flex flex-col sm:flex-row">
+      <mat-form-field class="mt-6 flex-auto">
+        <mat-label>Project Name</mat-label>
+        <mat-icon icIcon="icUnknown" class="mr-3" matPrefix></mat-icon>
+        <input cdkFocusInitial formControlName="projectName" matInput required />
+        <mat-error
+          *ngIf="
+            form.controls['projectName'].invalid &&
+            form.controls['projectName'].errors.required &&
+            (form.controls['projectName'].dirty || form.controls['projectName'].touched)
+          "
+        >
+          Project Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="sm:mt-6 sm:ml-6 flex-auto">
+        <mat-label>Project Key</mat-label>
+        <mat-icon icIcon="icUnknown" class="mr-3" matPrefix></mat-icon>
+        <input cdkFocusInitial formControlName="projectKey" matInput required />
+        <mat-error
+          *ngIf="
+            form.controls['projectKey'].invalid &&
+            form.controls['projectKey'].errors.required &&
+            (form.controls['projectKey'].dirty || form.controls['projectKey'].touched)
+          "
+        >
+          Project Key is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="flex-auto">
+      <mat-label>Bamboo Project Key</mat-label>
+      <mat-icon icIcon="icUnknown" class="mr-3" matPrefix></mat-icon>
+      <input formControlName="bambooProjectKey" matInput required />
+      <mat-error
+        *ngIf="
+          form.controls['bambooProjectKey'].invalid &&
+          form.controls['bambooProjectKey'].errors.required &&
+          (form.controls['bambooProjectKey'].dirty || form.controls['bambooProjectKey'].touched)
+        "
+      >
+        Bamboo Project Key is required
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button
+      *ngIf="isCreateMode()"
+      color="primary"
+      mat-button
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      CREATE
+    </button>
+    <button
+      *ngIf="isUpdateMode()"
+      color="primary"
+      mat-button
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      UPDATE
+    </button>
+  </mat-dialog-actions>
+</form>

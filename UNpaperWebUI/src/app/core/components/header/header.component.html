@@ -26,14 +26,20 @@
   <div class="unp-header-col">
     <!-- Due Date -->
     <div class="m-h-10px">
-      <button mat-icon-button color="primary" aria-label="Due Dates">
+      <button (click)="onCalendarClick()" mat-icon-button color="primary" aria-label="Due Dates">
         <mat-icon>calendar_today</mat-icon>
       </button>
     </div>
 
     <!-- Notifications -->
     <div class="m-h-10px">
-      <button (click)="logout()" class="m-h-10px" mat-icon-button color="primary" aria-label="Notifications">
+      <button
+        (click)="onNotificationClick()"
+        class="m-h-10px"
+        mat-icon-button
+        color="primary"
+        aria-label="Notifications"
+      >
         <mat-icon>notifications</mat-icon>
       </button>
     </div>
@@ -48,8 +54,8 @@
 
       <!-- User Details -->
       <div class="user-data m-h-10px">
-        <span class="user-name">User Name</span>
-        <span class="user-email">email@address.com</span>
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-email">{{ userEmail }}</span>
       </div>
 
       <!-- User Menu -->
