@@ -1,1 +1,13 @@
-<p>organizations works!</p>
+<div class="actions-container">
+  <div class="spacer"></div>
+  <button class="add-button m-10px" mat-raised-button color="primary">
+    <mat-icon>add</mat-icon>
+    Add Organization
+  </button>
+</div>
+<unp-data-table
+  [title]="'Organizations'"
+  [tableColumns]="tableColumns"
+  [tableData]="tableData"
+  [searchDisplay]="true"
+></unp-data-table>

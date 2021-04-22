@@ -1,0 +1,14 @@
+@import 'theme-colors';
+
+.actions-container {
+  display: flex;
+  align-items: flex-end;
+  background-color: $unpNeuLight2;
+
+  .spacer {
+    flex-grow: 1;
+  }
+
+  .add-button {
+  }
+}

@@ -5,7 +5,7 @@
     <a routerLink="/">
       <img src="./assets/logo/UNpaper-Logo-white.svg" alt="UNpaper Logo" class="unp-logo" />
     </a>
-    <div class="unp-version m-h-20px">v 0.1.0 (alpha)</div>
+    <div class="unp-version m-h-20px">v 0.2 (alpha)</div>
     <mat-divider class="unp-divider" [vertical]="true"></mat-divider>
   </div>
 
@@ -33,7 +33,7 @@
 
     <!-- Notifications -->
     <div class="m-h-10px">
-      <button class="m-h-10px" mat-icon-button color="primary" aria-label="Notifications">
+      <button (click)="logout()" class="m-h-10px" mat-icon-button color="primary" aria-label="Notifications">
         <mat-icon>notifications</mat-icon>
       </button>
     </div>

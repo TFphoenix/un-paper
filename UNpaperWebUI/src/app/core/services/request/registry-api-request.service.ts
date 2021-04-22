@@ -19,7 +19,6 @@ export class RegistryApiRequestService implements RequestMethods {
   });
 
   // uri
-  private readonly _apiPrefix = '/api';
   private readonly _baseUri = environment.services.registryApi;
 
   // ctor
@@ -46,7 +45,7 @@ export class RegistryApiRequestService implements RequestMethods {
    * @returns prefixed url
    */
   private getUrl(url: string): string {
-    return this._baseUri + this._apiPrefix + url;
+    return this._baseUri + url;
   }
 
   /**

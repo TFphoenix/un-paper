@@ -1,0 +1,59 @@
+@import 'theme-colors';
+
+.main-container {
+  width: 100%;
+  border-radius: 0.25rem;
+  border-color: #464646;
+  border-width: 1px;
+  overflow: auto;
+
+  .header-container {
+    color: $unpPink2;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: stretch flex-start;
+    align-items: stretch;
+    padding: 1rem;
+    background-color: $unpNeuLight2;
+
+    .header-title {
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      place-content: stretch flex-start;
+      align-items: stretch;
+      flex: 1 1 0%;
+      margin: 0;
+    }
+
+    .header-search {
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      place-content: center flex-start;
+      align-items: center;
+      padding-left: 0.5rem;
+      border-radius: 9999px;
+      background-color: $unpNeuLight3;
+
+      .search-input {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+        border-width: 0;
+        background-color: transparent;
+      }
+    }
+  }
+
+  .data-container {
+    .data-table {
+      width: 100%;
+    }
+  }
+}

@@ -23,7 +23,11 @@ import { APP_INITIALIZER } from '@angular/core';
 import { AppInitializerService } from './services/app-initializer/app-initializer.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
-import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
+import {
+  IPublicClientApplication,
+  PublicClientApplication,
+  InteractionType
+} from '@azure/msal-browser';
 import { appConfig } from '../configs/b2c-config';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { AuthService } from './services/auth/auth.service';
@@ -39,6 +43,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { LandingGuard } from './guards/landing/landing.guard';
 import { environment } from 'src/environments/environment';
 import { FunctionsApiRequestService } from './services/request/functions-api-request.service';
+import { IconService } from '@visurel/iconify-angular';
 
 // MSAL FACTORIES
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -92,14 +97,14 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     // etc
     {
       provide: APP_INITIALIZER,
-      useFactory: (configService: ConfigService) =>
+      useFactory: (configService: ConfigService, iconService: IconService) =>
         function () {
           // if AppInitializerService is created with dependency injection then Angular will return some errors
-          const appInitializerService = new AppInitializerService(configService);
+          const appInitializerService = new AppInitializerService(configService, iconService);
           return appInitializerService.load();
         },
       multi: true,
-      deps: [ConfigService]
+      deps: [ConfigService, IconService]
     },
     // MSAL
     {
