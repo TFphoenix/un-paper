@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TableColumn } from 'src/app/shared/interfaces/table-column.interface';
-import { TableData } from 'src/app/shared/models/table-data.model';
+import { BatchRequest } from 'src/app/shared/models/batch-request.model';
 
 @Component({
   selector: 'app-batches',
@@ -8,9 +8,9 @@ import { TableData } from 'src/app/shared/models/table-data.model';
   styleUrls: ['./batches.component.scss']
 })
 export class BatchesComponent implements OnInit {
-  tableData: TableData[] = [{ icon: 'icBatch', name: 'Prop 2', description: 'Prop 3' }];
+  tableData: any[] = [{ icon: 'icBatch', name: 'Prop 2', description: 'Prop 3' }];
 
-  tableColumns: TableColumn<TableData>[] = [
+  tableColumns: TableColumn<any>[] = [
     { label: '', property: 'icon', type: 'badge', visible: true },
     { label: 'Name', property: 'name', type: 'text', visible: true },
     { label: 'Description', property: 'description', type: 'text', visible: true },

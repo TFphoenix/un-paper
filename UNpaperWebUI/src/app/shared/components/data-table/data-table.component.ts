@@ -24,7 +24,6 @@ import { MatSort } from '@angular/material/sort';
 import { fadeInUp400ms } from 'src/app/shared/animations/fade-in-up.animation';
 import { stagger40ms } from 'src/app/shared/animations/stagger.animation';
 import { TableColumn } from '../../interfaces/table-column.interface';
-import { TableData } from '../../models/table-data.model';
 
 // Icons
 import icToggleArrowUp from '@iconify/icons-ic/round-keyboard-arrow-right';
@@ -48,7 +47,7 @@ import icToggleArrowDown from '@iconify/icons-ic/round-keyboard-arrow-down';
 export class DataTableComponent implements OnInit {
   // input
   @Input() title: string = 'No Title';
-  @Input() tableColumns: TableColumn<TableData>[];
+  @Input() tableColumns: any[];
   @Input() hideComponent: boolean = false;
   @Input() showToggleIcon: boolean = false;
   @Input() pageSize: number = 10;
@@ -60,8 +59,8 @@ export class DataTableComponent implements OnInit {
 
   // controls
   pageSizeOptions: number[] = [5, 10, 20, 50];
-  dataSource = new MatTableDataSource<TableData>();
-  selection = new SelectionModel<TableData>(true, []);
+  dataSource = new MatTableDataSource<any>();
+  selection = new SelectionModel<any>(true, []);
   layoutCtrl = new FormControl('boxed');
   searchCtrl = new FormControl();
 
