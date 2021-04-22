@@ -53,6 +53,7 @@ namespace UNpaper.Registry.API
             // Register services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IOrganizationService, OrganizationService>();
+            services.AddScoped<IBatchService, BatchService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

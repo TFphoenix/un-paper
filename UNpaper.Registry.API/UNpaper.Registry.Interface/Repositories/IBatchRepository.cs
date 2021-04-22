@@ -7,7 +7,7 @@ using UNpaper.Registry.Model.Entities;
 
 namespace UNpaper.Registry.Interface.Repositories
 {
-    public interface IOrganizationRepository: IRepository<Organization>
+    public interface IBatchRepository : IRepository<Batch>
     {
     }
 }

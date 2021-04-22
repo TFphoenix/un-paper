@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace UNpaper.Registry.Model.Entities
 {
-    public sealed class Role : EntityBase
+    public sealed class Batch : TrackedEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public Guid OrganizationId { get; set; }
+
+        public Organization Organization;
     }
 }

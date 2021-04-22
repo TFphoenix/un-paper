@@ -7,11 +7,7 @@ using UNpaper.Registry.Model.Entities;
 
 namespace UNpaper.Registry.Interface.Repositories
 {
-    public interface IUserRepository : IRepository
+    public interface IUserRepository : IRepository<User>
     {
-        int Add(User user);
-        Task<int> AddAsync(User user);
-        IQueryable<User> GetAsQueryable();
-        Task<User> GetAsync(Guid id);
     }
 }

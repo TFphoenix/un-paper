@@ -43,6 +43,7 @@ namespace UNpaper.Registry.Data
             // Register repositories
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<IBatchRepository, BatchRepository>();
         }
     }
 }

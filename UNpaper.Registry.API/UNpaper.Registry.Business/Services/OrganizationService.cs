@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using UNpaper.Registry.Interface.Repositories;
 using UNpaper.Registry.Interface.Services;
 using UNpaper.Registry.Model.Entities;
 
@@ -11,6 +12,13 @@ namespace UNpaper.Registry.Business.Services
 {
     public class OrganizationService : IOrganizationService
     {
+        private readonly IOrganizationRepository _organizationRepository;
+
+        public OrganizationService(IOrganizationRepository organizationRepository)
+        {
+            _organizationRepository = organizationRepository;
+        }
+
         public Task<Organization> GetUserOrganizations(ClaimsPrincipal userClaims)
         {
             throw new NotImplementedException();

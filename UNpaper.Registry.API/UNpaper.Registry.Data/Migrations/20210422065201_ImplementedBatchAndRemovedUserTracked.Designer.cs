@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UNpaper.Registry.Data;
 
 namespace UNpaper.Registry.Data.Migrations
 {
     [DbContext(typeof(UNpaperDbContext))]
-    partial class UNpaperDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210422065201_ImplementedBatchAndRemovedUserTracked")]
+    partial class ImplementedBatchAndRemovedUserTracked
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
