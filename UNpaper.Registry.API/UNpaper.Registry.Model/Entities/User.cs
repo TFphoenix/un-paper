@@ -18,5 +18,7 @@ namespace UNpaper.Registry.Model.Entities
         public string PostalCode { get; set; }
         public string State { get; set; }
         public string StreetAddress { get; set; }
+
+        public List<OrganizationUser> OrganizationUsers { get; set; } = new List<OrganizationUser>();
     }
 }

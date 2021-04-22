@@ -40,7 +40,9 @@ namespace UNpaper.Registry.Data
 
         private static void AddRepositories(this IServiceCollection services)
         {
+            // Register repositories
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         }
     }
 }
