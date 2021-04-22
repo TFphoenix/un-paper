@@ -45,25 +45,77 @@
       "properties": {
         "mode": "Incremental",
         "template": {
-          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
           "contentVersion": "1.0.0.0",
           "resources": [
             {
               "name": "unpaper-api-management-service",
               "type": "Microsoft.ApiManagement/service",
               "location": "[parameters('resourceLocation')]",
-              "properties": {},
+              "properties": {
+                "publisherEmail": "teodor@mihaescu.info",
+                "publisherName": "Teodor Mihaescu",
+                "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com",
+                "hostnameConfigurations": [
+                  {
+                    "type": "Proxy",
+                    "hostName": "unpaper-api-management-service.azure-api.net",
+                    "encodedCertificate": null,
+                    "keyVaultId": null,
+                    "certificatePassword": null,
+                    "negotiateClientCertificate": false,
+                    "certificate": null,
+                    "defaultSslBinding": true
+                  }
+                ],
+                "publicIPAddresses": null,
+                "privateIPAddresses": null,
+                "additionalLocations": null,
+                "virtualNetworkConfiguration": null,
+                "customProperties": {
+                  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "false",
+                  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "false",
+                  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11": "false",
+                  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10": "false",
+                  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30": "false",
+                  "Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2": "false"
+                },
+                "virtualNetworkType": "None",
+                "certificates": null,
+                "enableClientCertificate": false,
+                "apiVersionConstraint": {
+                  "minApiVersion": null
+                }
+              },
               "sku": {
                 "name": "Consumption",
                 "capacity": 0
               },
-              "identity": null,
               "apiVersion": "2019-12-01"
             },
             {
               "type": "Microsoft.ApiManagement/service/apis",
               "name": "unpaper-api-management-service/unpaper-registry-api",
-              "properties": {},
+              "properties": {
+                "displayName": "UNpaper.Registry.API",
+                "apiRevision": "1",
+                "description": null,
+                "subscriptionRequired": true,
+                "serviceUrl": "https://unpaper-registry-api.azurewebsites.net",
+                "path": "v1",
+                "protocols": [
+                  "https"
+                ],
+                "authenticationSettings": {
+                  "oAuth2": null,
+                  "openid": null
+                },
+                "subscriptionKeyParameterNames": {
+                  "header": "Ocp-Apim-Subscription-Key",
+                  "query": "subscription-key"
+                },
+                "isCurrent": true
+              },
               "apiVersion": "2019-12-01",
               "dependsOn": [
                 "unpaper-api-management-service"

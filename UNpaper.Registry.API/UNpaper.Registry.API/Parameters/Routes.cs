@@ -13,7 +13,7 @@ namespace UNpaper.Registry.API.Parameters
 
         // Controller Routes
         public const string AuthRoute = API_PREFIX + "user" + ACTION_SUFFIX;
-        public const string OrganizationRoute = API_PREFIX + "organizations" + ACTION_SUFFIX;
+        public const string OrganizationRoute = API_PREFIX + "organizations";
 
         // Action Routes
         public const string UserAuthAction = "auth";

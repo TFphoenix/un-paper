@@ -13,13 +13,15 @@ namespace UNpaper.Registry.Business.Services
     public class OrganizationService : IOrganizationService
     {
         private readonly IOrganizationRepository _organizationRepository;
+        private readonly IBatchRepository _batchRepository;
 
         private readonly IUserService _userService;
 
-        public OrganizationService(IOrganizationRepository organizationRepository, IUserService userService)
+        public OrganizationService(IOrganizationRepository organizationRepository, IUserService userService, IBatchRepository batchRepository)
         {
             _organizationRepository = organizationRepository;
             _userService = userService;
+            _batchRepository = batchRepository;
         }
 
         public async Task<List<Organization>> GetUserOrganizations(ClaimsPrincipal userClaims, bool includeBatches)
@@ -28,19 +30,51 @@ namespace UNpaper.Registry.Business.Services
             return _organizationRepository.GetUserOrganizationsAsQueryable(user, includeBatches).ToList();
         }
 
-        public Task<Organization> CreateOrganization(Organization organization)
+        public async Task<Organization> GetOrganization(Guid id)
         {
-            throw new NotImplementedException();
+            return await _organizationRepository.GetAsync(id);
         }
 
-        public Task<Organization> ModifyOrganization(Guid organizationId, Organization organization)
+        public async Task<Organization> CreateOrganization(Organization organization)
         {
-            throw new NotImplementedException();
+            return await _organizationRepository.AddAsyncEntity(organization);
         }
 
-        public Task<bool> DeleteOrganization(Guid organizationId)
+        public async Task<bool> ModifyOrganization(Organization organization)
         {
-            throw new NotImplementedException();
+            var oldOrganization = await _organizationRepository.GetAsync(organization.Id);
+
+            if (oldOrganization == null)
+            {
+                return false;
+            }
+
+            oldOrganization.Name = organization.Name;
+            oldOrganization.Description = organization.Description;
+            oldOrganization.FoundationDate = organization.FoundationDate;
+            oldOrganization.IdentificationCode = organization.IdentificationCode;
+
+            return await _organizationRepository.SaveAsync() > 0;
+        }
+
+        public async Task<bool> DeleteOrganization(Guid id)
+        {
+            var organization = await _organizationRepository.GetAsync(id);
+
+            if (organization == null)
+            {
+                return false;
+            }
+
+            organization.IsDeleted = true;
+            foreach (var batch in
+                _batchRepository.GetAsQueryable()
+                    .Where(b => b.OrganizationId == id))
+            {
+                batch.IsDeleted = true;
+            }
+
+            return await _organizationRepository.SaveAsync() > 0;
         }
     }
 }

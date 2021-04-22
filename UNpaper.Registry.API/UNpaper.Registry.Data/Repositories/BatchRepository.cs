@@ -45,5 +45,10 @@ namespace UNpaper.Registry.Data.Repositories
                 .Where(x => x.IsDeleted == false)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<int> SaveAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
     }
 }

@@ -2,7 +2,8 @@
   "dependencies": {
     "apis1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/unpaper-api-management-service/apis/unpaper-registry-api",
-      "type": "apis.azure"
+      "type": "apis.azure",
+      "apiEndpoint": "https://unpaper-api-management-service.azure-api.net/v1"
     }
   }
 }
