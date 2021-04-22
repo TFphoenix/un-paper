@@ -12,7 +12,7 @@ namespace UNpaper.Registry.Interface.Services
     {
         Task<List<Organization>> GetUserOrganizations(ClaimsPrincipal userClaims, bool includeBatches = false);
         Task<Organization> GetOrganization(Guid id);
-        Task<Organization> CreateOrganization(Organization organization);
+        Task<Organization> CreateOrganization(Organization organization, ClaimsPrincipal userClaims);
         Task<bool> ModifyOrganization(Organization organization);
         Task<bool> DeleteOrganization(Guid id);
     }

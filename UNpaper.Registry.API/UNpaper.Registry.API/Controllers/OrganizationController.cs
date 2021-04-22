@@ -34,8 +34,8 @@ namespace UNpaper.Registry.API.Controllers
 
             try
             {
-                var createdOrganization = await _organizationService.CreateOrganization(organization);
-                return Ok(createdOrganization);
+                var createdOrganization = await _organizationService.CreateOrganization(organization, User);
+                return (IActionResult)Ok(createdOrganization);
             }
             catch
             {

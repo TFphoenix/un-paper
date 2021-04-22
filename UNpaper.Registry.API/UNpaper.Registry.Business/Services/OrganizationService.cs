@@ -35,9 +35,22 @@ namespace UNpaper.Registry.Business.Services
             return await _organizationRepository.GetAsync(id);
         }
 
-        public async Task<Organization> CreateOrganization(Organization organization)
+        public async Task<Organization> CreateOrganization(Organization organization, ClaimsPrincipal userClaims)
         {
-            return await _organizationRepository.AddAsyncEntity(organization);
+            var user = await _userService.GetLoggedInUser(userClaims);
+
+            organization.OrganizationUsers.Add(new OrganizationUser()
+            {
+                Organization = organization,
+                User = user
+            });
+
+            var createdOrganization = await _organizationRepository.AddAsyncEntity(organization);
+
+            // For avoinding depenency cycle exception
+            createdOrganization.OrganizationUsers = new List<OrganizationUser>();
+
+            return createdOrganization;
         }
 
         public async Task<bool> ModifyOrganization(Organization organization)
