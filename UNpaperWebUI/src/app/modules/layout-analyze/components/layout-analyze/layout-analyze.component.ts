@@ -14,5 +14,6 @@ export class LayoutAnalyzeComponent implements OnInit {
 
   ngOnInit(): void {
     this.credentials = this._route.snapshot.data['credentials'].formRecognizer;
+    console.log('Form Recognizer credentials acquired');
   }
 }

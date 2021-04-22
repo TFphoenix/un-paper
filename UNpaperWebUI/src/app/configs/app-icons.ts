@@ -11,6 +11,7 @@ import icOrganization from '@iconify/icons-ic/round-business';
 import icBatch from '@iconify/icons-ic/round-widgets';
 import icClose from '@iconify/icons-ic/twotone-close';
 import icUnknown from '@iconify/icons-ic/help-outline';
+import icPending from '@iconify/icons-ic/round-pending';
 
 export const appIcons = {
   icArtifacts,
@@ -25,5 +26,6 @@ export const appIcons = {
   icOrganization,
   icBatch,
   icClose,
-  icUnknown
+  icUnknown,
+  icPending
 };

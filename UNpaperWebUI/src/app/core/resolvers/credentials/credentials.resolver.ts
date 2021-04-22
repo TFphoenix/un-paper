@@ -10,6 +10,8 @@ export class CredentialsResolver implements Resolve<boolean> {
   constructor(private readonly _functionsRequestService: FunctionsApiRequestService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    console.log('Acquiring Form Recognizer credentials...');
+
     return this._functionsRequestService.get('/credentials');
   }
 }
