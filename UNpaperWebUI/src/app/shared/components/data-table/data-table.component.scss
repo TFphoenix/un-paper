@@ -50,6 +50,17 @@
     }
   }
 
+  .data-placeholder {
+    display: flex;
+    justify-content: center;
+
+    .loading-gif {
+      width: 120px;
+      height: 120px;
+      margin-top: 60px;
+    }
+  }
+
   .data-container {
     .data-table {
       width: 100%;

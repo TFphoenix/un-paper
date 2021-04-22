@@ -15,15 +15,7 @@ import { OrganizationCreateUpdateComponent } from '../organization-create-update
   styleUrls: ['./organizations.component.scss']
 })
 export class OrganizationsComponent implements OnInit {
-  tableData: OrganizationData[] = [
-    {
-      icon: 'icPending',
-      name: '...',
-      description: '...',
-      foundationDate: null,
-      identificationCode: null
-    }
-  ];
+  tableData: OrganizationData[] = [];
 
   tableColumns: TableColumn<OrganizationData>[] = [
     { label: '', property: 'icon', type: 'badge', visible: true },
@@ -43,11 +35,9 @@ export class OrganizationsComponent implements OnInit {
   ngOnInit(): void {
     this._userService.getUserOrganizations().subscribe(organizations => {
       const data: OrganizationData[] = [];
-
       organizations.forEach(organization => {
         data.push(OrganizationData.getFromRequest(organization));
       });
-
       this.tableData = data;
     });
   }

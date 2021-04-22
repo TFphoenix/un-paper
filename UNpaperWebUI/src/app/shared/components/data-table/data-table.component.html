@@ -1,4 +1,5 @@
 <div class="main-container">
+  <!-- Header -->
   <div class="header-container" fxLayout="row" fxLayoutAlign="start">
     <h2 class="header-title" fxFlex fxLayout="row" fxLayoutAlign="start">
       <mat-icon
@@ -11,6 +12,7 @@
       <span>{{ title }}</span>
     </h2>
 
+    <!-- Search -->
     <div [hidden]="hideComponent">
       <div *ngIf="searchDisplay" class="header-search" fxLayout="row" fxLayoutAlign="start center">
         <ic-icon icIcon="icSearch" size="20px"></ic-icon>
@@ -35,7 +37,13 @@
     </div>
   </div>
 
-  <div class="data-container" [hidden]="hideComponent">
+  <!-- Placeholder -->
+  <div *ngIf="tableData.length === 0" class="data-placeholder">
+    <img class="loading-gif" src="./assets/gifs/dual-ring-loading.gif" alt="Loading Data..." />
+  </div>
+
+  <!-- Table -->
+  <div *ngIf="tableData.length > 0" class="data-container" [hidden]="hideComponent">
     <table @stagger [dataSource]="dataSource" class="data-table w-full" mat-table matSort>
       <!--- Note that these columns can be defined in any order.
                The actual rendered columns are set as a property on the row definition" -->
