@@ -6,5 +6,5 @@ export interface RequestMethods {
   post<T = any>(url: string, body: any, headers: HttpHeaders): Observable<T>;
   put<T = any>(url: string, body: any, headers: HttpHeaders): Observable<T>;
   patch<T = any>(url: string, body: any, headers: HttpHeaders): Observable<T>;
-  delete<T = any>(url: string, ids: string[], headers: HttpHeaders): Observable<T>;
+  delete<T = any>(url: string, id: string, headers: HttpHeaders): Observable<T>;
 }

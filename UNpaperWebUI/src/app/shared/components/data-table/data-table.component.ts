@@ -6,7 +6,9 @@ import {
   ViewChild,
   ChangeDetectorRef,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import {
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
@@ -53,9 +55,16 @@ export class DataTableComponent implements OnInit {
   @Input() pageSize: number = 10;
   @Input() searchDisplay: Boolean;
   @Input()
+  get tableData() {
+    return this.dataSource.data;
+  }
   set tableData(tableData) {
     this.dataSource.data = tableData;
   }
+
+  // output
+  @Output() onEdit = new EventEmitter<any>();
+  @Output() onDelete = new EventEmitter<any>();
 
   // controls
   pageSizeOptions: number[] = [5, 10, 20, 50];
@@ -121,5 +130,13 @@ export class DataTableComponent implements OnInit {
     } else {
       this.icToggle = icToggleArrowDown;
     }
+  }
+
+  onEditClick(entity: any) {
+    this.onEdit.emit(entity);
+  }
+
+  onDeleteClick(entity: any) {
+    this.onDelete.emit(entity);
   }
 }

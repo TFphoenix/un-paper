@@ -10,11 +10,10 @@ import { Observable } from 'rxjs';
 })
 export class RegistryApiRequestService implements RequestMethods {
   // headers
-  private readonly _prodHeaders: HttpHeaders = new HttpHeaders({
+  private readonly _baseHeaders: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json; charset=utf-8',
     'Ocp-Apim-Subscription-Key': environment.apimSubscriptionKey
   });
-  private readonly _localHeaders: HttpHeaders = this._prodHeaders;
 
   // uri
   private readonly _baseUri = environment.services.registryApi;
@@ -23,36 +22,24 @@ export class RegistryApiRequestService implements RequestMethods {
   constructor(private readonly _requestService: RequestService) {}
 
   // methods
-  get<T = any>(url: string, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
+  get<T = any>(url: string, headers: HttpHeaders = this.getHeaders()): Observable<T> {
     return this._requestService.get(this.getUrl(url), headers);
   }
-  post<T = any>(
-    url: string,
-    body: any,
-    headers: HttpHeaders = this.getHeadersByEnvironment()
-  ): Observable<T> {
-    return this._requestService.post(this.getUrl(url), headers);
+  post<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeaders()): Observable<T> {
+    return this._requestService.post(this.getUrl(url), body, headers);
   }
-  put<T = any>(
-    url: string,
-    body: any,
-    headers: HttpHeaders = this.getHeadersByEnvironment()
-  ): Observable<T> {
+  put<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeaders()): Observable<T> {
     return this._requestService.put(this.getUrl(url), body, headers);
   }
-  patch<T = any>(
-    url: string,
-    body: any,
-    headers: HttpHeaders = this.getHeadersByEnvironment()
-  ): Observable<T> {
+  patch<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeaders()): Observable<T> {
     return this._requestService.patch(this.getUrl(url), body, headers);
   }
   delete<T = any>(
     url: string,
-    ids: string[],
-    headers: HttpHeaders = this.getHeadersByEnvironment()
+    id: string,
+    headers: HttpHeaders = this.getHeaders()
   ): Observable<T> {
-    return this._requestService.delete(this.getUrl(url), ids, headers);
+    return this._requestService.delete(this.getUrl(url), id, headers);
   }
 
   /**
@@ -63,9 +50,9 @@ export class RegistryApiRequestService implements RequestMethods {
   }
 
   /**
-   * @returns http headers depending on the environment
+   * @returns http headers
    */
-  private getHeadersByEnvironment(): HttpHeaders {
-    return environment.production ? this._prodHeaders : this._localHeaders;
+  private getHeaders(): HttpHeaders {
+    return this._baseHeaders;
   }
 }

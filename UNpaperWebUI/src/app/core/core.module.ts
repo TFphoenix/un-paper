@@ -44,6 +44,7 @@ import { LandingGuard } from './guards/landing/landing.guard';
 import { environment } from 'src/environments/environment';
 import { FunctionsApiRequestService } from './services/request/functions-api-request.service';
 import { IconService } from '@visurel/iconify-angular';
+import { OrganizationService } from './services/organization/organization.service';
 
 // MSAL FACTORIES
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -88,6 +89,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     RegistryApiRequestService,
     FunctionsApiRequestService,
     UserService,
+    OrganizationService,
 
     // guards
     HomeGuard,

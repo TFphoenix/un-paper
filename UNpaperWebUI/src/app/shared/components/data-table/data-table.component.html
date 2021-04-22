@@ -85,7 +85,7 @@
         <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
           <button
             (click)="$event.stopPropagation()"
-            [matMenuTriggerData]="{ build: row }"
+            [matMenuTriggerData]="{ entity: row }"
             [matMenuTriggerFor]="actionsMenu"
             mat-icon-button
             type="button"
@@ -131,12 +131,12 @@
 
 <!-- Actions Menu -->
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
-  <ng-template let-build="build" matMenuContent>
-    <button mat-menu-item>
+  <ng-template let-entity="entity" matMenuContent>
+    <button (click)="onEditClick(entity)" mat-menu-item>
       <mat-icon icIcon="icEdit"></mat-icon>
       <span>Edit</span>
     </button>
-    <button mat-menu-item>
+    <button (click)="onDeleteClick(entity)" mat-menu-item>
       <mat-icon icIcon="icDelete"></mat-icon>
       <span>Delete</span>
     </button>

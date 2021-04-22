@@ -11,6 +11,7 @@ import { OrganizationRequest } from 'src/app/shared/models/organization-request.
 export class OrganizationCreateUpdateComponent implements OnInit {
   form: FormGroup;
   mode: 'create' | 'update' = 'create';
+  objectName: string = 'Organization';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: OrganizationRequest,
@@ -25,11 +26,12 @@ export class OrganizationCreateUpdateComponent implements OnInit {
       this.defaults = {} as OrganizationRequest;
     }
 
-    // this.form = this.fb.group({
-    //   projectName: [this.defaults.projectName, Validators.required],
-    //   projectKey: [this.defaults.projectKey, Validators.required],
-    //   bambooProjectKey: [this.defaults.bambooProjectKey, Validators.required]
-    // });
+    this.form = this.fb.group({
+      name: [this.defaults.name, Validators.required],
+      description: [this.defaults.description, Validators.required],
+      foundationDate: [this.defaults.foundationDate, Validators.required],
+      identificationCode: [this.defaults.identificationCode, Validators.required]
+    });
   }
 
   save() {

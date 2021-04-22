@@ -12,6 +12,7 @@ import icBatch from '@iconify/icons-ic/round-widgets';
 import icClose from '@iconify/icons-ic/twotone-close';
 import icUnknown from '@iconify/icons-ic/help-outline';
 import icPending from '@iconify/icons-ic/round-pending';
+import icInfo from '@iconify/icons-ic/sharp-warning';
 
 export const appIcons = {
   icArtifacts,
@@ -27,5 +28,6 @@ export const appIcons = {
   icBatch,
   icClose,
   icUnknown,
-  icPending
+  icPending,
+  icInfo
 };

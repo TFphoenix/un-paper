@@ -29,17 +29,33 @@ export class FunctionsApiRequestService implements RequestMethods {
   get<T = any>(url: string, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
     return this._requestService.get(this.getUrl(url), headers);
   }
-  post<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
+  post<T = any>(
+    url: string,
+    body: any,
+    headers: HttpHeaders = this.getHeadersByEnvironment()
+  ): Observable<T> {
     return this._requestService.post(this.getUrl(url), headers);
   }
-  put<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
+  put<T = any>(
+    url: string,
+    body: any,
+    headers: HttpHeaders = this.getHeadersByEnvironment()
+  ): Observable<T> {
     return this._requestService.put(this.getUrl(url), body, headers);
   }
-  patch<T = any>(url: string, body: any, headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
+  patch<T = any>(
+    url: string,
+    body: any,
+    headers: HttpHeaders = this.getHeadersByEnvironment()
+  ): Observable<T> {
     return this._requestService.patch(this.getUrl(url), body, headers);
   }
-  delete<T = any>(url: string, ids: string[], headers: HttpHeaders = this.getHeadersByEnvironment()): Observable<T> {
-    return this._requestService.delete(this.getUrl(url), ids, headers);
+  delete<T = any>(
+    url: string,
+    id: string,
+    headers: HttpHeaders = this.getHeadersByEnvironment()
+  ): Observable<T> {
+    return this._requestService.delete(this.getUrl(url), id, headers);
   }
 
   /**

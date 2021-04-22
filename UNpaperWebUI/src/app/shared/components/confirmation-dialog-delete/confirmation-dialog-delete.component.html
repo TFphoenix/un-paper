@@ -1,0 +1,45 @@
+<form [formGroup]="form" spellcheck="false" autocomplete="off" class="delete-confirmation">
+  <!-- Header -->
+  <div class="header" fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 class="headline m-0px" fxFlex="auto">Delete {{ entry.type }}</h2>
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon icIcon="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="content" fxLayout="column">
+    <!-- Warning -->
+    <div class="warning">
+      <mat-icon class="icon" icIcon="icInfo"></mat-icon>
+      <div class="text">
+        <h1 class="subheading-2 text-primary" fxFlex="auto">{{ entry.name }}</h1>
+        <p>Are you sure you want to delete this entry?</p>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <mat-form-field class="flex-auto">
+      <mat-label>
+        Type
+        <b>DELETE</b>
+        to confirm deletion
+      </mat-label>
+      <input
+        cdkFocusInitial
+        formControlName="deleteInput"
+        placeholder="{{ deleteText }}"
+        matInput
+      />
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <!-- Actions -->
+  <mat-dialog-actions align="end">
+    <button (click)="onDismiss()" cdkFocusInitial mat-button mat-dialog-close type="button">
+      CANCEL
+    </button>
+    <button (click)="onConfirm()" color="primary" mat-button type="submit" [disabled]="!form.valid">
+      DELETE
+    </button>
+  </mat-dialog-actions>
+</form>

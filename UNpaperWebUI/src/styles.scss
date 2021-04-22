@@ -55,6 +55,43 @@ body {
   margin-right: 10px;
 }
 
+.mr-3px {
+  margin-right: 3px !important;
+}
+
+.mt-6px {
+  margin-top: 6px !important;
+}
+
+.ml-8px {
+  margin-left: 8px !important;
+}
+
+.m-8px {
+  margin: 8px !important;
+}
+
+.m-0px {
+  margin: 0px !important;
+}
+
+// Flex
+.flex {
+  display: flex;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
 // Shadows
 .box-shadow-bot {
   -webkit-box-shadow: 0px 10px 40px -20px rgba(0, 0, 0, 0.6);
