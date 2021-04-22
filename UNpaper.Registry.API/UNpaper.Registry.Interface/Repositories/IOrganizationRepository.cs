@@ -7,7 +7,8 @@ using UNpaper.Registry.Model.Entities;
 
 namespace UNpaper.Registry.Interface.Repositories
 {
-    public interface IOrganizationRepository: IRepository<Organization>
+    public interface IOrganizationRepository : IRepository<Organization>
     {
+        IQueryable<Organization> GetUserOrganizationsAsQueryable(User user, bool includeBatches);
     }
 }

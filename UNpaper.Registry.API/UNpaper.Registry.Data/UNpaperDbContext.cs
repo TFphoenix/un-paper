@@ -12,6 +12,7 @@ namespace UNpaper.Registry.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Batch> Batches { get; set; }
+        public DbSet<OrganizationUser> OrganizationUsers { get; set; }
 
         // Other
         private const string TABLE_NAME_PREFIX = "UNp_";

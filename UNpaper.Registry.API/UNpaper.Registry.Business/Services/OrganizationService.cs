@@ -14,14 +14,18 @@ namespace UNpaper.Registry.Business.Services
     {
         private readonly IOrganizationRepository _organizationRepository;
 
-        public OrganizationService(IOrganizationRepository organizationRepository)
+        private readonly IUserService _userService;
+
+        public OrganizationService(IOrganizationRepository organizationRepository, IUserService userService)
         {
             _organizationRepository = organizationRepository;
+            _userService = userService;
         }
 
-        public Task<Organization> GetUserOrganizations(ClaimsPrincipal userClaims)
+        public async Task<List<Organization>> GetUserOrganizations(ClaimsPrincipal userClaims, bool includeBatches)
         {
-            throw new NotImplementedException();
+            var user = await _userService.GetLoggedInUser(userClaims);
+            return _organizationRepository.GetUserOrganizationsAsQueryable(user, includeBatches).ToList();
         }
 
         public Task<Organization> CreateOrganization(Organization organization)

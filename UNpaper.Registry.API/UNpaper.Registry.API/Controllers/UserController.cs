@@ -19,21 +19,21 @@ namespace UNpaper.Registry.API.Controllers
     [Authorize]
     [ApiController]
     [Route(Routes.AuthRoute)]
-    public class AuthController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly ILogger<AuthController> _logger;
-        private readonly IUserRepository _userRepository;
+        private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
+        private readonly IOrganizationService _organizationService;
 
-        public AuthController(ILogger<AuthController> logger, IUserRepository userRepository, IUserService userService)
+        public UserController(ILogger<UserController> logger, IUserService userService, IOrganizationService organizationService)
         {
             _logger = logger;
-            _userRepository = userRepository;
             _userService = userService;
+            _organizationService = organizationService;
         }
 
         [HttpGet]
-        [ActionName(Routes.UserAction)]
+        [ActionName(Routes.UserAuthAction)]
         public async Task<User> LoginUser()
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
@@ -42,20 +42,32 @@ namespace UNpaper.Registry.API.Controllers
         }
 
         [HttpPost]
-        [ActionName(Routes.UserAction)]
+        [ActionName(Routes.UserAuthAction)]
         public async Task<IActionResult> RegisterUser()
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadWriteScope);
 
-            User registeredUser = await _userService.RegisterUser(User);
-
-            if (registeredUser == null)
+            try
+            {
+                User registeredUser = await _userService.RegisterUser(User);
+                return Ok(new { message = "User succesfully registered", registeredUser = registeredUser });
+            }
+            catch
             {
                 var alreadyRegisteredUser = await _userService.GetLoggedInUser(User);
                 return StatusCode(409, new { message = "User already registered", registeredUser = alreadyRegisteredUser });
             }
+        }
 
-            return Ok(new { message = "User succesfully registered", registeredUser = registeredUser });
+        [HttpGet]
+        [ActionName(Routes.UserOrganizationsAction)]
+        public async Task<IEnumerable<Organization>> GetUserOrganizations(bool? batches)
+        {
+            HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
+
+            return batches.HasValue?
+                await _organizationService.GetUserOrganizations(User, batches.Value):
+                await _organizationService.GetUserOrganizations(User);
         }
     }
 }

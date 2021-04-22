@@ -9,7 +9,7 @@ using UNpaper.Registry.Model.Entities;
 
 namespace UNpaper.Registry.Data.Repositories
 {
-    public class OrganizationRepository: IOrganizationRepository
+    public class OrganizationRepository : IOrganizationRepository
     {
         private readonly UNpaperDbContext _context;
         private readonly DbSet<Organization> _organizations;
@@ -44,6 +44,18 @@ namespace UNpaper.Registry.Data.Repositories
             return await _organizations
                 .Where(x => x.IsDeleted == false)
                 .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public IQueryable<Organization> GetUserOrganizationsAsQueryable(User user, bool includeBatches)
+        {
+            return includeBatches ?
+                _context.OrganizationUsers
+                    .Where(ou => ou.User.Equals(user))
+                    .Include(ou => ou.Organization.Batches)
+                    .Select(ou => ou.Organization):
+                _context.OrganizationUsers
+                    .Where(ou => ou.User.Equals(user))
+                    .Select(ou => ou.Organization);
         }
     }
 }

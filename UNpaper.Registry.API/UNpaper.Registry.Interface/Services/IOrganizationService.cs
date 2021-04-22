@@ -10,7 +10,7 @@ namespace UNpaper.Registry.Interface.Services
 {
     public interface IOrganizationService
     {
-        Task<Organization> GetUserOrganizations(ClaimsPrincipal userClaims);
+        Task<List<Organization>> GetUserOrganizations(ClaimsPrincipal userClaims, bool includeBatches = false);
         Task<Organization> CreateOrganization(Organization organization);
         Task<Organization> ModifyOrganization(Guid organizationId, Organization organization);
         Task<bool> DeleteOrganization(Guid organizationId);
