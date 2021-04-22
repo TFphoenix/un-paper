@@ -30,6 +30,8 @@ import { TableColumn } from '../../interfaces/table-column.interface';
 // Icons
 import icToggleArrowUp from '@iconify/icons-ic/round-keyboard-arrow-right';
 import icToggleArrowDown from '@iconify/icons-ic/round-keyboard-arrow-down';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 @UntilDestroy()
 @Component({

@@ -39,7 +39,11 @@
 
   <!-- Placeholder -->
   <div *ngIf="tableData.length === 0" class="data-placeholder">
-    <img class="loading-gif" src="./assets/gifs/dual-ring-loading.gif" alt="Loading Data..." />
+    <mat-progress-spinner
+      class="loading-spinner"
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+    ></mat-progress-spinner>
   </div>
 
   <!-- Table -->
