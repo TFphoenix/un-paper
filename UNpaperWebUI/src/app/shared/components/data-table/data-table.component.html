@@ -44,7 +44,7 @@
       <ng-container *ngFor="let column of tableColumns; trackBy: trackByProperty">
         <!-- Text Columns -->
         <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
@@ -55,9 +55,22 @@
           </td>
         </ng-container>
 
+        <!-- Date Columns -->
+        <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+            {{ column.label }}
+          </th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+            <a href="" *ngIf="column.property === 'planName'; else noLink" target="_blank">
+              {{ row[column.property] }}
+            </a>
+            <ng-template #noLink>{{ row[column.property] | date: 'longDate' }}</ng-template>
+          </td>
+        </ng-container>
+
         <!-- Badge Columns -->
         <ng-container *ngIf="column.type === 'badge'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef class="uppercase" mat-header-cell mat-sort-header>
+          <th *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>

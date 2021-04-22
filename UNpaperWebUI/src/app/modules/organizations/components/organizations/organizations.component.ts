@@ -25,7 +25,7 @@ export class OrganizationsComponent implements OnInit {
     { label: '', property: 'icon', type: 'badge', visible: true },
     { label: 'Name', property: 'name', type: 'text', visible: true },
     { label: 'Description', property: 'description', type: 'text', visible: true },
-    { label: 'Foundation Date', property: 'foundationDate', type: 'text', visible: true },
+    { label: 'Foundation Date', property: 'foundationDate', type: 'date', visible: true },
     { label: 'Identification Code', property: 'identificationCode', type: 'text', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
