@@ -100,7 +100,10 @@ interface ILayoutPredictPageState extends ITableState {
 // }
 
 // @connect(mapStateToProps, mapDispatchToProps)
-export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPageProps>, ILayoutPredictPageState> {
+export class LayoutPredictPage extends React.Component<
+  Partial<ILayoutPredictPageProps>,
+  ILayoutPredictPageState
+> {
   private layoutHelper: ILayoutHelper = new LayoutHelper();
   private tableHelper: ITableHelper = new TableHelper(this);
 
@@ -207,9 +210,12 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
             {this.renderNextPageButton()}
             {this.renderPageIndicator()}
           </div>
-          <div className="predict-sidebar bg-lighter-1">
+          <div className="predict-sidebar">
             <div className="condensed-list">
-              <h6 className="condensed-list-header bg-darker-2 p-2 flex-center" style={{ marginBottom: '1rem' }}>
+              <h6
+                className="condensed-list-header bg-darker-2 p-2 flex-center"
+                style={{ marginBottom: '1rem' }}
+              >
                 <FontIcon className="mr-1" iconName="KeyPhraseExtraction" />
                 <span>{strings.layoutPredict.layout}</span>
               </h6>
@@ -217,6 +223,7 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                                 disabled={this.state.isFetching || this.state.isAnalyzing}
                                 actions={this.props.actions}
                             /> */}
+              <Separator className="separator-right-pane-main">File Picker</Separator>
               <div className="p-3">
                 <h5>{strings.layoutPredict.selectFileAndRunLayout}</h5>
                 <DocumentFilePicker
@@ -234,14 +241,18 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                   />
                 </div>
               </div>
-              <Separator className="separator-right-pane-main">{strings.layoutPredict.analysis}</Separator>
+              <Separator className="separator-right-pane-main">
+                {strings.layoutPredict.analysis}
+              </Separator>
               <div className="p-3" style={{ marginTop: '8px' }}>
                 <div className="container-items-end predict-button">
                   <PrimaryButton
                     theme={getPrimaryWhiteTheme()}
                     iconProps={{ iconName: 'KeyPhraseExtraction' }}
                     text={strings.layoutPredict.runLayout}
-                    aria-label={!this.state.analyzationLoaded ? strings.layoutPredict.inProgress : ''}
+                    aria-label={
+                      !this.state.analyzationLoaded ? strings.layoutPredict.inProgress : ''
+                    }
                     allowDisabledFocus
                     disabled={analyzeDisabled}
                     onClick={this.handleClick}
@@ -249,12 +260,22 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
                 </div>
                 {this.state.isFetching && (
                   <div className="loading-container">
-                    <Spinner label="Fetching..." ariaLive="assertive" labelPosition="right" size={SpinnerSize.large} />
+                    <Spinner
+                      label="Fetching..."
+                      ariaLive="assertive"
+                      labelPosition="right"
+                      size={SpinnerSize.large}
+                    />
                   </div>
                 )}
                 {this.state.isAnalyzing && (
                   <div className="loading-container">
-                    <Spinner label={strings.layoutPredict.inProgress} ariaLive="assertive" labelPosition="right" size={SpinnerSize.large} />
+                    <Spinner
+                      label={strings.layoutPredict.inProgress}
+                      ariaLive="assertive"
+                      labelPosition="right"
+                      size={SpinnerSize.large}
+                    />
                   </div>
                 )}
                 {this.state.layoutData && !this.state.isAnalyzing && (
@@ -322,10 +343,14 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
               let rowIndex = 0;
               table.cells.forEach(cell => {
                 if (cell.rowIndex === rowIndex) {
-                  tableContent += `"${cell.text}"${cell.columnSpan ? _.repeat(',', cell.columnSpan) : ','}`;
+                  tableContent += `"${cell.text}"${
+                    cell.columnSpan ? _.repeat(',', cell.columnSpan) : ','
+                  }`;
                 } else {
                   tableContent += '\n';
-                  tableContent += `"${cell.text}"${cell.columnSpan ? _.repeat(',', cell.columnSpan) : ','}`;
+                  tableContent += `"${cell.text}"${
+                    cell.columnSpan ? _.repeat(',', cell.columnSpan) : ','
+                  }`;
                   rowIndex = cell.rowIndex;
                 }
               });
@@ -423,14 +448,26 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
           handleTableToolTipChange={this.tableHelper.handleTableToolTipChange}
         />
         <TooltipHost
-          content={'rows: ' + this.state.tableIconTooltip.rows + ' columns: ' + this.state.tableIconTooltip.columns}
+          content={
+            'rows: ' +
+            this.state.tableIconTooltip.rows +
+            ' columns: ' +
+            this.state.tableIconTooltip.columns
+          }
           id="tableInfo"
           styles={hostStyles}
         >
-          <div aria-describedby="tableInfo" className="tooltip-container" onClick={this.handleTableIconFeatureSelect} />
+          <div
+            aria-describedby="tableInfo"
+            className="tooltip-container"
+            onClick={this.handleTableIconFeatureSelect}
+          />
         </TooltipHost>
         {this.state.tableToView !== null && (
-          <TableView handleTableViewClose={this.handleTableViewClose} tableToView={this.state.tableToView} />
+          <TableView
+            handleTableViewClose={this.handleTableViewClose}
+            tableToView={this.state.tableToView}
+          />
         )}
       </div>
     );
@@ -475,7 +512,9 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
 
   private handleTableIconFeatureSelect = () => {
     if (this.state.hoveringFeature != null) {
-      const tableState = this.imageMap.getTableBorderFeatureByID(this.state.hoveringFeature).get('state');
+      const tableState = this.imageMap
+        .getTableBorderFeatureByID(this.state.hoveringFeature)
+        .get('state');
       if (tableState === 'hovering' || tableState === 'rest') {
         this.tableHelper.setTableToView(
           this.tableHelper.getTable(this.state.currentPage, this.state.hoveringFeature),
@@ -524,7 +563,12 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
     };
 
     return this.state.currentPage > 1 ? (
-      <IconButton className="toolbar-btn prev" title="Previous" iconProps={{ iconName: 'ChevronLeft' }} onClick={prevPage} />
+      <IconButton
+        className="toolbar-btn prev"
+        title="Previous"
+        iconProps={{ iconName: 'ChevronLeft' }}
+        onClick={prevPage}
+      />
     ) : (
       <div></div>
     );
@@ -537,7 +581,12 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
     };
 
     return this.state.currentPage < numPages ? (
-      <IconButton className="toolbar-btn next" title="Next" onClick={nextPage} iconProps={{ iconName: 'ChevronRight' }} />
+      <IconButton
+        className="toolbar-btn next"
+        title="Next"
+        onClick={nextPage}
+        iconProps={{ iconName: 'ChevronRight' }}
+      />
     ) : (
       <div></div>
     );
@@ -600,7 +649,9 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
         } else if (error?.response) {
           alertMessage = error.response.data;
         } else {
-          alertMessage = interpolate(strings.errors.endpointConnectionError.message, { endpoint: 'form recognizer backend URL' });
+          alertMessage = interpolate(strings.errors.endpointConnectionError.message, {
+            endpoint: 'form recognizer backend URL'
+          });
         }
         this.setState({
           shouldShowAlert: true,
@@ -629,7 +680,12 @@ export class LayoutPredictPage extends React.Component<Partial<ILayoutPredictPag
 
     // let response;
     try {
-      const response = await ServiceHelper.postWithAutoRetry(endpointURL, body, { headers }, apiKey as string);
+      const response = await ServiceHelper.postWithAutoRetry(
+        endpointURL,
+        body,
+        { headers },
+        apiKey as string
+      );
       const operationLocation = response.headers['operation-location'];
 
       // Make the second REST API call and get the response.

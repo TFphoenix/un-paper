@@ -32,7 +32,14 @@ import { constants } from 'src/@fott/common/constants';
 import { interpolate, strings } from 'src/@fott/common/strings';
 import { getPrimaryWhiteTheme, getLightGreyTheme } from 'src/@fott/common/themes';
 import { poll } from 'src/@fott/common/utils';
-import { ErrorCode, FieldFormat, FieldType, IApplicationState, IPrebuiltSettings, ITag } from 'src/@fott/models/applicationState';
+import {
+  ErrorCode,
+  FieldFormat,
+  FieldType,
+  IApplicationState,
+  IPrebuiltSettings,
+  ITag
+} from 'src/@fott/models/applicationState';
 import IAppTitleActions, * as appTitleActions from '../../../redux/actions/appTitleActions';
 import IAppPrebuiltSettingsActions, * as appPrebuiltSettingsActions from '../../../redux/actions/prebuiltSettingsActions';
 import ServiceHelper from '../../../services/serviceHelper';
@@ -113,7 +120,10 @@ export interface IPrebuiltPredictPageState extends ILoadFileResult, ITableState 
 // }
 
 // @connect(mapStateToProps, mapDispatchToProps)
-export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPageProps, IPrebuiltPredictPageState> {
+export class PrebuiltPredictPage extends React.Component<
+  IPrebuiltPredictPageProps,
+  IPrebuiltPredictPageState
+> {
   private appInsights: any = null;
   private layoutHelper: ILayoutHelper = new LayoutHelper();
   prebuiltTypes: IPrebuiltTypes[] = [
@@ -211,7 +221,10 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
         });
       }
 
-      if (this.getOcrFromAnalyzeResult(this.state.analyzeResult).length > 0 && prevState.imageUri !== this.state.imageUri) {
+      if (
+        this.getOcrFromAnalyzeResult(this.state.analyzeResult).length > 0 &&
+        prevState.imageUri !== this.state.imageUri
+      ) {
         this.imageMap.removeAllFeatures();
         this.layoutHelper.drawLayout(this.state.currentPage);
         this.drawPredictionResult();
@@ -247,14 +260,17 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
       this.state.invalidFileFormat ||
       !this.state.fileLoaded ||
       (this.state.withPageRange && !this.state.pageRangeIsValid) ||
-      (needEndPoint && (!this.props.prebuiltSettings?.apiKey || !this.props.prebuiltSettings?.serviceURI))
+      (needEndPoint &&
+        (!this.props.prebuiltSettings?.apiKey || !this.props.prebuiltSettings?.serviceURI))
     );
   };
 
   public render() {
     const predictDisabled: boolean = this.getPredictDisabled();
 
-    const predictions = this.flatFields(this.getPredictionsFromAnalyzeResult(this.state.analyzeResult));
+    const predictions = this.flatFields(
+      this.getPredictionsFromAnalyzeResult(this.state.analyzeResult)
+    );
 
     // REMEMBER: Cannot read path property of undefined (reminiscent of React Router)
     // const onPrebuiltsPath: boolean = (this.props as any).match.path.includes('prebuilts');
@@ -276,9 +292,14 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
           <div className="condensed-list">
             <h6 className="condensed-list-header bg-darker-2 p-2 flex-center">
               <FontIcon className="mr-1" iconName="ContactCard" />
-              <span>{interpolate(strings.prebuiltPredict.anlayWithPrebuiltModels, this.state.currentPrebuiltType)}</span>
+              <span>
+                {interpolate(
+                  strings.prebuiltPredict.anlayWithPrebuiltModels,
+                  this.state.currentPrebuiltType
+                )}
+              </span>
             </h6>
-            <Separator className="separator-right-pane-main">1. Choose file for analysis.</Separator>
+            <Separator className="separator-right-pane-main">File Picker</Separator>
             <div className="p-3">
               {/* <h5>{strings.prebuiltPredict.selectFileAndRunAnalysis}</h5> */}
               <DocumentFilePicker
@@ -296,17 +317,17 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
                 />
               </div>
             </div>
-            <Separator className="separator-right-pane-main">2. Get prediction.</Separator>
+            <Separator className="separator-right-pane-main">Prediction</Separator>
             {constants.enablePredictionResultUpload && (
               <div className="p-3" style={{ marginTop: '8px' }}>
-                <Toggle
+                {/* <Toggle
                   theme={getLightGreyTheme()}
                   className="predict-mode-toggle"
                   defaultChecked
                   onText="Call live service"
                   offText="Use predicted file"
                   onChange={this.handleLiveModeToggleChange}
-                />
+                /> */}
               </div>
             )}
             {!this.state.liveMode && (
@@ -326,18 +347,28 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
                   disabled={this.state.isPredicting}
                   actions={this.props.actions}
                 /> */}
-                <div className="p-3" style={{ marginTop: '-28px' }}>
+                <div className="prediction-menu p-3" style={{ marginTop: '-28px' }}>
                   <div className="formtype-section">
-                    <div style={{ marginBottom: '3px' }}>{strings.prebuiltPredict.formTypeTitle}</div>
+                    <div style={{ marginBottom: '3px' }}>
+                      {strings.prebuiltPredict.formTypeTitle}
+                    </div>
                     <Dropdown
                       disabled={this.state.isPredicting}
                       className="prebuilt-type-dropdown"
-                      options={this.prebuiltTypes.map(type => ({ key: type.name, text: type.name }))}
+                      options={this.prebuiltTypes.map(type => ({
+                        key: type.name,
+                        text: type.name
+                      }))}
                       defaultSelectedKey={this.state.currentPrebuiltType.name}
                       onChange={this.onPrebuiltTypeChange}
                     ></Dropdown>
                   </div>
-                  <div className="locales-section" style={{ visibility: this.state.currentPrebuiltType.useLocale ? 'visible' : 'hidden' }}>
+                  {/* <div
+                    className="locales-section"
+                    style={{
+                      visibility: this.state.currentPrebuiltType.useLocale ? 'visible' : 'hidden'
+                    }}
+                  >
                     <div style={{ marginBottom: '3px' }}>{strings.prebuiltPredict.locale}</div>
                     <Dropdown
                       disabled={this.state.isPredicting}
@@ -346,7 +377,7 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
                       defaultSelectedKey={this.state.currentLocale}
                       onChange={this.onLocaleChange}
                     ></Dropdown>
-                  </div>
+                  </div> */}
                   <div style={{ marginBottom: '3px' }}>{'The composed API request is'}</div>
                   <TextField
                     className="mb-1 request-uri-textfield"
@@ -363,7 +394,9 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
                       theme={getPrimaryWhiteTheme()}
                       iconProps={{ iconName: 'ContactCard' }}
                       text={strings.prebuiltPredict.runAnalysis}
-                      aria-label={!this.state.isPredicting ? strings.prebuiltPredict.inProgress : ''}
+                      aria-label={
+                        !this.state.isPredicting ? strings.prebuiltPredict.inProgress : ''
+                      }
                       allowDisabledFocus
                       disabled={predictDisabled}
                       onClick={this.handleClick}
@@ -374,12 +407,22 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
             )}
             {this.state.isFetching && (
               <div className="loading-container">
-                <Spinner label="Fetching..." ariaLive="assertive" labelPosition="right" size={SpinnerSize.large} />
+                <Spinner
+                  label="Fetching..."
+                  ariaLive="assertive"
+                  labelPosition="right"
+                  size={SpinnerSize.large}
+                />
               </div>
             )}
             {this.state.isPredicting && (
               <div className="loading-container">
-                <Spinner label={strings.prebuiltPredict.inProgress} ariaLive="assertive" labelPosition="right" size={SpinnerSize.large} />
+                <Spinner
+                  label={strings.prebuiltPredict.inProgress}
+                  ariaLive="assertive"
+                  labelPosition="right"
+                  size={SpinnerSize.large}
+                />
               </div>
             )}
             {Object.keys(predictions).length > 0 && (
@@ -481,7 +524,11 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
     }
   };
 
-  onPredictionFileChange = (data: { file: File; fileLabel: string; fetchedFileURL: string }): void => {
+  onPredictionFileChange = (data: {
+    file: File;
+    fileLabel: string;
+    fetchedFileURL: string;
+  }): void => {
     if (this.imageMap) {
       this.imageMap.removeAllFeatures();
     }
@@ -496,7 +543,10 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
               predictionLoaded: false,
               fileLoaded: false
             },
-            () => new Promise(() => this.handlePredictionResult(result)).catch(this.handlePredictionError)
+            () =>
+              new Promise(() => this.handlePredictionResult(result)).catch(
+                this.handlePredictionError
+              )
           )
         );
     }
@@ -552,7 +602,12 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
   };
   private renderPrevPageButton = () => {
     return this.state.currentPage > 1 ? (
-      <IconButton className="toolbar-btn prev" title="Previous" iconProps={{ iconName: 'ChevronLeft' }} onClick={this.prevPage} />
+      <IconButton
+        className="toolbar-btn prev"
+        title="Previous"
+        iconProps={{ iconName: 'ChevronLeft' }}
+        onClick={this.prevPage}
+      />
     ) : (
       <div></div>
     );
@@ -560,7 +615,12 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
 
   private renderNextPageButton = () => {
     return this.state.currentPage < this.state.numPages ? (
-      <IconButton className="toolbar-btn next" title="Next" onClick={this.nextPage} iconProps={{ iconName: 'ChevronRight' }} />
+      <IconButton
+        className="toolbar-btn next"
+        title="Next"
+        onClick={this.nextPage}
+        iconProps={{ iconName: 'ChevronRight' }}
+      />
     ) : (
       <div></div>
     );
@@ -616,14 +676,26 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
           handleTableToolTipChange={this.tableHelper.handleTableToolTipChange}
         />
         <TooltipHost
-          content={'rows: ' + this.state.tableIconTooltip.rows + ' columns: ' + this.state.tableIconTooltip.columns}
+          content={
+            'rows: ' +
+            this.state.tableIconTooltip.rows +
+            ' columns: ' +
+            this.state.tableIconTooltip.columns
+          }
           id="tableInfo"
           styles={hostStyles}
         >
-          <div aria-describedby="tableInfo" className="tooltip-container" onClick={this.handleTableIconFeatureSelect} />
+          <div
+            aria-describedby="tableInfo"
+            className="tooltip-container"
+            onClick={this.handleTableIconFeatureSelect}
+          />
         </TooltipHost>
         {this.state.tableToView !== null && (
-          <TableView handleTableViewClose={this.handleTableViewClose} tableToView={this.state.tableToView} />
+          <TableView
+            handleTableViewClose={this.handleTableViewClose}
+            tableToView={this.state.tableToView}
+          />
         )}
       </div>
     );
@@ -631,7 +703,9 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
 
   private handleTableIconFeatureSelect = () => {
     if (this.state.hoveringFeature != null) {
-      const tableState = this.imageMap.getTableBorderFeatureByID(this.state.hoveringFeature).get('state');
+      const tableState = this.imageMap
+        .getTableBorderFeatureByID(this.state.hoveringFeature)
+        .get('state');
       if (tableState === 'hovering' || tableState === 'rest') {
         this.tableHelper.setTableToView(
           this.tableHelper.getTable(this.state.currentPage, this.state.hoveringFeature),
@@ -671,13 +745,17 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
       return;
     }
 
-    if (featureID !== null && this.imageMap.getTableBorderFeatureByID(featureID).get('state') !== 'selected') {
+    if (
+      featureID !== null &&
+      this.imageMap.getTableBorderFeatureByID(featureID).get('state') !== 'selected'
+    ) {
       this.imageMap.getTableBorderFeatureByID(featureID).set('state', 'hovering');
       this.imageMap.getTableIconFeatureByID(featureID).set('state', 'hovering');
     } else if (
       featureID === null &&
       this.state.hoveringFeature &&
-      this.imageMap.getTableBorderFeatureByID(this.state.hoveringFeature).get('state') !== 'selected'
+      this.imageMap.getTableBorderFeatureByID(this.state.hoveringFeature).get('state') !==
+        'selected'
     ) {
       this.imageMap.getTableBorderFeatureByID(this.state.hoveringFeature).set('state', 'rest');
       this.imageMap.getTableIconFeatureByID(this.state.hoveringFeature).set('state', 'rest');
@@ -715,7 +793,9 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
   private handlePredictionResult = result => {
     this.analyzeResults = _.cloneDeep(result);
     this.tableHelper.setAnalyzeResult(result?.analyzeResult);
-    const tags = this.getTagsForPredictResults(this.getPredictionsFromAnalyzeResult(result?.analyzeResult));
+    const tags = this.getTagsForPredictResults(
+      this.getPredictionsFromAnalyzeResult(result?.analyzeResult)
+    );
     this.setState(
       {
         tags,
@@ -743,7 +823,9 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
     } else if (error?.response) {
       alertMessage = error.response.data;
     } else {
-      alertMessage = interpolate(strings.errors.endpointConnectionError.message, { endpoint: 'form recognizer backend URL' });
+      alertMessage = interpolate(strings.errors.endpointConnectionError.message, {
+        endpoint: 'form recognizer backend URL'
+      });
     }
     this.setState({
       shouldShowAlert: true,
@@ -782,11 +864,19 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
     const endpointURL = this.getComposedURL();
     const apiKey = this.props.prebuiltSettings.apiKey;
 
-    const headers = { 'Content-Type': this.state.file ? this.state.file.type : 'application/json', 'cache-control': 'no-cache' };
+    const headers = {
+      'Content-Type': this.state.file ? this.state.file.type : 'application/json',
+      'cache-control': 'no-cache'
+    };
     const body = this.state.file ?? { source: this.state.fetchedFileURL };
     let response;
     try {
-      response = await ServiceHelper.postWithAutoRetry(endpointURL, body, { headers }, apiKey as string);
+      response = await ServiceHelper.postWithAutoRetry(
+        endpointURL,
+        body,
+        { headers },
+        apiKey as string
+      );
     } catch (err) {
       ServiceHelper.handleServiceError({ ...err, endpoint: endpointURL });
     }
@@ -820,8 +910,11 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
     const feature = new Feature({
       geometry: new Polygon([coordinates])
     });
-    const tag = this.state.tags.find(tag => text.toLocaleLowerCase().startsWith(tag.name.toLocaleLowerCase()));
-    const isHighlighted = text.toLocaleLowerCase() === this.state.highlightedField?.toLocaleLowerCase();
+    const tag = this.state.tags.find(tag =>
+      text.toLocaleLowerCase().startsWith(tag.name.toLocaleLowerCase())
+    );
+    const isHighlighted =
+      text.toLocaleLowerCase() === this.state.highlightedField?.toLocaleLowerCase();
     feature.setProperties({
       color: _.get(tag, 'color', '#333333'),
       fieldName: text,
@@ -861,7 +954,9 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
     const imageExtent = [0, 0, this.state.imageWidth, this.state.imageHeight];
     this.tableHelper.drawTables(this.state.currentPage);
     const isCurrentPage = result => result.page === this.state.currentPage;
-    const ocrForCurrentPage: any = this.getOcrFromAnalyzeResult(this.state.analyzeResult).find(isCurrentPage);
+    const ocrForCurrentPage: any = this.getOcrFromAnalyzeResult(this.state.analyzeResult).find(
+      isCurrentPage
+    );
     if (ocrForCurrentPage) {
       const ocrExtent = [0, 0, ocrForCurrentPage.width, ocrForCurrentPage.height];
       const createFeature = (fieldName, field) => {
@@ -871,12 +966,19 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
           if (_.get(field, 'page', null) === this.state.currentPage) {
             const text = fieldName;
             const boundingbox = _.get(field, 'boundingBox', []);
-            const feature = this.createBoundingBoxVectorFeature(text, boundingbox, imageExtent, ocrExtent);
+            const feature = this.createBoundingBoxVectorFeature(
+              text,
+              boundingbox,
+              imageExtent,
+              ocrExtent
+            );
             features.push(feature);
           }
         }
       };
-      const predictions = this.flatFields(this.getPredictionsFromAnalyzeResult(this.state.analyzeResult));
+      const predictions = this.flatFields(
+        this.getPredictionsFromAnalyzeResult(this.state.analyzeResult)
+      );
       for (const [fieldName, field] of Object.entries(predictions)) {
         createFeature(fieldName, field);
       }
@@ -939,7 +1041,10 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
   private getPredictionsFromAnalyzeResult(analyzeResult: any) {
     if (analyzeResult) {
       const documentResults = _.get(analyzeResult, 'documentResults', []);
-      return documentResults.reduce((accFields, documentResult) => ({ ...accFields, ...documentResult.fields }), {});
+      return documentResults.reduce(
+        (accFields, documentResult) => ({ ...accFields, ...documentResult.fields }),
+        {}
+      );
     } else {
       return {};
     }
@@ -1045,7 +1150,9 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
       if (this.state.withPageRange && this.state.pageRangeIsValid) {
         newQueryString += `&${constants.pages}=${this.state.pageRange}`;
       }
-      newQueryString += this.state.currentPrebuiltType.useLocale ? `&locale=${this.state.currentLocale}` : '';
+      newQueryString += this.state.currentPrebuiltType.useLocale
+        ? `&locale=${this.state.currentLocale}`
+        : '';
     }
 
     return newQueryString;
@@ -1053,7 +1160,11 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
 
   private getComposedURL = () => {
     const uri = this.getUpdatedRequestURI(true);
-    return this.props.prebuiltSettings.serviceURI.replace(/\/+$/, '') + '/' + uri.replace(/(\r\n|\n|\r)/gm, '').replace(/^\/+/, '');
+    return (
+      this.props.prebuiltSettings.serviceURI.replace(/\/+$/, '') +
+      '/' +
+      uri.replace(/(\r\n|\n|\r)/gm, '').replace(/^\/+/, '')
+    );
   };
 
   private setRequestURI = (e, newValue?) => {
@@ -1075,7 +1186,16 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
       const reOrderColumnHeaders = columnHeaders => {
         const headers = Array.from(columnHeaders);
         const fixedColumns = [];
-        const fixedColumnHeaders = ['Date', 'ProductCode', 'Description', 'UnitPrice', 'Quantity', 'Unit', 'Tax', 'Amount'];
+        const fixedColumnHeaders = [
+          'Date',
+          'ProductCode',
+          'Description',
+          'UnitPrice',
+          'Quantity',
+          'Unit',
+          'Tax',
+          'Amount'
+        ];
         for (const expectColumn of fixedColumnHeaders) {
           const index = headers.indexOf(expectColumn);
           if (index >= 0) {
@@ -1087,13 +1207,17 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
       };
       const collectHeaders = valueArray => {
         const headers = new Set();
-        valueArray.map(item => Object.keys(_.get(item, 'valueObject', [])).map(column => headers.add(column)));
+        valueArray.map(item =>
+          Object.keys(_.get(item, 'valueObject', [])).map(column => headers.add(column))
+        );
         return headers;
       };
       const columnNames = reOrderColumnHeaders(collectHeaders(valueArray));
       const columnHeaders = (function makeColumnHeaders() {
         const indexColumn = new Cell(0, 0, '');
-        const contentColumns = columnNames.map((columnName, columnIndex) => new Cell(0, columnIndex + 1, columnName));
+        const contentColumns = columnNames.map(
+          (columnName, columnIndex) => new Cell(0, columnIndex + 1, columnName)
+        );
         return [indexColumn, ...contentColumns];
       })();
       const matrix: any[] = [columnHeaders];
@@ -1107,7 +1231,13 @@ export class PrebuiltPredictPage extends React.Component<IPrebuiltPredictPagePro
         matrix.push([indexColumn, ...contentColumns]);
       }
       const flattenCells = matrix.reduce((cells, row) => (cells = [...cells, ...row]), []);
-      return { cells: flattenCells, columns: matrix[0].length, rows: matrix.length, fieldName: clickedField, tagColor };
+      return {
+        cells: flattenCells,
+        columns: matrix[0].length,
+        rows: matrix.length,
+        fieldName: clickedField,
+        tagColor
+      };
     };
 
     const predictions = this.getPredictionsFromAnalyzeResult(this.state.analyzeResult);

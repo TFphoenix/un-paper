@@ -1,3 +1,5 @@
+@import 'theme-colors';
+
 .page-range {
   display: flex;
   align-items: center;
@@ -5,12 +7,43 @@
   justify-content: space-between;
 
   margin-bottom: 10px;
+
+  .ms-Checkbox {
+    .ms-Checkbox-label {
+      .ms-Checkbox-checkbox {
+        border-color: $unpPink2;
+
+        .ms-Checkbox-checkmark {
+          color: $unpPink2;
+        }
+
+        &:hover {
+          background-color: $unpNeuLight3;
+        }
+      }
+
+      .ms-Checkbox-text {
+        color: $unpNeuDark4;
+      }
+    }
+
+    &.is-checked {
+      .ms-Checkbox-label {
+        .ms-Checkbox-checkbox {
+          background-color: $unpNeuLight3;
+        }
+      }
+    }
+  }
+
   .page-range-text {
     flex: 1;
+
     input[name='pagerange'] {
       width: 100%;
       height: 32px;
     }
+
     .page-range-alert {
       border: 1px solid #ffffff;
     }
