@@ -52,7 +52,10 @@ export interface IPredictResultProps {
 
 export interface IPredictResultState {}
 
-export default class PredictResult extends React.Component<IPredictResultProps, IPredictResultState> {
+export default class PredictResult extends React.Component<
+  IPredictResultProps,
+  IPredictResultState
+> {
   public render() {
     const { tags, predictions } = this.props;
     const tagsDisplayOrder = tags.map(tag => tag.name);
@@ -152,7 +155,7 @@ export default class PredictResult extends React.Component<IPredictResultProps, 
           </li>
           <li className="predictiontag-item-label mt-0 mb-1">
             <FontIcon className="pr-1 pl-1" iconName="Table" />
-            <span style={{ color: 'rgba(255, 255, 255, 0.75)' }}>Click to view analyzed table</span>
+            <span>Click to view analyzed table</span>
           </li>
         </div>
       );
@@ -178,21 +181,37 @@ export default class PredictResult extends React.Component<IPredictResultProps, 
   private renderPredictionItemLabel = (item, postProcessedValue) => {
     const displayText = item.text || item.valueString;
     return displayText == null ? (
-      <li className={postProcessedValue ? 'predictiontag-item-label mt-0' : 'predictiontag-item-label-null mt-0 mb-1'}>
+      <li
+        className={
+          postProcessedValue
+            ? 'predictiontag-item-label mt-0'
+            : 'predictiontag-item-label-null mt-0 mb-1'
+        }
+      >
         {postProcessedValue ? postProcessedValue : 'NULL'}
       </li>
     ) : (
       <>
-        <li className={postProcessedValue ? 'predictiontag-item-label mt-0' : 'predictiontag-item-label mt-0 mb-1'}>
+        <li
+          className={
+            postProcessedValue
+              ? 'predictiontag-item-label mt-0'
+              : 'predictiontag-item-label mt-0 mb-1'
+          }
+        >
           {postProcessedValue ? 'text: ' + displayText : displayText}
         </li>
-        {postProcessedValue && <li className="predictiontag-item-label mb-1">{postProcessedValue}</li>}
+        {postProcessedValue && (
+          <li className="predictiontag-item-label mb-1">{postProcessedValue}</li>
+        )}
       </>
     );
   };
 
   private getTagColor = (name: string): string => {
-    const tag: ITag = this.props.tags.find(tag => name.toLocaleLowerCase().startsWith(tag.name.toLocaleLowerCase()));
+    const tag: ITag = this.props.tags.find(tag =>
+      name.toLocaleLowerCase().startsWith(tag.name.toLocaleLowerCase())
+    );
     if (tag) {
       return tag.color;
     }
@@ -214,7 +233,11 @@ export default class PredictResult extends React.Component<IPredictResultProps, 
           }
         </div>
         <div className={'predictiontag-confidence'}>
-          {isNaN(item.confidence) ? <span>NaN</span> : <span>{(item.confidence * 100).toFixed(2) + '%'}</span>}
+          {isNaN(item.confidence) ? (
+            <span>NaN</span>
+          ) : (
+            <span>{(item.confidence * 100).toFixed(2) + '%'}</span>
+          )}
         </div>
       </div>
     );
@@ -229,7 +252,11 @@ export default class PredictResult extends React.Component<IPredictResultProps, 
   private triggerJSONDownload = (): void => {
     const { analyzeResult } = this.props;
     const predictionData = JSON.stringify(analyzeResult);
-    downloadFile(predictionData, this.props.downloadResultLabel + '.json', this.props.downloadPrefix);
+    downloadFile(
+      predictionData,
+      this.props.downloadResultLabel + '.json',
+      this.props.downloadPrefix
+    );
   };
 
   private triggerCSVDownload = (): void => {

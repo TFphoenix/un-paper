@@ -258,7 +258,7 @@ export const english: IAppStrings = {
     defaultURLInput: 'Paste or type URL...',
     uploadFile: 'Choose an image to analyze with',
     inProgress: 'Analysis in progress...',
-    anlayWithPrebuiltModels: 'Analyze ${name} (preview)',
+    anlayWithPrebuiltModels: 'Analyze ${name}',
     locale: 'Locale',
     formTypeTitle: 'Form Type',
     selectFileAndRunAnalysis: 'Upload file and run analysis',

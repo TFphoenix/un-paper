@@ -22,19 +22,19 @@ const rightPaneDefaultButtonPalette = {
   neutralPrimary: '#E9ECEF',
   neutralDark: '#fafbfb',
   black: '#fcfdfd',
-  white: '#2D3035',
+  white: '#2D3035'
 };
 
 const greenButtonPalette = {
-  themePrimary: '#78ad0e',
+  themePrimary: '#b5179e',
   themeLighterAlt: '#050701',
-  themeLighter: '#131c02',
-  themeLight: '#243404',
-  themeTertiary: '#486808',
-  themeSecondary: '#6a990c',
-  themeDarkAlt: '#83b61f',
-  themeDark: '#94c13a',
-  themeDarker: '#add165',
+  themeLighter: '#3a0ca3',
+  themeLight: '#480ca8',
+  themeTertiary: '#560bad',
+  themeSecondary: '#7209b7',
+  themeDarkAlt: '#b5179e',
+  themeDark: '#f72585',
+  themeDarker: '#f72585',
   neutralLighterAlt: '#393e43',
   neutralLighter: '#40454b',
   neutralLight: '#4c5157',
@@ -47,7 +47,7 @@ const greenButtonPalette = {
   neutralPrimary: '#cfcfcf',
   neutralDark: '#f4f4f4',
   black: '#f9f9f9',
-  white: '#32363B',
+  white: '#32363B'
 };
 
 const darkGreyPalette = {
@@ -72,7 +72,7 @@ const darkGreyPalette = {
   neutralPrimary: '#E5E6E6',
   neutralDark: '#f9f9f9',
   black: '#fcfcfc',
-  white: '#1E2024',
+  white: '#1E2024'
 };
 
 const whiteButtonPalette = {
@@ -97,7 +97,7 @@ const whiteButtonPalette = {
   neutralPrimary: '#cfcfcf',
   neutralDark: '#f4f4f4',
   black: '#f9f9f9',
-  white: '#32363B',
+  white: '#32363B'
 };
 
 const redButtonPalette = {
@@ -122,7 +122,7 @@ const redButtonPalette = {
   neutralPrimary: '#e9ecef ',
   neutralDark: '#fafbfb',
   black: '#fcfdfd',
-  white: '#272B30',
+  white: '#272B30'
 };
 
 const greyButtonPalette = {
@@ -147,7 +147,7 @@ const greyButtonPalette = {
   neutralPrimary: '#e9ecef',
   neutralDark: '#fafbfb',
   black: '#fcfdfd',
-  white: '#272B30',
+  white: '#272B30'
 };
 
 const blueButtonPalette = {
@@ -172,7 +172,7 @@ const blueButtonPalette = {
   neutralPrimary: '#e9ecef',
   neutralDark: '#fafbfb',
   black: '#fcfdfd',
-  white: '#272b30',
+  white: '#272b30'
 };
 
 const darkThemePalette = {
@@ -198,7 +198,7 @@ const darkThemePalette = {
   themeDarkAlt: '#4ba0e1',
   themeDark: '#65aee6',
   themeDarker: '#8ac2ec',
-  accent: '#3a96dd',
+  accent: '#3a96dd'
 };
 
 const greenWithWhiteBackgroundPalette = {
@@ -223,7 +223,7 @@ const greenWithWhiteBackgroundPalette = {
   neutralPrimary: '#323130',
   neutralDark: '#201f1e',
   black: '#000000',
-  white: '#ffffff',
+  white: '#ffffff'
 };
 
 const DarkDefaultPalette: Partial<IPalette> = {
@@ -250,7 +250,7 @@ const DarkDefaultPalette: Partial<IPalette> = {
   neutralLighter: '#252423',
   neutralLighterAlt: '#201f1e',
   white: '#1b1a19',
-  redDark: '#F1707B',
+  redDark: '#F1707B'
 };
 
 const lightGreyPalette = {
@@ -275,7 +275,7 @@ const lightGreyPalette = {
   neutralPrimary: '#B8B8B9',
   neutralDark: '#c9c9cb',
   black: '#d7d7d8',
-  white: '#474B4F',
+  white: '#474B4F'
 };
 
 const subMenuPalette = {
@@ -300,11 +300,11 @@ const subMenuPalette = {
   neutralPrimary: '#dedede',
   neutralDark: '#f7f7f7',
   black: '#fbfbfb',
-  white: '#373a3d',
+  white: '#373a3d'
 };
 
 const rightPaneDefaultButtonTheme = createTheme({
-  palette: rightPaneDefaultButtonPalette,
+  palette: rightPaneDefaultButtonPalette
 });
 const defaultDarkTheme = createTheme({ palette: DarkDefaultPalette });
 const defaultTheme = createTheme({ palette: DefaultPalette });
@@ -316,7 +316,7 @@ const blueTheme = createTheme({ palette: blueButtonPalette });
 const darkTheme = createTheme({ palette: darkThemePalette });
 const darkGreyTheme = createTheme({ palette: darkGreyPalette });
 const greenWithWhiteBackgroundTheme = createTheme({
-  palette: greenWithWhiteBackgroundPalette,
+  palette: greenWithWhiteBackgroundPalette
 });
 const lightGreyTheme = createTheme({ palette: lightGreyPalette });
 const subMenuTheme = createTheme({ palette: subMenuPalette });
