@@ -1,4 +1,5 @@
 import { EntityBaseRequest } from './entity-base-request.model';
+import { OrganizationUserRequest } from './organization-user-request.model';
 import { SignInTokenClaims } from './sign-in-token-claims.model';
 import { SignUpTokenClaims } from './sign-up-token-claims.model';
 
@@ -13,6 +14,8 @@ export class UserRequest extends EntityBaseRequest {
   city?: string;
   state?: string;
   streetAddress?: string;
+
+  organizationUsers?: OrganizationUserRequest[];
 
   constructor(tokenClaims: SignUpTokenClaims | SignInTokenClaims) {
     super();
@@ -31,7 +34,9 @@ export class UserRequest extends EntityBaseRequest {
     }
   }
 
-  private isSignUpTokenClaims(tokenClaims: SignUpTokenClaims | SignInTokenClaims): tokenClaims is SignUpTokenClaims {
+  private isSignUpTokenClaims(
+    tokenClaims: SignUpTokenClaims | SignInTokenClaims
+  ): tokenClaims is SignUpTokenClaims {
     return <SignUpTokenClaims>tokenClaims !== undefined;
   }
 }

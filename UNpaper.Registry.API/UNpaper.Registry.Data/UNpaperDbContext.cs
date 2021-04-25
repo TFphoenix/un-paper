@@ -10,6 +10,9 @@ namespace UNpaper.Registry.Data
         // DbSets
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Batch> Batches { get; set; }
+        public DbSet<OrganizationUser> OrganizationUsers { get; set; }
 
         // Other
         private const string TABLE_NAME_PREFIX = "UNp_";
@@ -21,6 +24,14 @@ namespace UNpaper.Registry.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Many-to-many relationships
+            modelBuilder.Entity<OrganizationUser>().HasKey(ou => new { ou.OrganizationId, ou.UserId });
+            //modelBuilder.Entity<OrganizationUser>()
+            //    .HasOne(ou => ou.Organization)
+            //    .WithMany(o => o.OrganizationUsers)
+            //    .HasForeignKey(ou => ou.OrganizationId)
+            //    .OnDelete(DeleteBehavior.NoAction);
+
             // Add tables prefix
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
             {

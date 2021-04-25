@@ -1,5 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
-import { MSAL_GUARD_CONFIG, MsalGuardConfiguration, MsalService, MsalBroadcastService } from '@azure/msal-angular';
+import {
+  MSAL_GUARD_CONFIG,
+  MsalGuardConfiguration,
+  MsalService,
+  MsalBroadcastService
+} from '@azure/msal-angular';
 import {
   RedirectRequest,
   PopupRequest,
@@ -44,7 +49,11 @@ export class AuthService {
 
     this._msalBroadcastService.msalSubject$
       .pipe(
-        filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_SUCCESS || msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS),
+        filter(
+          (msg: EventMessage) =>
+            msg.eventType === EventType.LOGIN_SUCCESS ||
+            msg.eventType === EventType.ACQUIRE_TOKEN_SUCCESS
+        ),
         takeUntil(this._destroying$)
       )
       .subscribe((result: EventMessage) => {
@@ -55,7 +64,9 @@ export class AuthService {
         // To learn more about b2c tokens, visit https://docs.microsoft.com/en-us/azure/active-directory-b2c/tokens-overview
 
         if (payload.idTokenClaims?.acr === b2cPolicies.names.forgotPassword) {
-          window.alert('Password has been reset successfully. \nPlease sign-in with your new password.');
+          window.alert(
+            'Password has been reset successfully. \nPlease sign-in with your new password.'
+          );
           return this._msalAuthService.logout();
         } else if (payload.idTokenClaims['acr'] === b2cPolicies.names.editProfile) {
           window.alert('Profile has been updated successfully. \nPlease sign-in again.');
@@ -68,7 +79,11 @@ export class AuthService {
 
     this._msalBroadcastService.msalSubject$
       .pipe(
-        filter((msg: EventMessage) => msg.eventType === EventType.LOGIN_FAILURE || msg.eventType === EventType.ACQUIRE_TOKEN_FAILURE),
+        filter(
+          (msg: EventMessage) =>
+            msg.eventType === EventType.LOGIN_FAILURE ||
+            msg.eventType === EventType.ACQUIRE_TOKEN_FAILURE
+        ),
         takeUntil(this._destroying$)
       )
       .subscribe((result: EventMessage) => {
@@ -96,13 +111,18 @@ export class AuthService {
     this._msalGuardConfig;
     if (this._msalGuardConfig.interactionType === InteractionType.Popup) {
       if (this._msalGuardConfig.authRequest) {
-        this._msalAuthService.loginPopup({ ...this._msalGuardConfig.authRequest, ...userFlowRequest }).subscribe(() => this.checkAccount());
+        this._msalAuthService
+          .loginPopup({ ...this._msalGuardConfig.authRequest, ...userFlowRequest })
+          .subscribe(() => this.checkAccount());
       } else {
         this._msalAuthService.loginPopup(userFlowRequest).subscribe(() => this.checkAccount());
       }
     } else {
       if (this._msalGuardConfig.authRequest) {
-        this._msalAuthService.loginRedirect({ ...this._msalGuardConfig.authRequest, ...userFlowRequest });
+        this._msalAuthService.loginRedirect({
+          ...this._msalGuardConfig.authRequest,
+          ...userFlowRequest
+        });
       } else {
         this._msalAuthService.loginRedirect(userFlowRequest);
       }
@@ -138,7 +158,9 @@ export class AuthService {
 
     if (tokenClaims.newUser) {
       // Sign Up
-      await this._userService.registerUser(new SignUpTokenClaims(tokenClaims));
+      this._userService.registerUser(new SignUpTokenClaims(tokenClaims)).subscribe(response => {
+        console.log(response); // TEST
+      });
     } else {
       // Sign In
       this._userService.getCurrentUser().subscribe(user => {

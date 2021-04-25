@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { Observable } from 'rxjs';
 import { TokenClaims } from 'src/app/shared/interfaces/token-claims.interface';
+import { OrganizationRequest } from 'src/app/shared/models/organization-request.model';
 import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
 import { UserRequest } from 'src/app/shared/models/user-request.model';
 import { RegistryApiRequestService } from '../request/registry-api-request.service';
@@ -10,17 +11,21 @@ import { RegistryApiRequestService } from '../request/registry-api-request.servi
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private readonly _requestService: RegistryApiRequestService, private readonly _authService: MsalService) {}
+  constructor(
+    private readonly _requestService: RegistryApiRequestService,
+    private readonly _authService: MsalService
+  ) {}
 
-  async registerUser(tokenClaims: SignUpTokenClaims) {
-    await this._requestService.post('/auth/user', JSON.stringify(new UserRequest(tokenClaims))).subscribe(response => {
-      console.log(response); // TEST
-    });
+  registerUser(tokenClaims: SignUpTokenClaims) {
+    return this._requestService.post('/user/auth', {});
   }
 
   getCurrentUser(): Observable<UserRequest> {
-    const tokenClaims = this.getAuthenticatedAccountTokenClaims();
-    return this._requestService.get('/auth/user/' + tokenClaims.oid);
+    return this._requestService.get('/user/auth');
+  }
+
+  getUserOrganizations(): Observable<OrganizationRequest[]> {
+    return this._requestService.get('/user/organizations');
   }
 
   private getAuthenticatedAccountTokenClaims() {

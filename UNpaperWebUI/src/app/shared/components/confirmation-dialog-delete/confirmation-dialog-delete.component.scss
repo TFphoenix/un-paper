@@ -1,0 +1,53 @@
+@import 'theme-colors';
+
+.delete-confirmation {
+  min-width: 312px;
+
+  .header {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 0px;
+    color: $unpPink2;
+  }
+
+  .content {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    padding: 10px;
+    margin: 0px;
+
+    .warning {
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      place-content: center flex-start;
+      align-items: center;
+      margin: 2rem;
+
+      .icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .text {
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+        place-content: flex-start center;
+        align-items: flex-start;
+        margin-left: 2rem;
+
+        .text-primary {
+          color: $unpPink2;
+        }
+      }
+    }
+  }
+}

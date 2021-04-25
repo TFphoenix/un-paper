@@ -23,8 +23,12 @@ import { APP_INITIALIZER } from '@angular/core';
 import { AppInitializerService } from './services/app-initializer/app-initializer.service';
 import { Optional } from '@angular/core';
 import { SkipSelf } from '@angular/core';
-import { IPublicClientApplication, PublicClientApplication, InteractionType } from '@azure/msal-browser';
-import { appConfig, apiConfig } from '../configs/b2c-config';
+import {
+  IPublicClientApplication,
+  PublicClientApplication,
+  InteractionType
+} from '@azure/msal-browser';
+import { appConfig } from '../configs/b2c-config';
 import { AuthCallbackComponent } from './components/auth-callback/auth-callback.component';
 import { AuthService } from './services/auth/auth.service';
 import { RequestService } from './services/request/request.service';
@@ -37,15 +41,20 @@ import { LandingComponent } from './components/landing/landing.component';
 import { HomeGuard } from './guards/home/home.guard';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LandingGuard } from './guards/landing/landing.guard';
+import { environment } from 'src/environments/environment';
+import { FunctionsApiRequestService } from './services/request/functions-api-request.service';
+import { IconService } from '@visurel/iconify-angular';
+import { OrganizationService } from './services/organization/organization.service';
 
-//TODO: Find a cleaner approach to MSAL & B2c config
+// MSAL FACTORIES
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication(appConfig);
 }
 
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();
-  protectedResourceMap.set(apiConfig.uri, apiConfig.scopes);
+  protectedResourceMap.set(environment.services.registryApi, environment.b2cScopes);
+  protectedResourceMap.set(environment.services.functionsApi, environment.b2cScopes);
 
   return {
     interactionType: InteractionType.Redirect,
@@ -57,7 +66,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Redirect,
     authRequest: {
-      scopes: [...apiConfig.scopes]
+      scopes: [...environment.b2cScopes]
     }
   };
 }
@@ -78,7 +87,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ConfigService,
     RequestService,
     RegistryApiRequestService,
+    FunctionsApiRequestService,
     UserService,
+    OrganizationService,
 
     // guards
     HomeGuard,
@@ -88,14 +99,14 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     // etc
     {
       provide: APP_INITIALIZER,
-      useFactory: (configService: ConfigService) =>
+      useFactory: (configService: ConfigService, iconService: IconService) =>
         function () {
           // if AppInitializerService is created with dependency injection then Angular will return some errors
-          const appInitializerService = new AppInitializerService(configService);
+          const appInitializerService = new AppInitializerService(configService, iconService);
           return appInitializerService.load();
         },
       multi: true,
-      deps: [ConfigService]
+      deps: [ConfigService, IconService]
     },
     // MSAL
     {

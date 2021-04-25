@@ -1,0 +1,15 @@
+<div class="actions-container">
+  <div class="spacer"></div>
+  <button (click)="addOrganization()" class="add-button m-10px" mat-raised-button color="primary">
+    <mat-icon>add</mat-icon>
+    Add Organization
+  </button>
+</div>
+<unp-data-table
+  (onEdit)="editOrganization($event)"
+  (onDelete)="deleteOrganization($event)"
+  [title]="'Organizations'"
+  [tableColumns]="tableColumns"
+  [tableData]="tableData"
+  [searchDisplay]="true"
+></unp-data-table>

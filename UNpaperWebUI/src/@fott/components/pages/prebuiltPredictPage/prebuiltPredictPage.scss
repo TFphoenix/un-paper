@@ -1,0 +1,99 @@
+@import 'theme-colors';
+
+.fott-prebuilt-predict-page {
+  color: $unpNeuDark4 !important;
+  height: 100%;
+
+  .predict {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    height: 100%;
+
+    .predict-main {
+      position: relative;
+      display: flex;
+      flex-grow: 1;
+      height: 100%;
+      justify-content: center;
+      background-color: $unpNeuMid1;
+
+      .map-wrapper {
+        height: calc(100% - 44px) !important;
+      }
+
+      > i {
+        font-size: 36pt;
+      }
+    }
+
+    .predict-sidebar {
+      height: 100%;
+      display: flex;
+      width: 400px;
+      min-width: 400px;
+      background-color: $unpNeuLight4;
+
+      h5 {
+        font-size: 1.171875rem !important;
+      }
+
+      h6 {
+        font-size: 0.9375rem !important;
+      }
+
+      .separator-right-pane-main {
+        &:before {
+          background-color: $unpPink2;
+        }
+
+        div {
+          color: $unpPink2;
+          background-color: $unpNeuLight4;
+        }
+      }
+
+      .prediction-menu {
+        display: flex;
+        flex-direction: column;
+
+        .request-uri-textfield {
+          textarea {
+            word-break: break-all;
+            background-color: white;
+            color: $unpPink2;
+          }
+        }
+
+        .predict-button {
+          .ms-Icon {
+            color: $unpPink2;
+          }
+        }
+      }
+    }
+  }
+
+  .formtype-section {
+    width: 50%;
+    float: left;
+    padding-right: 5px;
+  }
+  .locales-section {
+    width: 50%;
+    float: right;
+    padding-right: 5px;
+  }
+  .predict-button {
+    margin-top: 12px;
+    .ms-Button-icon {
+      color: rgb(120, 173, 14);
+    }
+  }
+
+  .predict-mode-toggle {
+    label {
+      color: rgb(250, 251, 251);
+    }
+  }
+}

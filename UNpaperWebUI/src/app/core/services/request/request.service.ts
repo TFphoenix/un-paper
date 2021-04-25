@@ -10,7 +10,9 @@ import { RequestMethods } from './request-methods.interface';
 export class RequestService implements RequestMethods {
   private readonly _maxRetries = 3;
   private readonly _msBetweenRetries = 2000;
-  private readonly _defaultHeaders: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
+  private readonly _defaultHeaders: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json; charset=utf-8'
+  });
 
   constructor(private readonly _http: HttpClient) {}
 
@@ -50,19 +52,8 @@ export class RequestService implements RequestMethods {
       .pipe(this.retryRequest<T>());
   }
 
-  delete<T = any>(url: string, ids: string[] = [], headers: HttpHeaders = this._defaultHeaders) {
-    if (ids.length > 1) {
-      // many ids to delete
-      return this._http
-        .post<T>(`${url}:delete`, ids, {
-          headers: headers,
-          reportProgress: true
-        })
-        .pipe(this.retryRequest<T>());
-    } else if (ids.length === 1) {
-      // one id to delete and was provided in the ids param
-      url = `${url}/${ids[0]}`;
-    }
+  delete<T = any>(url: string, id: string, headers: HttpHeaders = this._defaultHeaders) {
+    url = `${url}/${id}`;
 
     return this._http
       .delete<T>(url, {

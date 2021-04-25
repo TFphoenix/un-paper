@@ -1,0 +1,114 @@
+<form
+  class="form-container"
+  (ngSubmit)="save()"
+  [formGroup]="form"
+  spellcheck="false"
+  autocomplete="off"
+>
+  <!-- Header -->
+  <div class="header" fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 *ngIf="form.get('name').value" class="headline" fxFlex="auto">
+      {{ form.get('name').value }}
+    </h2>
+    <h2 *ngIf="!form.get('name').value" class="headline" fxFlex="auto">New {{ objectName }}</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <!-- Fields -->
+  <mat-dialog-content class="fields" fxLayout="column">
+    <div class="flex flex-col">
+      <!-- Field -->
+      <mat-form-field class="mt-6px flex-auto">
+        <mat-label>{{ objectName }} Name</mat-label>
+        <mat-icon class="mr-3px" matPrefix>business</mat-icon>
+        <input cdkFocusInitial formControlName="name" matInput required />
+        <mat-error
+          *ngIf="
+            form.controls['name'].invalid &&
+            form.controls['name'].errors.required &&
+            (form.controls['name'].dirty || form.controls['name'].touched)
+          "
+        >
+          {{ objectName }} Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Field -->
+      <mat-form-field class="mt-6px flex-auto">
+        <mat-label>{{ objectName }} Identification Code</mat-label>
+        <mat-icon class="mr-3px" matPrefix>tag</mat-icon>
+        <input formControlName="identificationCode" matInput required />
+        <mat-error
+          *ngIf="
+            form.controls['identificationCode'].invalid &&
+            form.controls['identificationCode'].errors.required &&
+            (form.controls['identificationCode'].dirty ||
+              form.controls['identificationCode'].touched)
+          "
+        >
+          {{ objectName }} Identification Code is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Field -->
+      <mat-form-field class="mt-6px flex-auto">
+        <mat-label>{{ objectName }} Foundation Date</mat-label>
+        <mat-icon class="mr-3px" matPrefix>event</mat-icon>
+        <input type="datetime-local" formControlName="foundationDate" matInput required />
+        <mat-error
+          *ngIf="
+            form.controls['foundationDate'].invalid &&
+            form.controls['foundationDate'].errors.required &&
+            (form.controls['foundationDate'].dirty || form.controls['foundationDate'].touched)
+          "
+        >
+          {{ objectName }} Foundation Date is required
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Field -->
+      <mat-form-field class="mt-6px flex-auto">
+        <mat-label>{{ objectName }} Description</mat-label>
+        <mat-icon class="mr-3px" matPrefix>subject</mat-icon>
+        <textarea formControlName="description" matInput required></textarea>
+        <mat-error
+          *ngIf="
+            form.controls['description'].invalid &&
+            form.controls['description'].errors.required &&
+            (form.controls['description'].dirty || form.controls['description'].touched)
+          "
+        >
+          {{ objectName }} Description is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <!-- Actions -->
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button
+      *ngIf="isCreateMode()"
+      color="primary"
+      mat-button
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      CREATE
+    </button>
+    <button
+      *ngIf="isUpdateMode()"
+      color="primary"
+      mat-button
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      UPDATE
+    </button>
+  </mat-dialog-actions>
+</form>

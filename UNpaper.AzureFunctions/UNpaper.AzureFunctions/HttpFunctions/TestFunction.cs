@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace UNpaper.AzureFunctions
+namespace UNpaper.AzureFunctions.HttpFunctions
 {
     public static class TestFunction
     {
@@ -27,7 +27,7 @@ namespace UNpaper.AzureFunctions
 
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+                : $"Hello, {name}. This HTTP triggered function executed successfully. (modified)";
 
             return new OkObjectResult(responseMessage);
         }

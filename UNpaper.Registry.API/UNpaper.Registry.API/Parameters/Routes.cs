@@ -12,9 +12,11 @@ namespace UNpaper.Registry.API.Parameters
         private const string ACTION_SUFFIX = "/[action]";
 
         // Controller Routes
-        public const string AuthRoute = API_PREFIX + "auth" + ACTION_SUFFIX;
+        public const string AuthRoute = API_PREFIX + "user" + ACTION_SUFFIX;
+        public const string OrganizationRoute = API_PREFIX + "organizations";
 
         // Action Routes
-        public const string UserAction = "user";
+        public const string UserAuthAction = "auth";
+        public const string UserOrganizationsAction = "organizations";
     }
 }

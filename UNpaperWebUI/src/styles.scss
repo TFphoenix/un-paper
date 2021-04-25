@@ -1,4 +1,5 @@
 @import 'theme';
+// @import 'src/@fott/common/fabric-icons-inline';
 
 // Fonts
 @font-face {
@@ -38,6 +39,10 @@ body {
 }
 
 // Margins
+.m-10px {
+  margin: 10px !important;
+}
+
 .m-h-20px {
   margin: 0 20px;
 }
@@ -46,8 +51,58 @@ body {
   margin: 0 10px;
 }
 
+.mr-8px {
+  margin-right: 8px;
+}
+
 .mr-10px {
   margin-right: 10px;
+}
+
+.mr-3px {
+  margin-right: 3px !important;
+}
+
+.mt-6px {
+  margin-top: 6px !important;
+}
+
+.ml-8px {
+  margin-left: 8px !important;
+}
+
+.m-8px {
+  margin: 8px !important;
+}
+
+.m-0px {
+  margin: 0px !important;
+}
+
+// Paddings
+.p-h-8px {
+  padding: 0 8px;
+}
+
+.pl-16px {
+  padding-left: 16px;
+}
+
+// Flex
+.flex {
+  display: flex;
+}
+
+.flex-auto {
+  flex: auto;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
 }
 
 // Shadows
@@ -73,6 +128,17 @@ body {
   -webkit-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
   box-shadow: 0px 0px 80px -20px rgba(0, 0, 0, 0.6);
+}
+
+// Custom Icons
+.unp-icon-16 {
+  width: 16px;
+  height: 16px;
+}
+
+.unp-icon-24 {
+  width: 24px;
+  height: 24px;
 }
 
 // Fonts

@@ -5,12 +5,13 @@
     <a routerLink="/">
       <img src="./assets/logo/UNpaper-Logo-white.svg" alt="UNpaper Logo" class="unp-logo" />
     </a>
-    <div class="unp-version m-h-20px">v 0.1.0 (alpha)</div>
+    <div class="unp-version m-h-20px">v 0.2 (alpha)</div>
     <mat-divider class="unp-divider" [vertical]="true"></mat-divider>
   </div>
 
   <!-- Search -->
-  <div class="unp-header-col">
+  <!-- TODO: Currently disabled -->
+  <!-- <div class="unp-header-col">
     <form class="unp-search-form m-h-20px">
       <mat-form-field class="search-field">
         <input matInput placeholder="Search for a document, organization or batch ..." />
@@ -19,20 +20,26 @@
         <mat-icon aria-hidden="false" aria-label="Search">search</mat-icon>
       </button>
     </form>
-  </div>
+  </div> -->
 
   <!-- Actions & User -->
   <div class="unp-header-col">
     <!-- Due Date -->
     <div class="m-h-10px">
-      <button mat-icon-button color="primary" aria-label="Due Dates">
+      <button (click)="onCalendarClick()" mat-icon-button color="primary" aria-label="Due Dates">
         <mat-icon>calendar_today</mat-icon>
       </button>
     </div>
 
     <!-- Notifications -->
     <div class="m-h-10px">
-      <button class="m-h-10px" mat-icon-button color="primary" aria-label="Notifications">
+      <button
+        (click)="onNotificationClick()"
+        class="m-h-10px"
+        mat-icon-button
+        color="primary"
+        aria-label="Notifications"
+      >
         <mat-icon>notifications</mat-icon>
       </button>
     </div>
@@ -47,8 +54,8 @@
 
       <!-- User Details -->
       <div class="user-data m-h-10px">
-        <span class="user-name">User Name</span>
-        <span class="user-email">email@address.com</span>
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-email">{{ userEmail }}</span>
       </div>
 
       <!-- User Menu -->
