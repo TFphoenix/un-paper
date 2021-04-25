@@ -8,7 +8,7 @@ export const environment = {
     'https://unpaper2020.onmicrosoft.com/api/functions.write'
   ],
   services: {
-    registryApi: 'https://unpaper-api-management-service.azure-api.net/v1',
+    registryApi: 'https://unpaper-api-management-service.azure-api.net/v1/api',
     functionsApi: 'https://unpaper-api-management-service.azure-api.net/unpaper-functions'
   }
 };
