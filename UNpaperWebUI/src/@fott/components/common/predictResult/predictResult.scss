@@ -94,13 +94,14 @@
   }
 
   &-item:hover {
-    color: #fff;
+    font-weight: bold;
     background: $lighter-4;
     cursor: pointer;
   }
 
   &-item-label:hover {
-    color: #fff;
+    color: $unpPink2;
+    font-weight: bold;
     background: $lighter-4;
     cursor: pointer;
   }
@@ -189,7 +190,14 @@ div.circle-picker-container {
 .results-container {
   margin-top: 30px;
   margin-bottom: 7px;
+  justify-content: center;
+  flex-direction: column;
 }
+
+.download-container {
+  justify-content: center;
+}
+
 .results-header {
   margin-bottom: 0px;
 }

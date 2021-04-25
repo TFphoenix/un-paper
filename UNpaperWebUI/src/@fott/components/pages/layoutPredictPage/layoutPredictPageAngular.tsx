@@ -37,7 +37,8 @@ const containerElementName = 'fottLayoutPredictPageContainer';
     '../../common/imageMap/imageMap.scss',
     '../../common/canvasCommandBar/canvasCommandBar.scss',
     '../../common/pageRange/pageRange.scss',
-    '../../common/tableView/tableView.scss'
+    '../../common/tableView/tableView.scss',
+    '../../common/predictResult/predictResult.scss'
   ],
   encapsulation: ViewEncapsulation.None
 })

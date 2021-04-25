@@ -42,8 +42,7 @@
         font-size: 0.9375rem !important;
       }
 
-      // TODO: Refactor selector
-      .root-41 {
+      .separator-right-pane-main {
         &:before {
           background-color: $unpPink2;
         }
@@ -57,6 +56,14 @@
       .prediction-menu {
         display: flex;
         flex-direction: column;
+
+        .request-uri-textfield {
+          textarea {
+            word-break: break-all;
+            background-color: white;
+            color: $unpPink2;
+          }
+        }
 
         .predict-button {
           .ms-Icon {
@@ -81,12 +88,6 @@
     margin-top: 12px;
     .ms-Button-icon {
       color: rgb(120, 173, 14);
-    }
-  }
-
-  .request-uri-textfield {
-    textarea {
-      word-break: break-all;
     }
   }
 

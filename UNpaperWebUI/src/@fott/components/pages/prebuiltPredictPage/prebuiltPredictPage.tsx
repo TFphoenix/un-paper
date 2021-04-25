@@ -291,7 +291,8 @@ export class PrebuiltPredictPage extends React.Component<
         <div className="predict-sidebar bg-lighter-1">
           <div className="condensed-list">
             <h6 className="condensed-list-header bg-darker-2 p-2 flex-center">
-              <FontIcon className="mr-1" iconName="ContactCard" />
+              {/* <FontIcon className="mr-1" iconName="ContactCard" /> */}
+              <img className="unp-icon-24 mr-8px" src="./assets/icons/prebuilt.svg" alt="" />
               <span>
                 {interpolate(
                   strings.prebuiltPredict.anlayWithPrebuiltModels,
@@ -390,23 +391,31 @@ export class PrebuiltPredictPage extends React.Component<
                     autoAdjustHeight={true}
                   />
                   <div className="container-items-end predict-button">
+                    {/* Analyze Button */}
                     <PrimaryButton
                       theme={getPrimaryWhiteTheme()}
-                      iconProps={{ iconName: 'ContactCard' }}
-                      text={strings.prebuiltPredict.runAnalysis}
+                      // iconProps={{ iconName: 'ContactCard' }}
+                      // text={strings.prebuiltPredict.runAnalysis}
                       aria-label={
                         !this.state.isPredicting ? strings.prebuiltPredict.inProgress : ''
                       }
                       allowDisabledFocus
                       disabled={predictDisabled}
                       onClick={this.handleClick}
-                    />
+                    >
+                      <img
+                        className="unp-icon-16 mr-8px"
+                        src="./assets/icons/prebuilt-primary.svg"
+                        alt=""
+                      />
+                      <span>{strings.layoutPredict.runLayout}</span>
+                    </PrimaryButton>
                   </div>
                 </div>
               </>
             )}
             {this.state.isFetching && (
-              <div className="loading-container">
+              <div className="loading-container pl-16px">
                 <Spinner
                   label="Fetching..."
                   ariaLive="assertive"
@@ -416,7 +425,7 @@ export class PrebuiltPredictPage extends React.Component<
               </div>
             )}
             {this.state.isPredicting && (
-              <div className="loading-container">
+              <div className="loading-container pl-16px">
                 <Spinner
                   label={strings.prebuiltPredict.inProgress}
                   ariaLive="assertive"

@@ -3,6 +3,8 @@
 @import './common/scss/fabric-icons-inline.scss';
 @import './common/css/bootstrap-theme-slate.css';
 
+@import 'theme-colors';
+
 // index.scss
 body {
   user-select: none;
@@ -330,4 +332,25 @@ input[type='file'] {
 
 .app-delete-icon {
   height: 18px;
+}
+
+// REMEMBER: Custom MS-UNpaper themes
+.ms-Dropdown {
+  &:active {
+    .ms-Dropdown-title {
+      border-color: $unpPink2;
+    }
+  }
+
+  &:focus {
+    &::after {
+      border-color: $unpPink2;
+    }
+  }
+}
+
+.ms-Spinner {
+  .ms-Spinner-circle {
+    border-color: #b5179e #fce7f9 #fce7f9;
+  }
 }

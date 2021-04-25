@@ -38,9 +38,10 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
 }
 
 /* *,
@@ -2085,7 +2086,8 @@ pre code {
   -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -2620,12 +2622,14 @@ textarea.form-control {
   font-size: 0.9375rem;
   line-height: 1.5;
   border-radius: 0.25rem;
-  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-    -webkit-box-shadow 0.15s ease-in-out;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
-    -webkit-box-shadow 0.15s ease-in-out;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+  -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
     -webkit-box-shadow 0.15s ease-in-out;
 }
 
@@ -4222,11 +4226,14 @@ input[type='button'].btn-block {
   background-color: #3a3f44;
   border: 0;
   border-radius: 1rem;
-  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   -webkit-appearance: none;
   appearance: none;
 }
@@ -4258,11 +4265,14 @@ input[type='button'].btn-block {
   background-color: #3a3f44;
   border: 0;
   border-radius: 1rem;
-  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   -moz-appearance: none;
   appearance: none;
 }
@@ -4297,11 +4307,14 @@ input[type='button'].btn-block {
   background-color: #3a3f44;
   border: 0;
   border-radius: 1rem;
-  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
   appearance: none;
 }
 
@@ -4340,11 +4353,14 @@ input[type='button'].btn-block {
 .custom-control-label::before,
 .custom-file-label,
 .custom-select {
-  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
     -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -6137,8 +6153,8 @@ button.close {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6263,8 +6279,8 @@ button.close {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -9852,7 +9868,14 @@ a.text-dark:focus {
 
 .navbar .nav-link:hover,
 .navbar .nav-link:focus {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#101112), color-stop(40%, #17191b), to(#1b1e20));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#101112),
+    color-stop(40%, #17191b),
+    to(#1b1e20)
+  );
   background-image: linear-gradient(#101112, #17191b 40%, #1b1e20);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9881,7 +9904,14 @@ a.text-dark:focus {
 
 .navbar.bg-light .nav-link:hover,
 .navbar.bg-light .nav-link:focus {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#4e5458), color-stop(40%, #565b60), to(#5b6165));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#4e5458),
+    color-stop(40%, #565b60),
+    to(#5b6165)
+  );
   background-image: linear-gradient(#4e5458, #565b60 40%, #5b6165);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9931,7 +9961,14 @@ a.text-dark:focus {
 }
 
 .btn-primary {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#484e55),
+    color-stop(60%, #3a3f44),
+    to(#313539)
+  );
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9942,7 +9979,14 @@ a.text-dark:focus {
 .btn-primary:not([disabled]):not(.disabled):focus,
 .btn-primary:not([disabled]):not(.disabled):active:hover,
 .btn-primary:not([disabled]):not(.disabled).active:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#101112), color-stop(40%, #17191b), to(#1b1e20));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#101112),
+    color-stop(40%, #17191b),
+    to(#1b1e20)
+  );
   background-image: linear-gradient(#101112, #17191b 40%, #1b1e20);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9950,7 +9994,14 @@ a.text-dark:focus {
 }
 
 .btn-secondary {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#8a9196), color-stop(60%, #7a8288), to(#70787d));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#8a9196),
+    color-stop(60%, #7a8288),
+    to(#70787d)
+  );
   background-image: linear-gradient(#8a9196, #7a8288 60%, #70787d);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9961,7 +10012,14 @@ a.text-dark:focus {
 .btn-secondary:not([disabled]):not(.disabled):focus,
 .btn-secondary:not([disabled]):not(.disabled):active,
 .btn-secondary:not([disabled]):not(.disabled).active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#4e5458), color-stop(40%, #565b60), to(#5b6165));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#4e5458),
+    color-stop(40%, #565b60),
+    to(#5b6165)
+  );
   background-image: linear-gradient(#4e5458, #565b60 40%, #5b6165);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9969,7 +10027,14 @@ a.text-dark:focus {
 }
 
 .btn-success {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#78cc78), color-stop(60%, #62c462), to(#53be53));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#78cc78),
+    color-stop(60%, #62c462),
+    to(#53be53)
+  );
   background-image: linear-gradient(#78cc78, #62c462 60%, #53be53);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9981,7 +10046,14 @@ a.text-dark:focus {
 .btn-success:not([disabled]):not(.disabled):focus,
 .btn-success:not([disabled]):not(.disabled):active,
 .btn-success:not([disabled]):not(.disabled).active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#379337), color-stop(40%, #3b9e3b), to(#3ea63e));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#379337),
+    color-stop(40%, #3b9e3b),
+    to(#3ea63e)
+  );
   background-image: linear-gradient(#379337, #3b9e3b 40%, #3ea63e);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -9989,7 +10061,14 @@ a.text-dark:focus {
 }
 
 .btn-info {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#74cae3), color-stop(60%, #5bc0de), to(#4ab9db));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#74cae3),
+    color-stop(60%, #5bc0de),
+    to(#4ab9db)
+  );
   background-image: linear-gradient(#74cae3, #5bc0de 60%, #4ab9db);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10001,7 +10080,14 @@ a.text-dark:focus {
 .btn-info:not([disabled]):not(.disabled):focus,
 .btn-info:not([disabled]):not(.disabled):active,
 .btn-info:not([disabled]):not(.disabled).active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#2596b8), color-stop(40%, #28a1c5), to(#29a8cd));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#2596b8),
+    color-stop(40%, #28a1c5),
+    to(#29a8cd)
+  );
   background-image: linear-gradient(#2596b8, #28a1c5 40%, #29a8cd);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10009,7 +10095,14 @@ a.text-dark:focus {
 }
 
 .btn-warning {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#faa123), color-stop(60%, #f89406), to(#e48806));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#faa123),
+    color-stop(60%, #f89406),
+    to(#e48806)
+  );
   background-image: linear-gradient(#faa123, #f89406 60%, #e48806);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10021,7 +10114,14 @@ a.text-dark:focus {
 .btn-warning:not([disabled]):not(.disabled):focus,
 .btn-warning:not([disabled]):not(.disabled):active,
 .btn-warning:not([disabled]):not(.disabled).active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#9e5f04), color-stop(40%, #ad6704), to(#b76d04));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#9e5f04),
+    color-stop(40%, #ad6704),
+    to(#b76d04)
+  );
   background-image: linear-gradient(#9e5f04, #ad6704 40%, #b76d04);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10029,7 +10129,14 @@ a.text-dark:focus {
 }
 
 .btn-danger {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f17a77), color-stop(60%, #ee5f5b), to(#ec4d49));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#f17a77),
+    color-stop(60%, #ee5f5b),
+    to(#ec4d49)
+  );
   background-image: linear-gradient(#f17a77, #ee5f5b 60%, #ec4d49);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10040,7 +10147,14 @@ a.text-dark:focus {
 .btn-danger:not([disabled]):not(.disabled):focus,
 .btn-danger:not([disabled]):not(.disabled):active,
 .btn-danger:not([disabled]):not(.disabled).active {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#d71c16), color-stop(40%, #e51d18), to(#e8241f));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#d71c16),
+    color-stop(40%, #e51d18),
+    to(#e8241f)
+  );
   background-image: linear-gradient(#d71c16, #e51d18 40%, #e8241f);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10057,14 +10171,14 @@ a.text-dark:focus {
   border-color: rgba(0, 0, 0, 0.6);
 }
 
-h1,
+/* h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
   text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
-}
+} */
 
 .table-primary,
 .table-secondary,
@@ -10188,7 +10302,14 @@ legend {
 }
 
 .input-group-addon {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#8a9196), color-stop(60%, #7a8288), to(#70787d));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#8a9196),
+    color-stop(60%, #7a8288),
+    to(#70787d)
+  );
   background-image: linear-gradient(#8a9196, #7a8288 60%, #70787d);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10203,7 +10324,14 @@ legend {
 }
 
 .nav-pills .nav-link {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#484e55),
+    color-stop(60%, #3a3f44),
+    to(#313539)
+  );
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10214,7 +10342,14 @@ legend {
 }
 
 .nav-pills .nav-link:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#101112), color-stop(40%, #17191b), to(#1b1e20));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#101112),
+    color-stop(40%, #17191b),
+    to(#1b1e20)
+  );
   background-image: linear-gradient(#101112, #17191b 40%, #1b1e20);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10225,7 +10360,14 @@ legend {
 .nav-pills .nav-link.active,
 .nav-pills .nav-link:hover {
   background-color: transparent;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#101112), color-stop(40%, #17191b), to(#1b1e20));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#101112),
+    color-stop(40%, #17191b),
+    to(#1b1e20)
+  );
   background-image: linear-gradient(#101112, #17191b 40%, #1b1e20);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10235,7 +10377,14 @@ legend {
 
 .nav-pills .nav-link.disabled,
 .nav-pills .nav-link.disabled:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#484e55),
+    color-stop(60%, #3a3f44),
+    to(#313539)
+  );
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10245,7 +10394,14 @@ legend {
 
 .pagination .page-link {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#484e55),
+    color-stop(60%, #3a3f44),
+    to(#313539)
+  );
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10253,7 +10409,14 @@ legend {
 }
 
 .pagination .page-link:hover {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#101112), color-stop(40%, #17191b), to(#1b1e20));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#101112),
+    color-stop(40%, #17191b),
+    to(#1b1e20)
+  );
   background-image: linear-gradient(#101112, #17191b 40%, #1b1e20);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10262,7 +10425,14 @@ legend {
 }
 
 .pagination .page-item.active .page-link {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#101112), color-stop(40%, #17191b), to(#1b1e20));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#101112),
+    color-stop(40%, #17191b),
+    to(#1b1e20)
+  );
   background-image: linear-gradient(#101112, #17191b 40%, #1b1e20);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10270,7 +10440,14 @@ legend {
 }
 
 .pagination .page-item.disabled .page-link {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#484e55),
+    color-stop(60%, #3a3f44),
+    to(#313539)
+  );
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-repeat: no-repeat;
   -webkit-filter: none;
@@ -10281,7 +10458,14 @@ legend {
   border: 1px solid rgba(0, 0, 0, 0.6);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   background-color: transparent;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#484e55), color-stop(60%, #3a3f44), to(#313539));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#484e55),
+    color-stop(60%, #3a3f44),
+    to(#313539)
+  );
   background-image: linear-gradient(#484e55, #3a3f44 60%, #313539);
   background-repeat: no-repeat;
   -webkit-filter: none;

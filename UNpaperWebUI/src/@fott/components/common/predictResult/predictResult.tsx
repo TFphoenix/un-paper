@@ -86,11 +86,11 @@ export default class PredictResult extends React.Component<
       ]
     };
     return (
-      <div>
+      <div className="p-h-8px">
         <div className="container-items-center container-space-between results-container">
           <h5 className="results-header">Prediction results</h5>
         </div>
-        <div className="container-items-center container-space-between">
+        <div className="container-items-center container-space-between download-container">
           {this.props.onAddAssetToProject ? (
             <PrimaryButton
               theme={getPrimaryGreenTheme()}
@@ -101,7 +101,7 @@ export default class PredictResult extends React.Component<
             <span></span>
           )}
           <PrimaryButton
-            className="align-self-end keep-button-120px"
+            className="keep-button-120px"
             theme={getPrimaryGreenTheme()}
             text="Download"
             allowDisabledFocus

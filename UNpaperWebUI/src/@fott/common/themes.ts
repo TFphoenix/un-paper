@@ -46,8 +46,8 @@ const greenButtonPalette = {
   neutralPrimaryAlt: '#e9e9e9',
   neutralPrimary: '#cfcfcf',
   neutralDark: '#f4f4f4',
-  black: '#f9f9f9',
-  white: '#32363B'
+  black: '#32363B',
+  white: '#f9f9f9'
 };
 
 const darkGreyPalette = {
@@ -202,26 +202,26 @@ const darkThemePalette = {
 };
 
 const greenWithWhiteBackgroundPalette = {
-  themePrimary: '#78ad0e',
-  themeLighterAlt: '#f9fcf2',
-  themeLighter: '#e6f2ce',
-  themeLight: '#d1e7a7',
-  themeTertiary: '#a8ce5c',
-  themeSecondary: '#86b723',
-  themeDarkAlt: '#6c9c0c',
-  themeDark: '#5b840b',
-  themeDarker: '#436108',
-  neutralLighterAlt: '#faf9f8',
-  neutralLighter: '#f3f2f1',
-  neutralLight: '#edebe9',
-  neutralQuaternaryAlt: '#e1dfdd',
-  neutralQuaternary: '#d0d0d0',
-  neutralTertiaryAlt: '#c8c6c4',
-  neutralTertiary: '#a19f9d',
+  themePrimary: '#b5179e',
+  themeLighterAlt: '#050701',
+  themeLighter: '#3a0ca3',
+  themeLight: '#480ca8',
+  themeTertiary: '#560bad',
+  themeSecondary: '#7209b7',
+  themeDarkAlt: '#b5179e',
+  themeDark: '#f72585',
+  themeDarker: '#f72585',
+  neutralLighterAlt: '#393e43',
+  neutralLighter: '#40454b',
+  neutralLight: '#4c5157',
+  neutralQuaternaryAlt: '#53585f',
+  neutralQuaternary: '#595f65',
+  neutralTertiaryAlt: '#73787f',
+  neutralTertiary: '#dfdfdf',
   neutralSecondary: '#605e5c',
-  neutralPrimaryAlt: '#3b3a39',
-  neutralPrimary: '#323130',
-  neutralDark: '#201f1e',
+  neutralPrimaryAlt: '#e9e9e9',
+  neutralPrimary: '#000000',
+  neutralDark: '#f4f4f4',
   black: '#000000',
   white: '#ffffff'
 };

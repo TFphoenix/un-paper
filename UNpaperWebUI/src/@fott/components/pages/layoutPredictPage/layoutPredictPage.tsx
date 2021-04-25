@@ -216,7 +216,8 @@ export class LayoutPredictPage extends React.Component<
                 className="condensed-list-header bg-darker-2 p-2 flex-center"
                 style={{ marginBottom: '1rem' }}
               >
-                <FontIcon className="mr-1" iconName="KeyPhraseExtraction" />
+                {/* <FontIcon className="mr-1" iconName="KeyPhraseExtraction" /> */}
+                <img className="unp-icon-24 mr-8px" src="./assets/icons/layout.svg" alt="" />
                 <span>{strings.layoutPredict.layout}</span>
               </h6>
               {/* <PrebuiltSetting prebuiltSettings={this.props.prebuiltSettings}
@@ -246,17 +247,25 @@ export class LayoutPredictPage extends React.Component<
               </Separator>
               <div className="p-3" style={{ marginTop: '8px' }}>
                 <div className="container-items-end predict-button">
+                  {/* Analyze Button */}
                   <PrimaryButton
                     theme={getPrimaryWhiteTheme()}
-                    iconProps={{ iconName: 'KeyPhraseExtraction' }}
-                    text={strings.layoutPredict.runLayout}
+                    // iconProps={{ iconName: 'KeyPhraseExtraction' }}
+                    // text={strings.layoutPredict.runLayout}
                     aria-label={
                       !this.state.analyzationLoaded ? strings.layoutPredict.inProgress : ''
                     }
                     allowDisabledFocus
                     disabled={analyzeDisabled}
                     onClick={this.handleClick}
-                  />
+                  >
+                    <img
+                      className="unp-icon-16 mr-8px"
+                      src="./assets/icons/layout-primary.svg"
+                      alt=""
+                    />
+                    <span>{strings.layoutPredict.runLayout}</span>
+                  </PrimaryButton>
                 </div>
                 {this.state.isFetching && (
                   <div className="loading-container">
@@ -281,8 +290,9 @@ export class LayoutPredictPage extends React.Component<
                 {this.state.layoutData && !this.state.isAnalyzing && (
                   <div className="container-items-center container-space-between results-container">
                     <h5 className="results-header">{strings.layoutPredict.layoutResults}</h5>
+                    {/* Download Button */}
                     <PrimaryButton
-                      className="align-self-end keep-button-120px"
+                      className="keep-button-120px"
                       theme={getPrimaryGreenTheme()}
                       text={strings.layoutPredict.download}
                       allowDisabledFocus
