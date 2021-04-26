@@ -6,17 +6,8 @@
 @import 'theme-colors';
 
 // index.scss
-body {
-  user-select: none;
-  background-color: #272b30;
-}
-
 body.no-focus-outline :focus {
   outline: none;
-}
-
-#rootdiv {
-  overflow: hidden;
 }
 
 input[type='file'] {
