@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IconService } from '@visurel/iconify-angular';
+import * as React from 'react';
 import { registerIcons } from 'src/@fott/common/registerIcons';
 import { appIcons } from 'src/app/configs/app-icons';
 import { ConfigService } from '../config/config.service';
@@ -27,6 +28,9 @@ export class AppInitializerService {
    */
   onLoaded() {
     console.log('Config data loaded');
+
+    // Register React
+    window.React = React;
 
     // Register icons for @fott
     registerIcons();
