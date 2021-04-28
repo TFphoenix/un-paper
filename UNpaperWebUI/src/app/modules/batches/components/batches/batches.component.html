@@ -1,11 +1,13 @@
 <div class="actions-container">
   <div class="spacer"></div>
-  <button class="add-button m-10px" mat-raised-button color="primary">
+  <button (click)="addBatch()" class="add-button m-10px" mat-raised-button color="primary">
     <mat-icon>add</mat-icon>
     Add Batch
   </button>
 </div>
 <unp-data-table
+  (onEdit)="editBatch($event)"
+  (onDelete)="deleteBatch($event)"
   [title]="'Batches'"
   [tableColumns]="tableColumns"
   [tableData]="tableData"

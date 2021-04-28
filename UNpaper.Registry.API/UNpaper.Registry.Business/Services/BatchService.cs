@@ -37,9 +37,6 @@ namespace UNpaper.Registry.Business.Services
         {
             var createdBatch = await _batchRepository.AddAsyncEntity(batch);
 
-            // For avoinding depenency cycle exception
-            //createdBatch.BatchUsers = new List<BatchUser>();
-
             return createdBatch;
         }
 

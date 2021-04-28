@@ -7,6 +7,19 @@ namespace UNpaper.Registry.API.Parameters
 {
     public static class ResponseMessages
     {
+        public enum ResponseStatus
+        {
+            Success,
+            Error,
+            Other
+        }
+
+        public class Response
+        {
+            public ResponseStatus Status { get; set; } = ResponseStatus.Other;
+            public string Message { get; set; } = "No Message";
+        }
+
         // Errors
         public const string OrganizationNotFoundError = "Organization not found, make sure the given ID is correct and organization is not deleted";
         public const string OrganizationCreateError = "Error creating organization";

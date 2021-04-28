@@ -10,4 +10,8 @@ export class OrganizationRequest extends EntityBaseRequest {
 
   organizationUsers?: OrganizationUserRequest[];
   batches?: BatchRequest[];
+
+  public toString = (): string => {
+    return this.name;
+  };
 }

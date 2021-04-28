@@ -62,7 +62,11 @@ namespace UNpaper.Registry.API.Controllers
             {
                 var updated = await _batchService.ModifyBatch(batch);
                 return updated
-                    ? (IActionResult)Ok(ResponseMessages.BatchUpdateSuccess)
+                    ? (IActionResult)Ok(new ResponseMessages.Response()
+                    {
+                        Status = ResponseMessages.ResponseStatus.Success,
+                        Message = ResponseMessages.BatchUpdateSuccess
+                    })
                     : NotFound(ResponseMessages.BatchNotFoundError);
             }
             catch
@@ -79,7 +83,11 @@ namespace UNpaper.Registry.API.Controllers
             var deleted = await _batchService.DeleteBatch(new Guid(id));
 
             return deleted ?
-                (IActionResult)Ok(ResponseMessages.BatchDeleteSuccess) :
+                (IActionResult)Ok(new ResponseMessages.Response()
+                {
+                    Status = ResponseMessages.ResponseStatus.Success,
+                    Message = ResponseMessages.BatchDeleteSuccess
+                }) :
                 NotFound(ResponseMessages.BatchNotFoundError);
         }
     }

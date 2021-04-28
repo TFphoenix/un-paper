@@ -36,23 +36,23 @@ export class OrganizationCreateUpdateComponent implements OnInit {
 
   save() {
     if (this.isCreateMode()) {
-      this.createProject();
+      this.createEntity();
     } else if (this.isUpdateMode()) {
-      this.updateProject();
+      this.updateEntity();
     }
   }
 
-  createProject() {
-    const project = this.form.value;
+  createEntity() {
+    const entity = this.form.value;
 
-    this.dialogRef.close(project);
+    this.dialogRef.close(entity);
   }
 
-  updateProject() {
-    const project = this.form.value;
-    project.id = this.defaults.id;
+  updateEntity() {
+    const entity = this.form.value;
+    entity.id = this.defaults.id;
 
-    this.dialogRef.close(project);
+    this.dialogRef.close(entity);
   }
 
   isCreateMode() {

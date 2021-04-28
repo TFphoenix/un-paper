@@ -62,7 +62,11 @@ namespace UNpaper.Registry.API.Controllers
             {
                 var updated = await _organizationService.ModifyOrganization(organization);
                 return updated
-                    ? (IActionResult)Ok(ResponseMessages.OrganizationUpdateSuccess)
+                    ? (IActionResult)Ok(new ResponseMessages.Response()
+                    {
+                        Status = ResponseMessages.ResponseStatus.Success,
+                        Message = ResponseMessages.OrganizationUpdateSuccess
+                    })
                     : NotFound(ResponseMessages.OrganizationNotFoundError);
             }
             catch
@@ -79,7 +83,11 @@ namespace UNpaper.Registry.API.Controllers
             var deleted = await _organizationService.DeleteOrganization(new Guid(id));
 
             return deleted ?
-                (IActionResult)Ok(ResponseMessages.OrganizationDeleteSuccess) :
+                (IActionResult)Ok(new ResponseMessages.Response()
+                {
+                    Status = ResponseMessages.ResponseStatus.Success,
+                    Message = ResponseMessages.OrganizationDeleteSuccess
+                }) :
                 NotFound(ResponseMessages.OrganizationNotFoundError);
         }
     }

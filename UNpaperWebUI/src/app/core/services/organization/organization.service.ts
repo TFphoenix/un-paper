@@ -1,8 +1,6 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrganizationRequest } from 'src/app/shared/models/organization-request.model';
-import { environment } from 'src/environments/environment';
 import { RegistryApiRequestService } from '../request/registry-api-request.service';
 
 @Injectable({

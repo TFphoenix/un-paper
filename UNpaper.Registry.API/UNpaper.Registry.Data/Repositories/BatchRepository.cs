@@ -46,6 +46,14 @@ namespace UNpaper.Registry.Data.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
+        //public async Task<Batch> GetAsyncWithOrganization(Guid id)
+        //{
+        //    return await _batches
+        //        .Include(b => b.Organization)
+        //        .Where(x => x.IsDeleted == false)
+        //        .SingleOrDefaultAsync(x => x.Id == id);
+        //}
+
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();

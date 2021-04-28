@@ -55,7 +55,7 @@ export class OrganizationsComponent implements OnInit {
               this.tableData = data;
             },
             error: errorMessage => {
-              console.log(errorMessage);
+              console.error(errorMessage);
             }
           });
         }
@@ -72,15 +72,10 @@ export class OrganizationsComponent implements OnInit {
         if (updatedOrganization) {
           this._organizationService.update(updatedOrganization).subscribe({
             next: result => {
-              // BUG: Entering error branch because of text format
               this.updateOrganization(updatedOrganization);
             },
             error: errorMessage => {
-              // OK
-              if (errorMessage.status === 200) {
-                this.updateOrganization(updatedOrganization);
-              }
-              // console.log(errorMessage);
+              console.error(errorMessage);
             }
           });
         }
@@ -95,15 +90,10 @@ export class OrganizationsComponent implements OnInit {
       if (dialogResult) {
         this._organizationService.delete(organization.id).subscribe({
           next: result => {
-            // BUG: Entering error branch because of text format
             this.removeOrganization(organization);
           },
           error: errorMessage => {
-            // OK
-            if (errorMessage.status === 200) {
-              this.removeOrganization(organization);
-            }
-            // console.log(errorMessage);
+            console.error(errorMessage);
           }
         });
       }
