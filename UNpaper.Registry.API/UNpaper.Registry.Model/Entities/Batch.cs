@@ -12,6 +12,6 @@ namespace UNpaper.Registry.Model.Entities
         public string Description { get; set; }
         public Guid OrganizationId { get; set; }
 
-        public Organization Organization;
-    }
+        public Organization Organization { get; set; }
+    };
 }

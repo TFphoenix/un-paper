@@ -9,5 +9,7 @@ namespace UNpaper.Registry.Interface.Repositories
 {
     public interface IBatchRepository : IRepository<Batch>
     {
+        Task<Batch> AddAsyncEntity(Batch batch);
+        IQueryable<Batch> GetUserBatchesAsQueryable(User user, bool includeBatches);
     }
 }

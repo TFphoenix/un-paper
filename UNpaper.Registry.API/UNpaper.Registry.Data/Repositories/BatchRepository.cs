@@ -50,5 +50,45 @@ namespace UNpaper.Registry.Data.Repositories
         {
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<Batch> AddAsyncEntity(Batch batch)
+        {
+            var createdBatch = await _batches.AddAsync(batch);
+
+            var created = await _context.SaveChangesAsync();
+
+            return createdBatch.Entity;
+        }
+
+        public IQueryable<Batch> GetUserBatchesAsQueryable(User user, bool includeOrganization)
+        {
+            if (includeOrganization)
+            {
+                var batches = _context.OrganizationUsers
+                    .Include(ou => ou.Organization.Batches)
+                    .ThenInclude(b => b.Organization)
+                    .Where(ou => ou.User.Equals(user) &&
+                                 ou.User.IsDeleted == false &&
+                                 ou.Organization.IsDeleted == false)
+                    .SelectMany(ou => ou.Organization.Batches
+                        .Where(b => b.IsDeleted == false));
+
+                // To prevent parsing errors because of cyclic dependencies
+                foreach (var batch in batches)
+                {
+                    batch.Organization.Batches = new List<Batch>();
+                }
+
+                return batches;
+            }
+
+            return _context.OrganizationUsers
+                    .Include(ou => ou.Organization.Batches)
+                    .Where(ou => ou.User.Equals(user) &&
+                                 ou.User.IsDeleted == false &&
+                                 ou.Organization.IsDeleted == false)
+                    .SelectMany(ou => ou.Organization.Batches
+                        .Where(b => b.IsDeleted == false));
+        }
     }
 }
