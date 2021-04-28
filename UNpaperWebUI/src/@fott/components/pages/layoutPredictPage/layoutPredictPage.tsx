@@ -141,7 +141,7 @@ export class LayoutPredictPage extends React.Component<
   private fileHelper: ILoadFileHelper = new LoadFileHelper();
 
   componentDidMount() {
-    document.title = strings.layoutPredict.title + ' - ' + strings.appName;
+    document.title = strings.appName + ' - ' + strings.layoutPredict.title;
     this.props.appTitleActions.setTitle(strings.layoutPredict.title);
   }
   componentDidUpdate(_prevProps: ILayoutPredictPageProps, prevState: ILayoutPredictPageState) {

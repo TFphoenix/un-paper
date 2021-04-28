@@ -199,7 +199,7 @@ export class PrebuiltPredictPage extends React.Component<
   public async componentDidMount() {
     const { appTitleActions, prebuiltSettings } = this.props;
     // this.appInsights = getAppInsights();
-    document.title = strings.prebuiltPredict.title + ' - ' + strings.appName;
+    document.title = strings.appName + ' - ' + strings.prebuiltPredict.title;
     appTitleActions.setTitle(`${strings.prebuiltPredict.title}`);
     if (prebuiltSettings && prebuiltSettings.serviceURI) {
       this.setState({

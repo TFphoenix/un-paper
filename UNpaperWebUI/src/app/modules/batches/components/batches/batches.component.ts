@@ -31,6 +31,8 @@ export class BatchesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    document.title = 'UNpaper - Batches';
+
     this._userService.getUserBatches(true).subscribe(batches => {
       const data: BatchData[] = [];
       batches.forEach(batch => {

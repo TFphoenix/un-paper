@@ -33,6 +33,8 @@ export class OrganizationsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    document.title = 'UNpaper - Organizations';
+
     this._userService.getUserOrganizations().subscribe(organizations => {
       const data: OrganizationData[] = [];
       organizations.forEach(organization => {
