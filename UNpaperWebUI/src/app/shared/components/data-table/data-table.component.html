@@ -48,7 +48,12 @@
   </div>
 
   <!-- Table -->
-  <div *ngIf="tableData.length > 0" class="data-container" [hidden]="hideComponent">
+  <!-- TODO: *ngIf="tableData.length > 0" -->
+  <div
+    class="data-container"
+    [ngClass]="{ hidden: tableData.length === 0 }"
+    [hidden]="hideComponent"
+  >
     <table @stagger [dataSource]="dataSource" class="data-table w-full" mat-table matSort>
       <!--- Note that these columns can be defined in any order.
                The actual rendered columns are set as a property on the row definition" -->
@@ -57,7 +62,7 @@
       <ng-container *ngFor="let column of tableColumns; trackBy: trackByProperty">
         <!-- Text Columns -->
         <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
@@ -70,7 +75,7 @@
 
         <!-- Date Columns -->
         <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
@@ -83,7 +88,7 @@
 
         <!-- Badge Columns -->
         <ng-container *ngIf="column.type === 'badge'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>

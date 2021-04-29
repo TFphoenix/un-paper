@@ -60,6 +60,10 @@
   }
 
   .data-container {
+    &.hidden {
+      display: none;
+    }
+
     .data-table {
       width: 100%;
     }
