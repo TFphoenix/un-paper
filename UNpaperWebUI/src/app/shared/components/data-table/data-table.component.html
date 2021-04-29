@@ -12,7 +12,7 @@
       <span>{{ title }}</span>
     </h2>
 
-    <!-- Search -->
+    <!-- Search & Filter -->
     <div [hidden]="hideComponent">
       <div *ngIf="searchDisplay" class="header-search" fxLayout="row" fxLayoutAlign="start center">
         <ic-icon icIcon="icSearch" size="20px"></ic-icon>
@@ -38,7 +38,7 @@
   </div>
 
   <!-- Placeholder -->
-  <div *ngIf="tableData.length === 0" class="data-placeholder">
+  <div *ngIf="tableData.length === 0 && !noDataFound" class="data-placeholder">
     <mat-progress-spinner
       class="loading-spinner"
       [color]="'primary'"
@@ -47,10 +47,16 @@
     ></mat-progress-spinner>
   </div>
 
+  <!-- No Data -->
+  <div *ngIf="noDataFound" class="no-data">
+    <span class="text">NO DATA FOUND</span>
+    <img class="image" src="./assets/icons/no-data.svg" alt="" />
+  </div>
+
   <!-- Table -->
   <div
     class="data-container"
-    [ngClass]="{ hidden: tableData.length === 0 }"
+    [ngClass]="{ hidden: tableData.length === 0 || noDataFound }"
     [hidden]="hideComponent"
   >
     <table @stagger [dataSource]="dataSource" class="data-table w-full" mat-table matSort>
@@ -113,7 +119,8 @@
       <tr
         *matRowDef="let row; columns: visibleColumns"
         @fadeInUp
-        class="tb-content trans-ease-out"
+        (click)="onSelectClick(row)"
+        class="tb-content trans-ease-out data-row"
         mat-row
       ></tr>
     </table>
@@ -146,6 +153,12 @@
 <!-- Actions Menu -->
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-entity="entity" matMenuContent>
+    <!-- Additional Actions -->
+    <button *ngFor="let action of additionalActions" (click)="action.onClick(entity)" mat-menu-item>
+      <mat-icon [icIcon]="action.icon"></mat-icon>
+      <span>{{ action.name }}</span>
+    </button>
+    <!-- Default Actions -->
     <button (click)="onEditClick(entity)" mat-menu-item>
       <mat-icon icIcon="icEdit"></mat-icon>
       <span>Edit</span>

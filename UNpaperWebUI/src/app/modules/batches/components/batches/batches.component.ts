@@ -6,6 +6,7 @@ import { ConfirmationDialogDeleteComponent } from 'src/app/shared/components/con
 import { TableColumn } from 'src/app/shared/interfaces/table-column.interface';
 import { BatchData } from 'src/app/shared/models/batch-data.model';
 import { BatchRequest } from 'src/app/shared/models/batch-request.model';
+import { OrganizationData } from 'src/app/shared/models/organization-data.model';
 import { BatchCreateUpdateComponent } from '../batch-create-update/batch-create-update.component';
 
 @Component({
@@ -24,6 +25,8 @@ export class BatchesComponent implements OnInit {
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
+  selectedOrganization: OrganizationData;
+
   constructor(
     private readonly _batchService: BatchService,
     private readonly _userService: UserService,
@@ -33,13 +36,7 @@ export class BatchesComponent implements OnInit {
   ngOnInit(): void {
     document.title = 'UNpaper - Batches';
 
-    this._userService.getUserBatches(true).subscribe(batches => {
-      const data: BatchData[] = [];
-      batches.forEach(batch => {
-        data.push(BatchData.getFromRequest(batch));
-      });
-      this.tableData = data;
-    });
+    this.populateBatches();
   }
 
   addBatch() {
@@ -98,6 +95,37 @@ export class BatchesComponent implements OnInit {
         });
       }
     });
+  }
+
+  removeSelectedOrganization() {
+    history.state.selectedOrganization = this.selectedOrganization = null;
+    this.populateBatches();
+  }
+
+  private populateBatches() {
+    this.selectedOrganization = history.state.selectedOrganization as OrganizationData;
+
+    if (this.selectedOrganization) {
+      // Organization's batches
+      this._userService.getUserBatches(true).subscribe(batches => {
+        const data: BatchData[] = [];
+        batches.forEach(batch => {
+          if (batch.organizationId === this.selectedOrganization.id) {
+            data.push(BatchData.getFromRequest(batch));
+          }
+        });
+        this.tableData = data;
+      });
+    } else {
+      // All batches
+      this._userService.getUserBatches(true).subscribe(batches => {
+        const data: BatchData[] = [];
+        batches.forEach(batch => {
+          data.push(BatchData.getFromRequest(batch));
+        });
+        this.tableData = data;
+      });
+    }
   }
 
   private updateBatch(updatedBatch: BatchRequest) {

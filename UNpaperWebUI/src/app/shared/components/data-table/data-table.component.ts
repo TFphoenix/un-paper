@@ -32,6 +32,7 @@ import icToggleArrowUp from '@iconify/icons-ic/round-keyboard-arrow-right';
 import icToggleArrowDown from '@iconify/icons-ic/round-keyboard-arrow-down';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { TableAction } from '../../models/table-action.model';
 
 @UntilDestroy()
 @Component({
@@ -62,11 +63,15 @@ export class DataTableComponent implements OnInit {
   }
   set tableData(tableData) {
     this.dataSource.data = tableData;
+    this.noDataFound = this.initialized && tableData.length === 0;
   }
+  @Input() additionalActions: TableAction[] = [];
 
   // output
+  @Output() onSelect = new EventEmitter<any>();
   @Output() onEdit = new EventEmitter<any>();
   @Output() onDelete = new EventEmitter<any>();
+  @Output() onBatches = new EventEmitter<any>();
 
   // controls
   pageSizeOptions: number[] = [5, 10, 20, 50];
@@ -74,6 +79,7 @@ export class DataTableComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   layoutCtrl = new FormControl('boxed');
   searchCtrl = new FormControl();
+  noDataFound: boolean = false;
 
   // icons
   icToggle = icToggleArrowDown;
@@ -81,6 +87,9 @@ export class DataTableComponent implements OnInit {
   // elements
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  // other
+  private initialized: boolean = false;
 
   constructor(private dialog: MatDialog) {}
 
@@ -93,6 +102,8 @@ export class DataTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.initialized = true;
+
     if (this.searchDisplay) {
       this.searchCtrl.valueChanges
         .pipe(untilDestroyed(this))
@@ -112,6 +123,7 @@ export class DataTableComponent implements OnInit {
     value = value.trim();
     value = value.toLowerCase();
     this.dataSource.filter = value;
+    this.noDataFound = this.dataSource.filteredData.length === 0;
   }
 
   toggleColumnVisibility(column, event) {
@@ -134,11 +146,19 @@ export class DataTableComponent implements OnInit {
     }
   }
 
+  onSelectClick(entity: any) {
+    this.onSelect.emit(entity);
+  }
+
   onEditClick(entity: any) {
     this.onEdit.emit(entity);
   }
 
   onDeleteClick(entity: any) {
     this.onDelete.emit(entity);
+  }
+
+  onBatchesClick(entity: any) {
+    this.onBatches.emit(entity);
   }
 }
