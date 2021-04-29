@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { OrganizationService } from 'src/app/core/services/organization/organization.service';
@@ -28,8 +28,13 @@ export class OrganizationsComponent implements OnInit {
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
+  onBatchesAction = new EventEmitter<any>();
   tableActions: TableAction[] = [
-    { name: 'Batches', icon: 'icBatch', onClick: this.gotoOrganizationBatches }
+    {
+      name: 'Batches',
+      icon: 'icBatch',
+      onClick: this.onBatchesAction
+    }
   ];
 
   constructor(
@@ -37,7 +42,12 @@ export class OrganizationsComponent implements OnInit {
     private readonly _userService: UserService,
     private readonly _dialog: MatDialog,
     private readonly _router: Router
-  ) {}
+  ) {
+    // Table actions subscriptions
+    this.onBatchesAction.subscribe(organization => {
+      this.gotoOrganizationBatches(organization);
+    });
+  }
 
   ngOnInit(): void {
     document.title = 'UNpaper - Organizations';

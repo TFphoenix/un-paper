@@ -154,7 +154,11 @@
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-entity="entity" matMenuContent>
     <!-- Additional Actions -->
-    <button *ngFor="let action of additionalActions" (click)="action.onClick(entity)" mat-menu-item>
+    <button
+      *ngFor="let action of additionalActions"
+      (click)="action.onClick.emit(entity)"
+      mat-menu-item
+    >
       <mat-icon [icIcon]="action.icon"></mat-icon>
       <span>{{ action.name }}</span>
     </button>

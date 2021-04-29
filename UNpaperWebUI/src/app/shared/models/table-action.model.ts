@@ -1,5 +1,7 @@
+import { EventEmitter } from '@angular/core';
+
 export class TableAction {
   name: string;
   icon: string;
-  onClick: (entity: any) => void;
+  onClick: EventEmitter<any>;
 }
