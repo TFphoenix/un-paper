@@ -18,6 +18,7 @@ import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { b2cPolicies } from 'src/app/configs/b2c-config';
 import { TokenClaims } from 'src/app/shared/interfaces/token-claims.interface';
+import { SignInTokenClaims } from 'src/app/shared/models/sign-in-token-claims.model';
 import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
 import { UserService } from '../user/user.service';
 
@@ -36,6 +37,8 @@ export class AuthService {
     return this._loggedIn;
   }
   private readonly _destroying$ = new Subject<void>();
+
+  userClaims: SignInTokenClaims;
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private _msalGuardConfig: MsalGuardConfiguration,
@@ -105,6 +108,12 @@ export class AuthService {
 
   checkAccount(): void {
     this._loggedIn = this._msalAuthService.instance.getAllAccounts().length > 0;
+
+    if (this._loggedIn) {
+      this.userClaims = new SignUpTokenClaims(
+        this._msalAuthService.instance.getAllAccounts()[0].idTokenClaims as TokenClaims
+      );
+    }
   }
 
   login(userFlowRequest?: RedirectRequest | PopupRequest): void {

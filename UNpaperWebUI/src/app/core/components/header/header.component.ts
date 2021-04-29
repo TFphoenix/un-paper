@@ -38,6 +38,13 @@ export class HeaderComponent implements OnInit {
   onCalendarClick() {}
 
   private populateUserData() {
+    if (this._authService.loggedIn) {
+      console.log(this._authService.userClaims); // TEST
+      this.userName = this._authService.userClaims.userName;
+      this.userEmail = this._authService.userClaims.userEmails[0];
+      return;
+    }
+
     this._userService.getCurrentUser().subscribe(user => {
       console.log(user); // TEST
       this.userName = user.name;
