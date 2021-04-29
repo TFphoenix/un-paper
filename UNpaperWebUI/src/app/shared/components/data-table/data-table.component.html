@@ -48,16 +48,12 @@
   </div>
 
   <!-- Table -->
-  <!-- TODO: *ngIf="tableData.length > 0" -->
   <div
     class="data-container"
     [ngClass]="{ hidden: tableData.length === 0 }"
     [hidden]="hideComponent"
   >
     <table @stagger [dataSource]="dataSource" class="data-table w-full" mat-table matSort>
-      <!--- Note that these columns can be defined in any order.
-               The actual rendered columns are set as a property on the row definition" -->
-
       <!-- Content Column -->
       <ng-container *ngFor="let column of tableColumns; trackBy: trackByProperty">
         <!-- Text Columns -->
@@ -65,7 +61,7 @@
           <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
-          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="p-h-12px" mat-cell>
             <a href="" *ngIf="column.property === 'planName'; else noLink" target="_blank">
               {{ row[column.property] }}
             </a>
@@ -78,7 +74,7 @@
           <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
-          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="p-h-12px" mat-cell>
             <a href="" *ngIf="column.property === 'planName'; else noLink" target="_blank">
               {{ row[column.property] }}
             </a>
@@ -91,7 +87,7 @@
           <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
-          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="pr-12px" mat-cell>
             <mat-icon [icIcon]="row[column.property]"></mat-icon>
           </td>
         </ng-container>
@@ -100,7 +96,7 @@
       <!-- Action Column -->
       <ng-container matColumnDef="actions">
         <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
-        <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+        <td *matCellDef="let row" class="w-10 text-secondary pl-12px" mat-cell>
           <button
             (click)="$event.stopPropagation()"
             [matMenuTriggerData]="{ entity: row }"
