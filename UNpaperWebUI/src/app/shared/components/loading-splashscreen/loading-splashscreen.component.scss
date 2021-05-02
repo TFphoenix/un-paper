@@ -1,0 +1,82 @@
+@import 'theme-colors';
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $unpNeuDark2T075;
+
+  .logo {
+    width: 256px;
+    z-index: 1001;
+
+    animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+  }
+
+  .pulsating-circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 512px;
+    height: 512px;
+
+    &:before {
+      content: '';
+      position: relative;
+      display: block;
+      width: 300%;
+      height: 300%;
+      box-sizing: border-box;
+      margin-left: -100%;
+      margin-top: -100%;
+      border-radius: 768px;
+      background-color: $unpPink2;
+      animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: $unpNeuLight1;
+      border-radius: 256px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+      animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite;
+    }
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.33);
+    }
+    80%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulse-dot {
+    0% {
+      transform: scale(0.8);
+    }
+    50% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0.8);
+    }
+  }
+}
