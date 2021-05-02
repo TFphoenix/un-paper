@@ -15,7 +15,7 @@
     <!-- Search & Filter -->
     <div [hidden]="hideComponent">
       <div *ngIf="searchDisplay" class="header-search" fxLayout="row" fxLayoutAlign="start center">
-        <ic-icon icIcon="icSearch" size="20px"></ic-icon>
+        <ic-icon class="search-icon" icIcon="icSearch" size="20px"></ic-icon>
         <input
           [formControl]="searchCtrl"
           class="search-input"
@@ -25,7 +25,7 @@
 
         <button
           [matMenuTriggerFor]="columnFilterMenu"
-          class="ml-4"
+          class="filter-icon ml-4"
           fxFlex="none"
           mat-icon-button
           matTooltip="Filter Columns"
