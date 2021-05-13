@@ -9,5 +9,6 @@ namespace UNpaper.AzureFunctions.Common
         // Prefixes
         public const string GeneralPrefix = "unpaper-";
         public const string OrganizationPrefix = GeneralPrefix + "org-";
+        public const string BatchPrefix = GeneralPrefix + "bch-";
     }
 }

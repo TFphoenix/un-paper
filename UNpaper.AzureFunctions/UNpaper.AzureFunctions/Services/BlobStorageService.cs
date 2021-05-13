@@ -21,7 +21,29 @@ namespace UNpaper.AzureFunctions.Services
             await _blobServiceClient.CreateBlobContainerAsync(containerName);
         }
 
-        public async Task ListBlobs(string containersPrefix, int? segmentSize = null)
+        public async Task UploadBlob(Stream blobContent, string containerName, string blobPath = "")
+        {
+            // Get blob
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            BlobClient blob = container.GetBlobClient(blobPath);
+
+            // Upload data to blob
+            blobContent.Position = 0;
+            await blob.UploadAsync(blobContent, true);
+            blobContent.Close();
+        }
+
+        public async Task ListContainerBlobs(string containerName)
+        {
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+
+            await foreach (BlobItem blob in container.GetBlobsAsync())
+            {
+                Console.WriteLine("Blob name: {0}", blob.Name);
+            }
+        }
+
+        public async Task ListTree(string containersPrefix, int? segmentSize = null)
         {
             try
             {
@@ -32,9 +54,15 @@ namespace UNpaper.AzureFunctions.Services
 
                 await foreach (Azure.Page<BlobContainerItem> containerPage in resultSegment)
                 {
-                    foreach (BlobContainerItem containerItem in containerPage.Values)
+                    foreach (BlobContainerItem container in containerPage.Values)
                     {
-                        Console.WriteLine("Container name: {0}", containerItem.Name);
+                        Console.WriteLine("Container name: {0}", container.Name);
+
+                        var blobs = _blobServiceClient.GetBlobContainerClient(container.Name).GetBlobsAsync();
+                        await foreach (var blob in blobs)
+                        {
+                            Console.WriteLine("\tBlob name: {0}", blob.Name);
+                        }
                     }
 
                     Console.WriteLine();
