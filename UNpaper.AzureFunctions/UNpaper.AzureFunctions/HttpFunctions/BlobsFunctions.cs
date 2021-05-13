@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +41,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         }
 
         [FunctionName("BlobsUpload")]
-        public async Task<IActionResult> UploadDocument(
+        public async Task<IActionResult> UploadDocuments(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = Routes.BlobsRoute + "/{organization}/{batch}")]
             HttpRequest req,
             ILogger log,
@@ -49,38 +50,57 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         {
             try
             {
-                // Get document data
-                //var formdata = await req.ReadFormAsync(); // TODO: Used for multiple documents
-                var file = req.Form.Files["file"];
-
-                // Ensure document content is valid
-                if (file.Length > 0)
-                {
-                    await using var ms = new MemoryStream();
-
-                    // Convert document data to stream
-                    file.CopyTo(ms);
-
-                    // Upload document to blob
-                    var containerName = $"{BlobConstants.OrganizationPrefix}{organization}";
-                    var blobPath = $"{BlobConstants.BatchPrefix}{batch}/{file.FileName}";
-                    await _storageService.UploadBlob(ms, containerName, blobPath);
-                }
-                else
+                // Read documents
+                var formData = await req.ReadFormAsync();
+                var files = formData.Files;
+                if (formData.Files.Count == 0)
                 {
                     return new BadRequestObjectResult(new ResponseModel
                     {
                         Status = "ERROR",
-                        Message = "Invalid document content"
+                        Message = "No documents provided"
                     });
                 }
 
-                // Return successfull response
-                return new OkObjectResult(new ResponseModel
+                // Prepare results
+                var results = new List<ResponseModel>();
+                var succeeded = 0;
+
+                // Upload documents to blobs
+                foreach (var file in files)
                 {
-                    Status = "SUCCESS",
-                    Message = $"Successfully uploaded document \"{file.FileName}\" ({file.Length.ToString()} bytes) to blob"
-                });
+                    var result = await UploadDocument(file, organization, batch);
+
+                    if (result.Status.Equals("SUCCESS")) ++succeeded;
+
+                    results.Add(result);
+                }
+
+                // Verify results
+                if (succeeded == 0)
+                {
+                    return new BadRequestObjectResult(new
+                    {
+                        OverallStatus = "ERROR",
+                        Results = results
+                    });
+                }
+                else if (succeeded == files.Count)
+                {
+                    return new OkObjectResult(new
+                    {
+                        OverallStatus = "SUCCESS",
+                        Results = results
+                    });
+                }
+                else
+                {
+                    return new OkObjectResult(new
+                    {
+                        OverallStatus = "PARTIAL-SUCCESS",
+                        Results = results
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -150,6 +170,48 @@ namespace UNpaper.AzureFunctions.HttpFunctions
                     Message = "Can't create organization container"
                 });
             }
+        }
+
+        private async Task<ResponseModel> UploadDocument(IFormFile file, string organization, string batch)
+        {
+            try
+            {
+                // Ensure document content is valid
+                if (file.Length > 0)
+                {
+                    await using var ms = new MemoryStream();
+
+                    // Convert document data to stream
+                    file.CopyTo(ms);
+
+                    // Upload document to blob
+                    var containerName = $"{BlobConstants.OrganizationPrefix}{organization}";
+                    var blobPath = $"{BlobConstants.BatchPrefix}{batch}/{file.FileName}";
+                    await _storageService.UploadBlob(ms, containerName, blobPath);
+                }
+                else
+                {
+                    return new ResponseModel
+                    {
+                        Status = "ERROR",
+                        Message = $"[{file.FileName}]: Invalid document content"
+                    };
+                }
+            }
+            catch
+            {
+                return new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = $"[{file.FileName}]: Error uploading document"
+                };
+            }
+
+            return new ResponseModel
+            {
+                Status = "SUCCESS",
+                Message = $"[{file.FileName}]: Successfully uploaded document to blob ({(file.Length / 1048576.0):0.00} MB)"
+            };
         }
     }
 }
