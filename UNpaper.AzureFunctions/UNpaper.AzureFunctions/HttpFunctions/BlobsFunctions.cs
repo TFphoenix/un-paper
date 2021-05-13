@@ -32,7 +32,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            await _storageService.ListTree("unpaper-");
+            await _storageService.ListTree(BlobConstants.GeneralPrefix);
 
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
@@ -120,20 +120,34 @@ namespace UNpaper.AzureFunctions.HttpFunctions
 
         [FunctionName("BlobsDelete")]
         public async Task<IActionResult> DeleteDocument(
-            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = Routes.BlobsRoute)]
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = Routes.BlobsRoute + "/{organization}/{batch}/{fileName}")]
             HttpRequest req,
-            ILogger log)
+            ILogger log,
+            string organization,
+            string batch,
+            string fileName)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                // Delete blob
+                var containerName = $"{BlobConstants.OrganizationPrefix}{organization}";
+                var blobPath = $"{BlobConstants.BatchPrefix}{batch}/{fileName}";
+                await _storageService.DeleteBlob(containerName, blobPath);
+            }
+            catch
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = $"[{fileName}]: Can't delete blob"
+                });
+            }
 
-        [FunctionName("BlobsUpdate")]
-        public async Task<IActionResult> UpdateDocument(
-            [HttpTrigger(AuthorizationLevel.Function, "put", Route = Routes.BlobsRoute)]
-            HttpRequest req,
-            ILogger log)
-        {
-            throw new NotImplementedException();
+            return new OkObjectResult(new ResponseModel
+            {
+                Status = "SUCCESS",
+                Message = $"[{fileName}]: Successfully deleted blob"
+            });
         }
 
         [FunctionName("OrganizationsCreate")]
@@ -187,7 +201,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
                     // Upload document to blob
                     var containerName = $"{BlobConstants.OrganizationPrefix}{organization}";
                     var blobPath = $"{BlobConstants.BatchPrefix}{batch}/{file.FileName}";
-                    await _storageService.UploadBlob(ms, containerName, blobPath);
+                    await _storageService.UploadToBlob(ms, containerName, blobPath);
                 }
                 else
                 {

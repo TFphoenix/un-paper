@@ -21,16 +21,41 @@ namespace UNpaper.AzureFunctions.Services
             await _blobServiceClient.CreateBlobContainerAsync(containerName);
         }
 
-        public async Task UploadBlob(Stream blobContent, string containerName, string blobPath = "")
+        public async Task UploadToBlob(Stream content, string containerName, string blobPath = "")
         {
             // Get blob
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
             BlobClient blob = container.GetBlobClient(blobPath);
 
             // Upload data to blob
-            blobContent.Position = 0;
-            await blob.UploadAsync(blobContent, true);
-            blobContent.Close();
+            content.Position = 0;
+            await blob.UploadAsync(content, true);
+            content.Close();
+        }
+
+        public async Task DeleteBlob(string containerName, string blobPath = "")
+        {
+            // Get blob
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            BlobClient blob = container.GetBlobClient(blobPath);
+            
+            // Delete blob
+            await blob.DeleteAsync();
+        }
+
+        public async Task DownloadBlob(string containerName, string blobPath = "")
+        {
+            // Get blob
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            BlobClient blob = container.GetBlobClient(blobPath);
+
+            // Download blob // TODO
+            //BlobDownloadInfo download = await blob.DownloadAsync();
+            //using (FileStream downloadFileStream = File.OpenWrite(downloadFilePath))
+            //{
+            //    await download.Content.CopyToAsync(downloadFileStream);
+            //    downloadFileStream.Close();
+            //}
         }
 
         public async Task ListContainerBlobs(string containerName)
@@ -52,7 +77,7 @@ namespace UNpaper.AzureFunctions.Services
                     _blobServiceClient.GetBlobContainersAsync(BlobContainerTraits.Metadata, containersPrefix, default)
                         .AsPages(default, segmentSize);
 
-                await foreach (Azure.Page<BlobContainerItem> containerPage in resultSegment)
+                await foreach (Page<BlobContainerItem> containerPage in resultSegment)
                 {
                     foreach (BlobContainerItem container in containerPage.Values)
                     {
