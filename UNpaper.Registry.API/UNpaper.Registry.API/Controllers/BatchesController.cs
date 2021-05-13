@@ -42,11 +42,13 @@ namespace UNpaper.Registry.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Read(string id)
+        public async Task<IActionResult> Read(string id, bool? organization)
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
 
-            var batch = await _batchService.GetBatch(new Guid(id));
+            var batch = organization.HasValue ?
+                await _batchService.GetBatch(new Guid(id), organization.Value) :
+                await _batchService.GetBatch(new Guid(id));
 
             return batch != null
                 ? (IActionResult)Ok(batch)

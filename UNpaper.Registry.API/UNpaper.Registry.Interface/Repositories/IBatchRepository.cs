@@ -12,5 +12,6 @@ namespace UNpaper.Registry.Interface.Repositories
         //Task<Batch> GetAsyncWithOrganization(Guid id);
         Task<Batch> AddAsyncEntity(Batch batch);
         IQueryable<Batch> GetUserBatchesAsQueryable(User user, bool includeBatches);
+        Task<Batch> GetAsyncWithOrganization(Guid id);
     }
 }

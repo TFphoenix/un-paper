@@ -28,9 +28,11 @@ namespace UNpaper.Registry.Business.Services
             return _batchRepository.GetUserBatchesAsQueryable(user, includeBatch).ToList();
         }
 
-        public async Task<Batch> GetBatch(Guid id)
+        public async Task<Batch> GetBatch(Guid id, bool includeOrganization = false)
         {
-            return await _batchRepository.GetAsync(id);
+            return includeOrganization ?
+                await _batchRepository.GetAsyncWithOrganization(id) :
+                await _batchRepository.GetAsync(id);
         }
 
         public async Task<Batch> CreateBatch(Batch batch)

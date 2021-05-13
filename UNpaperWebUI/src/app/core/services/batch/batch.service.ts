@@ -13,8 +13,8 @@ export class BatchService {
     return this._requestService.post('/batches', batch);
   }
 
-  getById(id: string): Observable<BatchRequest> {
-    return this._requestService.get(`/batches/${id}`);
+  getById(id: string, includeOrganization: boolean = false): Observable<BatchRequest> {
+    return this._requestService.get(`/batches/${id}?organization=${includeOrganization}`);
   }
 
   update(batch: BatchRequest): Observable<string> {

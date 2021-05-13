@@ -11,7 +11,7 @@ namespace UNpaper.Registry.Interface.Services
     public interface IBatchService
     {
         Task<List<Batch>> GetUserBatches(ClaimsPrincipal userClaims, bool includeBatches = false);
-        Task<Batch> GetBatch(Guid id);
+        Task<Batch> GetBatch(Guid id, bool includeOrganization = false);
         Task<Batch> CreateBatch(Batch batch);
         Task<bool> ModifyBatch(Batch batch);
         Task<bool> DeleteBatch(Guid id);

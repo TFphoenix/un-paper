@@ -1,0 +1,31 @@
+<div class="batch-container">
+  <div class="batch-header m-16px">
+    <img class="batch-icon mr-16px mt-8px" src="./assets/icons/batch.svg" alt="" />
+    <div class="batch-title">
+      <div class="batch-title-text">
+        <h1 class="batch-name">{{ currentBatch.name }}</h1>
+        <div class="organization" *ngIf="currentBatch.organization">
+          <div>
+            <h4>Organization</h4>
+            <p class="m-0">{{ currentBatch.organization.name }}</p>
+          </div>
+          <img class="organization-icon ml-8px" src="./assets/icons/organization.svg" alt="" />
+        </div>
+      </div>
+      <h4>Description</h4>
+      <p class="batch-description">
+        {{ currentBatch.description }}
+      </p>
+    </div>
+  </div>
+
+  <!-- <unp-data-table
+    (onSelect)="gotoBatchDocuments($event)"
+    (onEdit)="editBatch($event)"
+    (onDelete)="deleteBatch($event)"
+    [title]="'Batches'"
+    [tableColumns]="tableColumns"
+    [tableData]="tableData"
+    [searchDisplay]="true"
+  ></unp-data-table> -->
+</div>

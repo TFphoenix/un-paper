@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { BatchService } from 'src/app/core/services/batch/batch.service';
 import { UserService } from 'src/app/core/services/user/user.service';
 import { ConfirmationDialogDeleteComponent } from 'src/app/shared/components/confirmation-dialog-delete/confirmation-dialog-delete.component';
@@ -30,7 +31,8 @@ export class BatchesComponent implements OnInit {
   constructor(
     private readonly _batchService: BatchService,
     private readonly _userService: UserService,
-    private readonly _dialog: MatDialog
+    private readonly _dialog: MatDialog,
+    private readonly _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -100,6 +102,10 @@ export class BatchesComponent implements OnInit {
   removeSelectedOrganization() {
     history.state.selectedOrganization = this.selectedOrganization = null;
     this.populateBatches();
+  }
+
+  gotoBatchDocuments(batch: BatchData) {
+    this._router.navigate([`/batches/${batch.id}`]);
   }
 
   private populateBatches() {

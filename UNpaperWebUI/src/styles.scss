@@ -39,8 +39,16 @@ body {
 }
 
 // Margins
+.m-0 {
+  margin: 0 !important;
+}
+
 .m-10px {
   margin: 10px !important;
+}
+
+.m-16px {
+  margin: 16px !important;
 }
 
 .m-h-20px {
@@ -51,6 +59,10 @@ body {
   margin: 0 10px;
 }
 
+.mr-3px {
+  margin-right: 3px !important;
+}
+
 .mr-8px {
   margin-right: 8px;
 }
@@ -59,12 +71,16 @@ body {
   margin-right: 10px;
 }
 
-.mr-3px {
-  margin-right: 3px !important;
+.mr-16px {
+  margin-right: 16px;
 }
 
 .mt-6px {
   margin-top: 6px !important;
+}
+
+.mt-8px {
+  margin-top: 8px !important;
 }
 
 .ml-8px {

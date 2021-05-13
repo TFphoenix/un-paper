@@ -21,6 +21,7 @@
   </button>
 </div>
 <unp-data-table
+  (onSelect)="gotoBatchDocuments($event)"
   (onEdit)="editBatch($event)"
   (onDelete)="deleteBatch($event)"
   [title]="'Batches'"
