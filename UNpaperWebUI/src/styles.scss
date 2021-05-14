@@ -235,6 +235,22 @@ body {
   color: $unpPink2;
 }
 
+.unp-yellow {
+  color: $unpYellow;
+}
+
+.unp-green {
+  color: $unpGreen;
+}
+
+.unp-blue {
+  color: $unpBlue;
+}
+
+.unp-red {
+  color: $unpRed;
+}
+
 // Text
 .uppercase {
   text-transform: uppercase;
@@ -244,6 +260,10 @@ body {
   font-weight: bold !important;
 }
 
+.center {
+  text-align: center !important;
+}
+
 // Fonts
 .f-poppins {
   font-family: poppinsFont !important;
@@ -251,4 +271,18 @@ body {
 
 .f-lato {
   font-family: latoFont !important;
+}
+
+// Animations
+.rotating {
+  animation: rotation 2s infinite linear;
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
 }

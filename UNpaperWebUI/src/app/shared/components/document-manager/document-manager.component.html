@@ -69,10 +69,19 @@
                   ></div>
                 </div>
               </td>
-              <td class="text-center">
-                <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-                <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-                <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+              <td class="center">
+                <div *ngIf="item.isUploading" class="status-icon unp-primary">
+                  <mat-icon class="rotating">autorenew</mat-icon>
+                </div>
+                <div *ngIf="item.isSuccess" class="status-icon unp-green">
+                  <mat-icon>check_circle</mat-icon>
+                </div>
+                <div *ngIf="item.isCancel" class="status-icon unp-yellow">
+                  <mat-icon>do_disturb_on</mat-icon>
+                </div>
+                <div *ngIf="item.isError" class="status-icon unp-red">
+                  <mat-icon>cancel</mat-icon>
+                </div>
               </td>
               <td nowrap>
                 <button
