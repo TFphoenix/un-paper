@@ -14,8 +14,8 @@ export const environment = {
   services: {
     registryApi: 'https://localhost:44343/api',
     // registryApi: 'https://unpaper-api-management-service.azure-api.net/v1/api', // TEST: Uncomment for testing purposes
-    // functionsApi: 'http://localhost:7071/api' // BUG: Fix CORS on localhost
-    functionsApi: 'https://unpaper-api-management-service.azure-api.net/unpaper-functions' // TEST: Uncomment for testing purposes
+    functionsApi: 'http://localhost:7071/api'
+    // functionsApi: 'https://unpaper-api-management-service.azure-api.net/unpaper-functions' // TEST: Uncomment for testing purposes
   }
 };
 

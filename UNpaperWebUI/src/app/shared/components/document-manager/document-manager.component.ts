@@ -3,9 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DocumentData } from '../../models/document-data.model';
 import { FileUploader } from 'ng2-file-upload';
+import { environment } from 'src/environments/environment';
 
 // const URL = '/api/';
-const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = `${environment.services.functionsApi}/TestFunction`;
 
 @Component({
   selector: 'unp-document-manager',
