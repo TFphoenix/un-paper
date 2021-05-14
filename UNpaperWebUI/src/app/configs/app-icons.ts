@@ -14,6 +14,8 @@ import icUnknown from '@iconify/icons-ic/help-outline';
 import icPending from '@iconify/icons-ic/round-pending';
 import icInfo from '@iconify/icons-ic/sharp-warning';
 import icDocument from '@iconify/icons-ic/round-description';
+import icLayout from '@iconify/icons-ic/round-auto-awesome-mosaic';
+import icPrebuilt from '@iconify/icons-ic/round-article';
 
 export const appIcons = {
   icArtifacts,
@@ -31,5 +33,7 @@ export const appIcons = {
   icClose,
   icUnknown,
   icPending,
-  icInfo
+  icInfo,
+  icLayout,
+  icPrebuilt
 };

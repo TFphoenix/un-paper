@@ -1,0 +1,184 @@
+<form
+  class="form-container"
+  (ngSubmit)="save()"
+  [formGroup]="form"
+  spellcheck="false"
+  autocomplete="off"
+>
+  <!-- Header -->
+  <div class="header" fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 *ngIf="form.get('name').value" class="headline" fxFlex="auto">
+      {{ form.get('name').value }}
+    </h2>
+    <h2 *ngIf="!form.get('name').value" class="headline" fxFlex="auto">Upload Documents</h2>
+
+    <button class="text-secondary close-button" mat-dialog-close mat-icon-button type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <!-- Uploader -->
+  <div class="uploader-container mt-16px">
+    <div class="row">
+      <div class="col-md-3">
+        <div
+          ng2FileDrop
+          [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+          (fileOver)="fileOverBase($event)"
+          [uploader]="uploader"
+          class="well my-drop-zone"
+        >
+          Drop your documents here
+        </div>
+
+        Or upload them here:
+        <input type="file" ng2FileSelect [uploader]="uploader" multiple />
+        <br />
+      </div>
+
+      <div class="col-md-9" style="margin-bottom: 40px">
+        <h3>Upload queue</h3>
+        <p>Queue length: {{ uploader?.queue?.length }}</p>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="unp-primary bold" width="50%">Name</th>
+              <th class="unp-primary bold">Size</th>
+              <th class="unp-primary bold">Progress</th>
+              <th class="unp-primary bold">Status</th>
+              <th class="unp-primary bold">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of uploader.queue">
+              <td>
+                <strong>{{ item?.file?.name }}</strong>
+              </td>
+              <td *ngIf="uploader.options.isHTML5" nowrap>
+                {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+              </td>
+              <td *ngIf="uploader.options.isHTML5">
+                <div class="progress" style="margin-bottom: 0">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    [ngStyle]="{ width: item.progress + '%' }"
+                  ></div>
+                </div>
+              </td>
+              <td class="text-center">
+                <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+              </td>
+              <td nowrap>
+                <button
+                  type="button"
+                  class="btn btn-success btn-xs"
+                  (click)="item.upload()"
+                  [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                >
+                  <span class="glyphicon glyphicon-upload"></span>
+                  Upload
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-warning btn-xs"
+                  (click)="item.cancel()"
+                  [disabled]="!item.isUploading"
+                >
+                  <span class="glyphicon glyphicon-ban-circle"></span>
+                  Cancel
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                  <span class="glyphicon glyphicon-trash"></span>
+                  Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <div>
+            <h3 class="unp-primary bold mb-3px">Overall Progress:</h3>
+            <div class="progress" style="">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                [ngStyle]="{ width: uploader.progress + '%' }"
+              ></div>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="btn btn-success btn-s"
+            (click)="uploader.uploadAll()"
+            [disabled]="!uploader.getNotUploadedItems().length"
+          >
+            <span class="glyphicon glyphicon-upload"></span>
+            Upload all
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning btn-s"
+            (click)="uploader.cancelAll()"
+            [disabled]="!uploader.isUploading"
+          >
+            <span class="glyphicon glyphicon-ban-circle"></span>
+            Cancel all
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger btn-s"
+            (click)="uploader.clearQueue()"
+            [disabled]="!uploader.queue.length"
+          >
+            <span class="glyphicon glyphicon-trash"></span>
+            Remove all
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Response</div>
+          <div class="panel-body">
+            {{ response }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button
+      *ngIf="isCreateMode()"
+      color="primary"
+      mat-button
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      UPLOAD
+    </button>
+    <button
+      *ngIf="isUpdateMode()"
+      color="primary"
+      mat-button
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      OVERWRITE
+    </button>
+  </mat-dialog-actions>
+</form>
