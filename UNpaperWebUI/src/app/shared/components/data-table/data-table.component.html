@@ -22,6 +22,7 @@
           placeholder="Search..."
           type="search"
         />
+        <!-- <mat-icon class="cancel-search">close</mat-icon> -->
 
         <button
           [matMenuTriggerFor]="columnFilterMenu"
@@ -163,11 +164,11 @@
       <span>{{ action.name }}</span>
     </button>
     <!-- Default Actions -->
-    <button (click)="onEditClick(entity)" mat-menu-item>
+    <button *ngIf="editAction" (click)="onEditClick(entity)" mat-menu-item>
       <mat-icon icIcon="icEdit"></mat-icon>
       <span>Edit</span>
     </button>
-    <button (click)="onDeleteClick(entity)" mat-menu-item>
+    <button *ngIf="deleteAction" (click)="onDeleteClick(entity)" mat-menu-item>
       <mat-icon icIcon="icDelete"></mat-icon>
       <span>Delete</span>
     </button>

@@ -13,9 +13,11 @@ import icClose from '@iconify/icons-ic/twotone-close';
 import icUnknown from '@iconify/icons-ic/help-outline';
 import icPending from '@iconify/icons-ic/round-pending';
 import icInfo from '@iconify/icons-ic/sharp-warning';
+import icDocument from '@iconify/icons-ic/round-description';
 
 export const appIcons = {
   icArtifacts,
+  icDocument,
   icLogs,
   icFilterList,
   icMoreHoriz,

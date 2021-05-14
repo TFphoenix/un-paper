@@ -22,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -59,6 +60,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatOptionModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatRadioModule,
     MatRippleModule,
     MatSelectModule,
@@ -97,6 +99,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatOptionModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatRadioModule,
     MatRippleModule,
     MatSelectModule,

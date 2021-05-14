@@ -1,31 +1,60 @@
 <div class="batch-container">
   <div class="batch-header m-16px">
+    <!-- Batch Icon -->
     <img class="batch-icon mr-16px mt-8px" src="./assets/icons/batch.svg" alt="" />
-    <div class="batch-title">
-      <div class="batch-title-text">
-        <h1 class="batch-name">{{ currentBatch.name }}</h1>
-        <div class="organization" *ngIf="currentBatch.organization">
-          <div>
-            <h4>Organization</h4>
-            <p class="m-0">{{ currentBatch.organization.name }}</p>
+
+    <!-- Loading placeholder -->
+    <div class="loading-placeholder" *ngIf="!currentBatch">
+      <h1 class="unp-primary">Loading Batch...</h1>
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <!-- Batch Info -->
+    <div class="batch-info" *ngIf="currentBatch">
+      <div class="batch-info-content">
+        <!-- Left Column -->
+        <div class="left-column">
+          <h1 class="unp-primary mb-8px">{{ currentBatch.name }}</h1>
+          <h4>Description</h4>
+          <p class="batch-description">
+            {{ currentBatch.description }}
+          </p>
+        </div>
+        <!-- Right Column -->
+        <div class="right-column">
+          <!-- Organization -->
+          <div class="organization mr-10px" *ngIf="currentBatch.organization">
+            <div>
+              <h4>Organization</h4>
+              <p class="m-0">{{ currentBatch.organization.name }}</p>
+            </div>
+            <img class="organization-icon ml-8px" src="./assets/icons/organization.svg" alt="" />
           </div>
-          <img class="organization-icon ml-8px" src="./assets/icons/organization.svg" alt="" />
+
+          <!-- Action Buttons -->
+          <button
+            (click)="uploadDocument()"
+            class="upload-button m-10px"
+            mat-raised-button
+            color="primary"
+          >
+            <mat-icon>file_upload</mat-icon>
+            Upload Document
+          </button>
         </div>
       </div>
-      <h4>Description</h4>
-      <p class="batch-description">
-        {{ currentBatch.description }}
-      </p>
     </div>
   </div>
 
-  <!-- <unp-data-table
-    (onSelect)="gotoBatchDocuments($event)"
-    (onEdit)="editBatch($event)"
-    (onDelete)="deleteBatch($event)"
-    [title]="'Batches'"
+  <!-- Batch Documents -->
+  <unp-data-table
+    *ngIf="currentBatch"
+    (onSelect)="previewDocument($event)"
+    (onDelete)="deleteDocument($event)"
+    [title]="'Documents'"
     [tableColumns]="tableColumns"
     [tableData]="tableData"
     [searchDisplay]="true"
-  ></unp-data-table> -->
+    [editAction]="false"
+  ></unp-data-table>
 </div>

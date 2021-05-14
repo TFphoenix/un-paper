@@ -38,9 +38,21 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-// Margins
+// Margins (full)
 .m-0 {
   margin: 0 !important;
+}
+
+.m-0px {
+  margin: 0px !important;
+}
+
+.m-8px {
+  margin: 6px !important;
+}
+
+.m-8px {
+  margin: 8px !important;
 }
 
 .m-10px {
@@ -51,6 +63,7 @@ body {
   margin: 16px !important;
 }
 
+// Margins (1D)
 .m-h-20px {
   margin: 0 20px;
 }
@@ -59,20 +72,30 @@ body {
   margin: 0 10px;
 }
 
+// Margins (right)
 .mr-3px {
   margin-right: 3px !important;
 }
 
+.mr-6px {
+  margin-right: 6px !important;
+}
+
 .mr-8px {
-  margin-right: 8px;
+  margin-right: 8px !important;
 }
 
 .mr-10px {
-  margin-right: 10px;
+  margin-right: 10px !important;
 }
 
 .mr-16px {
-  margin-right: 16px;
+  margin-right: 16px !important;
+}
+
+// Margins (top)
+.mt-3px {
+  margin-top: 3px !important;
 }
 
 .mt-6px {
@@ -83,16 +106,54 @@ body {
   margin-top: 8px !important;
 }
 
+.mt-10px {
+  margin-top: 10px !important;
+}
+
+.mt-16px {
+  margin-top: 16px !important;
+}
+
+// Margins (left)
+.ml-3px {
+  margin-top: 3px !important;
+}
+
+.ml-6px {
+  margin-left: 6px !important;
+}
+
 .ml-8px {
   margin-left: 8px !important;
 }
 
-.m-8px {
-  margin: 8px !important;
+.ml-10px {
+  margin-left: 10px !important;
 }
 
-.m-0px {
-  margin: 0px !important;
+.ml-16px {
+  margin-left: 16px !important;
+}
+
+// Margins (bottom)
+.mb-3px {
+  margin-bottom: 3px !important;
+}
+
+.mb-6px {
+  margin-bottom: 6px !important;
+}
+
+.mb-8px {
+  margin-bottom: 8px !important;
+}
+
+.mb-10px {
+  margin-bottom: 10px !important;
+}
+
+.mb-16px {
+  margin-bottom: 16px !important;
 }
 
 // Paddings
@@ -167,6 +228,11 @@ body {
 .unp-icon-24 {
   width: 24px;
   height: 24px;
+}
+
+// Colors
+.unp-primary {
+  color: $unpPink2;
 }
 
 // Text

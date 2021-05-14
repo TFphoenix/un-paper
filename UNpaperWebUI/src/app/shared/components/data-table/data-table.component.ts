@@ -65,6 +65,8 @@ export class DataTableComponent implements OnInit {
     this.dataSource.data = tableData;
     this.noDataFound = this.initialized && tableData.length === 0;
   }
+  @Input() deleteAction: boolean = true;
+  @Input() editAction: boolean = true;
   @Input() additionalActions: TableAction[] = [];
 
   // output

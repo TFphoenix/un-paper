@@ -17,7 +17,6 @@ import { BatchCreateUpdateComponent } from '../batch-create-update/batch-create-
 })
 export class BatchesComponent implements OnInit {
   tableData: BatchData[] = [];
-
   tableColumns: TableColumn<BatchData>[] = [
     { label: '', property: 'icon', type: 'badge', visible: true },
     { label: 'Name', property: 'name', type: 'text', visible: true },

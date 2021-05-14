@@ -46,7 +46,20 @@
         outline-offset: 2px;
         border-width: 0;
         background-color: transparent;
+
+        // &::-webkit-search-cancel-button {
+        //   -webkit-appearance: none;
+        //   height: 16px;
+        //   width: 16px;
+        // }
       }
+
+      // .cancel-search {
+      //   position: absolute;
+      //   right: 70px;
+      //   height: 16px;
+      //   width: 16px;
+      // }
 
       .filter-icon {
         vertical-align: baseline;
