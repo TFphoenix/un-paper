@@ -28,9 +28,15 @@ export class BatchDocumentsComponent implements OnInit {
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
+  previewAction = new EventEmitter<any>();
   openInLayoutAction = new EventEmitter<any>();
   openInPrebuiltAction = new EventEmitter<any>();
   tableActions: TableAction[] = [
+    {
+      name: 'Preview',
+      icon: 'icVisibility',
+      onClick: this.previewAction
+    },
     {
       name: 'Open in: Prebuilt Analyze',
       icon: 'icPrebuilt',
@@ -50,6 +56,10 @@ export class BatchDocumentsComponent implements OnInit {
     private readonly _dialog: MatDialog
   ) {
     // Table actions subscriptions
+    this.previewAction.subscribe(document => {
+      this.previewDocument(document);
+    });
+
     this.openInLayoutAction.subscribe(document => {
       this.openInLayout(document);
     });
@@ -73,7 +83,7 @@ export class BatchDocumentsComponent implements OnInit {
     this._dialog
       .open(DocumentManagerComponent)
       .afterClosed()
-      .subscribe(document => {
+      .subscribe(documents => {
         // if (organization) {
         //   this._organizationService.create(organization).subscribe({
         //     next: createdOrganization => {

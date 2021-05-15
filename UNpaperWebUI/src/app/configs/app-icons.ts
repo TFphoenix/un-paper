@@ -16,6 +16,7 @@ import icInfo from '@iconify/icons-ic/sharp-warning';
 import icDocument from '@iconify/icons-ic/round-description';
 import icLayout from '@iconify/icons-ic/round-auto-awesome-mosaic';
 import icPrebuilt from '@iconify/icons-ic/round-article';
+import icVisibility from '@iconify/icons-ic/round-visibility';
 
 export const appIcons = {
   icArtifacts,
@@ -35,5 +36,6 @@ export const appIcons = {
   icPending,
   icInfo,
   icLayout,
-  icPrebuilt
+  icPrebuilt,
+  icVisibility
 };

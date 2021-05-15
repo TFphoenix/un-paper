@@ -1,7 +1,7 @@
 @import 'theme-colors';
 
 .form-container {
-  min-width: 312px;
+  min-width: 512px;
 
   // Header
   .header {
@@ -37,10 +37,6 @@
   .uploader-container {
     // Style
     .row {
-      // margin-right: -16px;
-      // margin-left: -16px;
-      // box-sizing: border-box;
-
       &:before {
         box-sizing: border-box;
         display: table;
@@ -58,7 +54,7 @@
     .well {
       min-height: 20px;
       padding: 19px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       background-color: #f5f5f5;
       border: 1px solid #e3e3e3;
       border-radius: 4px;
@@ -77,7 +73,6 @@
       th {
         border-top: 0;
         vertical-align: bottom;
-        border-bottom: 2px solid #ddd;
         padding: 8px;
         line-height: 1.42857143;
         text-align: left;
@@ -117,13 +112,108 @@
       }
     }
 
+    #table-wrapper {
+      position: relative;
+    }
+    #table-scroll {
+      max-height: 256px;
+      overflow: auto;
+      margin-top: 20px;
+    }
+    #table-wrapper table {
+      width: 100%;
+    }
+    #table-wrapper table thead th {
+      text-align: left;
+
+      .text {
+        position: absolute;
+        top: -20px;
+        z-index: 2;
+        height: 20px;
+      }
+    }
+
     // Custom
-    .my-drop-zone {
+    .drop-zone {
       border: dotted 3px lightgray;
+      cursor: pointer;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        border: dotted 3px $unpPink2;
+        color: $unpPink2;
+
+        .documents-icon {
+          display: none;
+
+          &.file-over {
+            display: block;
+          }
+        }
+      }
+
+      .documents-icon {
+        width: 32px;
+        opacity: 0.8;
+
+        &.file-over {
+          display: none;
+        }
+      }
     }
 
     .nv-file-over {
       border: dotted 3px $unpPink2;
+      color: $unpPink2;
+
+      .documents-icon {
+        display: none;
+
+        &.file-over {
+          display: block;
+        }
+      }
+    }
+
+    .documents-table {
+      .name-col {
+        min-width: 214px;
+      }
+
+      .name-data {
+        max-width: 30vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .progress {
+        width: 72px;
+      }
+
+      .status-icon-container {
+        width: 48px;
+      }
+
+      .action-button {
+        &:hover:enabled {
+          color: $unpPink2;
+        }
+      }
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    .response-content {
+      word-break: break-all;
+      overflow: auto;
+      max-height: 10vh;
     }
   }
 }

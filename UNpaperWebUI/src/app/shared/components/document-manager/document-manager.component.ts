@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DocumentData } from '../../models/document-data.model';
@@ -14,6 +14,8 @@ const URL = `${environment.services.functionsApi}/TestFunction`;
   styleUrls: ['./document-manager.component.scss']
 })
 export class DocumentManagerComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
+
   form: FormGroup;
   mode: 'create' | 'update' = 'create';
   objectName: string = 'Document';
@@ -67,6 +69,10 @@ export class DocumentManagerComponent implements OnInit {
 
   fileOverBase(e: any): void {
     this.hasBaseDropZoneOver = e;
+  }
+
+  chooseFiles() {
+    this.fileInput.nativeElement.click();
   }
 
   save() {
