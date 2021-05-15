@@ -33,13 +33,9 @@ export class DocumentManagerComponent implements OnInit {
     private readonly _authService: AuthService
   ) {
     // Ensure user authentication and get token
-    _authService.getAuthenticationToken().subscribe({
-      next: result => {
-        this.initializeUploader(`Bearer ${result.idToken}`);
-      },
-      error: e => {
-        console.error(e);
-      }
+    _authService.getAuthenticationToken().then(result => {
+      console.log(result);
+      this.initializeUploader(`Bearer ${result.accessToken}`);
     });
   }
 
@@ -99,6 +95,8 @@ export class DocumentManagerComponent implements OnInit {
     this.uploader = new FileUploader({
       url: URL,
       authToken: authToken,
+      // authToken:
+      //   'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ilg1ZVhrNHh5b2pORnVtMWtsMll0djhkbE5QNC1jNTdkTzZRR1RWQndhTmsifQ.eyJpc3MiOiJodHRwczovL3VucGFwZXIyMDIwLmIyY2xvZ2luLmNvbS83YmNiOGQwNS04ZjRlLTRkODUtODkyYi1jMjQyMWE1MmM1MDYvdjIuMC8iLCJleHAiOjE2MjEwOTA4NjEsIm5iZiI6MTYyMTA4NzI2MSwiYXVkIjoiYjgwMmFmOGItMjRmNy00ZDg2LTgzMDEtMWUzZDQxY2NlZjVjIiwib2lkIjoiOGYzMDE3OGEtOWM5Ni00ODY4LTg0N2MtN2I5MjBiOWM1YTdmIiwic3ViIjoiOGYzMDE3OGEtOWM5Ni00ODY4LTg0N2MtN2I5MjBiOWM1YTdmIiwiY2l0eSI6IkNvZGxlYSIsImNvdW50cnkiOiJSb21hbmlhIiwibmFtZSI6IlRlb2RvciBNaWhhZXNjdSIsImdpdmVuX25hbWUiOiJUZW9kb3IiLCJwb3N0YWxDb2RlIjoiNTA1MTAxIiwic3RhdGUiOiJCViIsInN0cmVldEFkZHJlc3MiOiJGcmV6aWVpIDM1IiwiZmFtaWx5X25hbWUiOiJUZXN0IiwiZW1haWxzIjpbIm1paGFlc2N1LnRlb2RvckB5YWhvby5jb20iXSwidGZwIjoiQjJDXzFfc2lnbnVwX3NpZ25pbiIsInNjcCI6ImZ1bmN0aW9ucy5yZWFkIGZ1bmN0aW9ucy53cml0ZSBkZW1vLnJlYWQgZGVtby53cml0ZSIsImF6cCI6Ijk1NTU4MmYyLTFmNDItNGJlMS1hNzNhLWMxNDQzZjI4MDM0YyIsInZlciI6IjEuMCIsImlhdCI6MTYyMTA4NzI2MX0.jCKYz6wbEGEyyV-vFSjrn2i-F4kq3BslMvfMHQloag_FhUMofnnUxW0wayvG6E42VHSS3B3eq5aE-PTkouuxN7dUrpvH_gA1CmLk79JrgsTXeyGV1XPu3l2LzRO0s4rViQpBI88pqO4HSzwhyN8nsAYwwp6J_WK1J0qzohdqhRfOy8sZosb3ljIY3jQHjxJtVEbtMpvHfY0e_q5dBmqfLI7iLTJAoLwVBGQVoQUm2AXmzoGa8bHS2461URUCAdlEYP1z4KzC12sk7rWCBUaB0yXRcxMPGIdzjxCZLqjsBSyycV-wpmyUkgb4IaYzgsf5_5luNjnlbsT1YMh5cRJdfQ',
       headers: [{ name: 'Ocp-Apim-Subscription-Key', value: environment.apimSubscriptionKey }],
       disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
       formatDataFunctionIsAsync: true,

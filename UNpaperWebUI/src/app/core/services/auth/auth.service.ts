@@ -21,6 +21,7 @@ import { b2cPolicies } from 'src/app/configs/b2c-config';
 import { TokenClaims } from 'src/app/shared/interfaces/token-claims.interface';
 import { SignInTokenClaims } from 'src/app/shared/models/sign-in-token-claims.model';
 import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
+import { environment } from 'src/environments/environment';
 import { UserService } from '../user/user.service';
 
 interface IdTokenClaims extends AuthenticationResult {
@@ -163,10 +164,13 @@ export class AuthService {
     return this._msalAuthService.handleRedirectObservable();
   }
 
-  getAuthenticationToken(): Observable<AuthenticationResult> {
-    return this._msalAuthService.acquireTokenSilent({
+  getAuthenticationToken(): Promise<AuthenticationResult> {
+    var silentRequest: SilentRequest = {
+      scopes: environment.b2cScopes,
       account: this._msalAuthService.instance.getAllAccounts()[0]
-    } as SilentRequest);
+    };
+
+    return this._msalAuthService.instance.acquireTokenSilent(silentRequest);
   }
 
   async processAuthResult(result: AuthenticationResult) {
