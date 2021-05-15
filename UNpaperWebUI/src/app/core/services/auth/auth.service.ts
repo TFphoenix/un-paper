@@ -12,7 +12,8 @@ import {
   AuthenticationResult,
   AuthError,
   EventMessage,
-  EventType
+  EventType,
+  SilentRequest
 } from '@azure/msal-browser';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -160,6 +161,12 @@ export class AuthService {
 
   handleRedirect(): Observable<AuthenticationResult> {
     return this._msalAuthService.handleRedirectObservable();
+  }
+
+  getAuthenticationToken(): Observable<AuthenticationResult> {
+    return this._msalAuthService.acquireTokenSilent({
+      account: this._msalAuthService.instance.getAllAccounts()[0]
+    } as SilentRequest);
   }
 
   async processAuthResult(result: AuthenticationResult) {

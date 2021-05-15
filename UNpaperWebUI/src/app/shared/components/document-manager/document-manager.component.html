@@ -20,8 +20,8 @@
   <mat-divider class="-mx-6 text-border"></mat-divider>
 
   <!-- Uploader -->
-  <div class="uploader-container mt-16px">
-    <div class="row">
+  <div class="uploader-container mt-16px" *ngIf="uploader">
+    <div>
       <div>
         <div
           ng2FileDrop
@@ -47,6 +47,7 @@
           ng2FileSelect
           [uploader]="uploader"
           multiple
+          accept="application/json, application/pdf, image/jpeg, image/png, image/tiff"
         />
       </div>
 
@@ -150,12 +151,23 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="uploader?.queue?.length > 0">
+    <div *ngIf="uploader?.queue?.length > 0">
       <h3 class="unp-primary bold mb-3px">Response:</h3>
       <div class="response-content">
         {{ response }}
       </div>
     </div>
+  </div>
+
+  <!-- Loading Placeholder -->
+  <div *ngIf="!uploader" class="loading-placeholder">
+    <mat-progress-spinner
+      class="loading-spinner mb-16px"
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+      [diameter]="32"
+    ></mat-progress-spinner>
+    <div class="unp-primary">Loading document manager...</div>
   </div>
 
   <!-- Actions -->
@@ -165,7 +177,7 @@
       mat-button
       type="button"
       (click)="uploader.cancelAll()"
-      [disabled]="!uploader.isUploading"
+      [disabled]="!uploader || !uploader.isUploading"
     >
       CANCEL ALL
     </button>
@@ -174,7 +186,7 @@
       mat-button
       type="button"
       (click)="uploader.clearQueue()"
-      [disabled]="!uploader.queue.length"
+      [disabled]="!uploader || !uploader.queue.length"
     >
       REMOVE ALL
     </button>
@@ -183,7 +195,7 @@
       mat-button
       type="button"
       (click)="uploader.uploadAll()"
-      [disabled]="!uploader.getNotUploadedItems().length"
+      [disabled]="!uploader || !uploader.getNotUploadedItems().length"
     >
       UPLOAD ALL
     </button>

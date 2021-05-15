@@ -41,7 +41,7 @@ export class UserService {
     return this._requestService.get('/user/batches');
   }
 
-  private getAuthenticatedAccountTokenClaims() {
+  getUserClaims() {
     return this._authService.instance.getAllAccounts()[0].idTokenClaims as TokenClaims;
   }
 }

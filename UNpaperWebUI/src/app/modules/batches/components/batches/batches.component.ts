@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BatchService } from 'src/app/core/services/batch/batch.service';
@@ -8,6 +8,7 @@ import { TableColumn } from 'src/app/shared/interfaces/table-column.interface';
 import { BatchData } from 'src/app/shared/models/batch-data.model';
 import { BatchRequest } from 'src/app/shared/models/batch-request.model';
 import { OrganizationData } from 'src/app/shared/models/organization-data.model';
+import { TableAction } from 'src/app/shared/models/table-action.model';
 import { BatchCreateUpdateComponent } from '../batch-create-update/batch-create-update.component';
 
 @Component({
@@ -26,6 +27,15 @@ export class BatchesComponent implements OnInit {
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
+  onDocumentsAction = new EventEmitter<any>();
+  tableActions: TableAction[] = [
+    {
+      name: 'Documents',
+      icon: 'icDocument',
+      onClick: this.onDocumentsAction
+    }
+  ];
+
   selectedOrganization: OrganizationData;
 
   constructor(
@@ -33,7 +43,12 @@ export class BatchesComponent implements OnInit {
     private readonly _userService: UserService,
     private readonly _dialog: MatDialog,
     private readonly _router: Router
-  ) {}
+  ) {
+    // Table actions subscriptions
+    this.onDocumentsAction.subscribe(batch => {
+      this.gotoBatchDocuments(batch);
+    });
+  }
 
   ngOnInit(): void {
     document.title = 'UNpaper - Batches';

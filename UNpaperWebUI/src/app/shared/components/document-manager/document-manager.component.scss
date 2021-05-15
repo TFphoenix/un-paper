@@ -36,20 +36,6 @@
   // Uploader
   .uploader-container {
     // Style
-    .row {
-      &:before {
-        box-sizing: border-box;
-        display: table;
-        content: ' ';
-      }
-
-      &:after {
-        box-sizing: border-box;
-        display: table;
-        content: ' ';
-        clear: both;
-      }
-    }
 
     .well {
       min-height: 20px;
@@ -71,6 +57,7 @@
       border-collapse: collapse;
 
       th {
+        border-bottom: none;
         border-top: 0;
         vertical-align: bottom;
         padding: 8px;
@@ -79,6 +66,7 @@
       }
 
       td {
+        vertical-align: middle;
         height: 30px;
         padding: 8px;
         line-height: 1.42857143;
@@ -215,5 +203,14 @@
       overflow: auto;
       max-height: 10vh;
     }
+  }
+
+  // Loading Placeholder
+  .loading-placeholder {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
   }
 }

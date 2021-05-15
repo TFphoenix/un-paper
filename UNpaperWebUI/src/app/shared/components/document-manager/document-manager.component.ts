@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DocumentData } from '../../models/document-data.model';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 // const URL = '/api/';
 const URL = `${environment.services.functionsApi}/TestFunction`;
@@ -22,34 +23,24 @@ export class DocumentManagerComponent implements OnInit {
 
   // Uploader
   uploader: FileUploader;
-  hasBaseDropZoneOver: boolean;
-  response: string;
+  hasBaseDropZoneOver: boolean = false;
+  response: string = 'No response yet';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public defaults: DocumentData,
     private dialogRef: MatDialogRef<DocumentManagerComponent, DocumentData>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private readonly _authService: AuthService
   ) {
-    this.uploader = new FileUploader({
-      url: URL,
-      disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
-      formatDataFunctionIsAsync: true,
-      formatDataFunction: async item => {
-        return new Promise((resolve, reject) => {
-          resolve({
-            name: item._file.name,
-            length: item._file.size,
-            contentType: item._file.type,
-            date: new Date()
-          });
-        });
+    // Ensure user authentication and get token
+    _authService.getAuthenticationToken().subscribe({
+      next: result => {
+        this.initializeUploader(`Bearer ${result.idToken}`);
+      },
+      error: e => {
+        console.error(e);
       }
     });
-
-    this.hasBaseDropZoneOver = false;
-    this.response = '';
-
-    this.uploader.response.subscribe(res => (this.response = res));
   }
 
   ngOnInit() {
@@ -102,5 +93,34 @@ export class DocumentManagerComponent implements OnInit {
 
   isUpdateMode() {
     return this.mode === 'update';
+  }
+
+  private initializeUploader(authToken: string) {
+    this.uploader = new FileUploader({
+      url: URL,
+      authToken: authToken,
+      headers: [{ name: 'Ocp-Apim-Subscription-Key', value: environment.apimSubscriptionKey }],
+      disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
+      formatDataFunctionIsAsync: true,
+      allowedMimeType: [
+        'application/json',
+        'application/pdf',
+        'image/jpeg',
+        'image/png',
+        'image/tiff'
+      ],
+      formatDataFunction: async item => {
+        return new Promise((resolve, reject) => {
+          resolve({
+            name: item._file.name,
+            length: item._file.size,
+            contentType: item._file.type,
+            date: new Date()
+          });
+        });
+      }
+    });
+
+    this.uploader.response.subscribe(res => (this.response = res));
   }
 }
