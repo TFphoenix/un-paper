@@ -40,9 +40,10 @@ namespace UNpaper.AzureFunctions.HttpFunctions
             return new OkObjectResult(data);
         }
 
-        [FunctionName("BlobsUpload")]
-        public async Task<IActionResult> UploadDocuments(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = Routes.BlobsRoute + "/{organization}/{batch}")]
+        [FunctionName("BlobsUploadForm")]
+        public async Task<IActionResult> UploadDocumentsByForm(
+            [HttpTrigger(AuthorizationLevel.Function, "post",
+            Route = Routes.BlobsRoute + "/{organization}/{batch}")]
             HttpRequest req,
             ILogger log,
             string organization,
@@ -191,7 +192,8 @@ namespace UNpaper.AzureFunctions.HttpFunctions
             try
             {
                 // Ensure document content is valid
-                if (file.Length > 0)
+                if (file.Length > 0 &&
+                    Array.IndexOf(BlobConstants.AcceptedDocumentFormats, file.ContentType) != -1)
                 {
                     await using var ms = new MemoryStream();
 
@@ -208,7 +210,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
                     return new ResponseModel
                     {
                         Status = "ERROR",
-                        Message = $"[{file.FileName}]: Invalid document content"
+                        Message = $"[{file.FileName}]: Invalid document content! Make sure the document contains data and is among the accepted formats: {BlobConstants.AcceptedDocumentFormats}"
                     };
                 }
             }
