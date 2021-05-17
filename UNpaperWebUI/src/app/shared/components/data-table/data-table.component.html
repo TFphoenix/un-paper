@@ -12,20 +12,22 @@
       <span>{{ title }}</span>
     </h2>
 
-    <!-- Search -->
+    <!-- Search & Filter -->
     <div [hidden]="hideComponent">
       <div *ngIf="searchDisplay" class="header-search" fxLayout="row" fxLayoutAlign="start center">
-        <ic-icon icIcon="icSearch" size="20px"></ic-icon>
+        <ic-icon class="search-icon" icIcon="icSearch" size="20px"></ic-icon>
         <input
           [formControl]="searchCtrl"
           class="search-input"
           placeholder="Search..."
           type="search"
         />
+        <!-- <mat-icon class="cancel-search">close</mat-icon> -->
 
         <button
+          *ngIf="filteringEnabled"
           [matMenuTriggerFor]="columnFilterMenu"
-          class="ml-4"
+          class="filter-icon ml-4"
           fxFlex="none"
           mat-icon-button
           matTooltip="Filter Columns"
@@ -38,7 +40,7 @@
   </div>
 
   <!-- Placeholder -->
-  <div *ngIf="tableData.length === 0" class="data-placeholder">
+  <div *ngIf="tableData.length === 0 && !noDataFound" class="data-placeholder">
     <mat-progress-spinner
       class="loading-spinner"
       [color]="'primary'"
@@ -47,20 +49,27 @@
     ></mat-progress-spinner>
   </div>
 
-  <!-- Table -->
-  <div *ngIf="tableData.length > 0" class="data-container" [hidden]="hideComponent">
-    <table @stagger [dataSource]="dataSource" class="data-table w-full" mat-table matSort>
-      <!--- Note that these columns can be defined in any order.
-               The actual rendered columns are set as a property on the row definition" -->
+  <!-- No Data -->
+  <div *ngIf="noDataFound" class="no-data">
+    <span class="text">NO DATA FOUND</span>
+    <img class="image" src="./assets/icons/no-data.svg" alt="" />
+  </div>
 
+  <!-- Table -->
+  <div
+    class="data-container"
+    [ngClass]="{ hidden: tableData.length === 0 || noDataFound }"
+    [hidden]="hideComponent"
+  >
+    <table @stagger [dataSource]="dataSource" class="data-table w-full" mat-table matSort>
       <!-- Content Column -->
       <ng-container *ngFor="let column of tableColumns; trackBy: trackByProperty">
         <!-- Text Columns -->
         <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
-          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="p-h-12px" mat-cell>
             <a href="" *ngIf="column.property === 'planName'; else noLink" target="_blank">
               {{ row[column.property] }}
             </a>
@@ -70,10 +79,10 @@
 
         <!-- Date Columns -->
         <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
-          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="p-h-12px" mat-cell>
             <a href="" *ngIf="column.property === 'planName'; else noLink" target="_blank">
               {{ row[column.property] }}
             </a>
@@ -83,11 +92,24 @@
 
         <!-- Badge Columns -->
         <ng-container *ngIf="column.type === 'badge'" [matColumnDef]="column.property">
-          <th *matHeaderCellDef mat-header-cell mat-sort-header>
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
             {{ column.label }}
           </th>
-          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="pr-12px" mat-cell>
             <mat-icon [icIcon]="row[column.property]"></mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- FileSize Columns -->
+        <ng-container *ngIf="column.type === 'fileSize'" [matColumnDef]="column.property">
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
+            {{ column.label }}
+          </th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="p-h-12px" mat-cell>
+            <a href="" *ngIf="column.property === 'planName'; else noLink" target="_blank">
+              {{ row[column.property] }}
+            </a>
+            <ng-template #noLink>{{ row[column.property] | fileSizeFormat }}</ng-template>
           </td>
         </ng-container>
       </ng-container>
@@ -95,7 +117,7 @@
       <!-- Action Column -->
       <ng-container matColumnDef="actions">
         <th *matHeaderCellDef mat-header-cell mat-sort-header></th>
-        <td *matCellDef="let row" class="w-10 text-secondary" mat-cell>
+        <td *matCellDef="let row" class="w-10 text-secondary pl-12px" mat-cell>
           <button
             (click)="$event.stopPropagation()"
             [matMenuTriggerData]="{ entity: row }"
@@ -112,7 +134,8 @@
       <tr
         *matRowDef="let row; columns: visibleColumns"
         @fadeInUp
-        class="tb-content trans-ease-out"
+        (click)="onSelectClick(row)"
+        class="tb-content trans-ease-out data-row"
         mat-row
       ></tr>
     </table>
@@ -145,11 +168,21 @@
 <!-- Actions Menu -->
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-entity="entity" matMenuContent>
-    <button (click)="onEditClick(entity)" mat-menu-item>
+    <!-- Additional Actions -->
+    <button
+      *ngFor="let action of additionalActions"
+      (click)="action.onClick.emit(entity)"
+      mat-menu-item
+    >
+      <mat-icon [icIcon]="action.icon"></mat-icon>
+      <span>{{ action.name }}</span>
+    </button>
+    <!-- Default Actions -->
+    <button *ngIf="editAction" (click)="onEditClick(entity)" mat-menu-item>
       <mat-icon icIcon="icEdit"></mat-icon>
       <span>Edit</span>
     </button>
-    <button (click)="onDeleteClick(entity)" mat-menu-item>
+    <button *ngIf="deleteAction" (click)="onDeleteClick(entity)" mat-menu-item>
       <mat-icon icIcon="icDelete"></mat-icon>
       <span>Delete</span>
     </button>

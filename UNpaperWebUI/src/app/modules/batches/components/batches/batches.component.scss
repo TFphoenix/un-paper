@@ -9,6 +9,26 @@
     flex-grow: 1;
   }
 
-  .add-button {
+  .action-button {
+    height: 48px;
+  }
+
+  .selected-organization {
+    display: flex;
+    align-items: center;
+
+    .organization-name {
+      display: flex;
+      flex-direction: column;
+
+      .info {
+        font-size: 12px;
+      }
+
+      .name {
+        color: $unpPink2;
+        font-weight: bold;
+      }
+    }
   }
 }

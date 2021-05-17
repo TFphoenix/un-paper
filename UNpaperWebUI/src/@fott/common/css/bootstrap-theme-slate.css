@@ -220,12 +220,12 @@ samp {
   font-size: 1em;
 }
 
-pre {
+/* pre {
   margin-top: 0;
   margin-bottom: 1rem;
   overflow: auto;
   -ms-overflow-style: scrollbar;
-}
+} */
 
 figure {
   margin: 0 0 1rem;
@@ -595,10 +595,10 @@ pre code {
   word-break: normal;
 }
 
-.pre-scrollable {
+/* .pre-scrollable {
   max-height: 340px;
   overflow-y: scroll;
-}
+} */
 
 .container {
   width: 100%;
@@ -2007,7 +2007,7 @@ pre code {
   background-color: rgba(255, 255, 255, 0.075);
 }
 
-@media (max-width: 575.98px) {
+/* @media (max-width: 575.98px) {
   .table-responsive-sm {
     display: block;
     width: 100%;
@@ -2057,15 +2057,15 @@ pre code {
   .table-responsive-xl > .table-bordered {
     border: 0;
   }
-}
-
+} */
+/* 
 .table-responsive {
   display: block;
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
-}
+} */
 
 .table-responsive > .table-bordered {
   border: 0;
@@ -6118,13 +6118,13 @@ button.close {
   margin-right: 0.25rem;
 }
 
-.modal-scrollbar-measure {
+/* .modal-scrollbar-measure {
   position: absolute;
   top: -9999px;
   width: 50px;
   height: 50px;
   overflow: scroll;
-}
+} */
 
 @media (min-width: 576px) {
   .modal-dialog {

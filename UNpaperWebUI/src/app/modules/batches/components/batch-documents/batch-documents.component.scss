@@ -1,0 +1,60 @@
+@import 'theme-colors';
+
+.batch-container {
+  .batch-header {
+    display: flex;
+    align-items: flex-start;
+
+    .batch-icon {
+      width: 64px;
+      height: 64px;
+    }
+
+    .loading-placeholder {
+      flex: auto;
+      justify-content: center;
+    }
+
+    .batch-info {
+      flex: auto;
+
+      &-content {
+        display: flex;
+        justify-content: space-between;
+
+        h4 {
+          margin: 0;
+          color: $unpPink2;
+          font-weight: bold;
+        }
+
+        .left-column {
+          flex: auto;
+
+          .batch-description {
+            max-height: 128px;
+            overflow-y: auto;
+          }
+        }
+
+        .right-column {
+          margin-left: 64px;
+          display: flex;
+          align-items: flex-end;
+          text-align: right;
+          flex-direction: column;
+
+          .organization {
+            display: flex;
+            align-items: center;
+
+            .organization-icon {
+              width: 32px;
+              height: 32px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

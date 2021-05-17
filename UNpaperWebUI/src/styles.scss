@@ -38,11 +38,32 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-// Margins
+// Margins (full)
+.m-0 {
+  margin: 0 !important;
+}
+
+.m-0px {
+  margin: 0px !important;
+}
+
+.m-8px {
+  margin: 6px !important;
+}
+
+.m-8px {
+  margin: 8px !important;
+}
+
 .m-10px {
   margin: 10px !important;
 }
 
+.m-16px {
+  margin: 16px !important;
+}
+
+// Margins (1D)
 .m-h-20px {
   margin: 0 20px;
 }
@@ -51,32 +72,88 @@ body {
   margin: 0 10px;
 }
 
+// Margins (right)
+.mr-3px {
+  margin-right: 3px !important;
+}
+
+.mr-6px {
+  margin-right: 6px !important;
+}
+
 .mr-8px {
-  margin-right: 8px;
+  margin-right: 8px !important;
 }
 
 .mr-10px {
-  margin-right: 10px;
+  margin-right: 10px !important;
 }
 
-.mr-3px {
-  margin-right: 3px !important;
+.mr-16px {
+  margin-right: 16px !important;
+}
+
+// Margins (top)
+.mt-3px {
+  margin-top: 3px !important;
 }
 
 .mt-6px {
   margin-top: 6px !important;
 }
 
+.mt-8px {
+  margin-top: 8px !important;
+}
+
+.mt-10px {
+  margin-top: 10px !important;
+}
+
+.mt-16px {
+  margin-top: 16px !important;
+}
+
+// Margins (left)
+.ml-3px {
+  margin-top: 3px !important;
+}
+
+.ml-6px {
+  margin-left: 6px !important;
+}
+
 .ml-8px {
   margin-left: 8px !important;
 }
 
-.m-8px {
-  margin: 8px !important;
+.ml-10px {
+  margin-left: 10px !important;
 }
 
-.m-0px {
-  margin: 0px !important;
+.ml-16px {
+  margin-left: 16px !important;
+}
+
+// Margins (bottom)
+.mb-3px {
+  margin-bottom: 3px !important;
+}
+
+.mb-6px {
+  margin-bottom: 6px !important;
+}
+
+.mb-8px {
+  margin-bottom: 8px !important;
+}
+
+.mb-10px {
+  margin-bottom: 10px !important;
+}
+
+.mb-16px {
+  margin-bottom: 16px !important;
 }
 
 // Paddings
@@ -84,8 +161,20 @@ body {
   padding: 0 8px;
 }
 
+.p-h-12px {
+  padding: 0 12px !important;
+}
+
 .pl-16px {
   padding-left: 16px;
+}
+
+.pl-12px {
+  padding-left: 12px !important;
+}
+
+.pr-12px {
+  padding-right: 12px !important;
 }
 
 // Flex
@@ -141,6 +230,40 @@ body {
   height: 24px;
 }
 
+// Colors
+.unp-primary {
+  color: $unpPink2;
+}
+
+.unp-yellow {
+  color: $unpYellow;
+}
+
+.unp-green {
+  color: $unpGreen;
+}
+
+.unp-blue {
+  color: $unpBlue;
+}
+
+.unp-red {
+  color: $unpRed;
+}
+
+// Text
+.uppercase {
+  text-transform: uppercase;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.center {
+  text-align: center !important;
+}
+
 // Fonts
 .f-poppins {
   font-family: poppinsFont !important;
@@ -148,4 +271,18 @@ body {
 
 .f-lato {
   font-family: latoFont !important;
+}
+
+// Animations
+.rotating {
+  animation: rotation 2s infinite linear;
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
 }

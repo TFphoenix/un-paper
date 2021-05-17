@@ -6,3 +6,5 @@
   <!--This is to avoid reload during acquireTokenSilent() because of hidden iframe -->
   <router-outlet *ngIf="!isIframe"></router-outlet>
 </app-sidenav>
+
+<unp-loading-splashscreen *ngIf="loading"></unp-loading-splashscreen>

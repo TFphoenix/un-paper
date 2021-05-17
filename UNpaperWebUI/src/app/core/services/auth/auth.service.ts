@@ -12,13 +12,16 @@ import {
   AuthenticationResult,
   AuthError,
   EventMessage,
-  EventType
+  EventType,
+  SilentRequest
 } from '@azure/msal-browser';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { b2cPolicies } from 'src/app/configs/b2c-config';
 import { TokenClaims } from 'src/app/shared/interfaces/token-claims.interface';
+import { SignInTokenClaims } from 'src/app/shared/models/sign-in-token-claims.model';
 import { SignUpTokenClaims } from 'src/app/shared/models/sign-up-token-claims.model';
+import { environment } from 'src/environments/environment';
 import { UserService } from '../user/user.service';
 
 interface IdTokenClaims extends AuthenticationResult {
@@ -36,6 +39,8 @@ export class AuthService {
     return this._loggedIn;
   }
   private readonly _destroying$ = new Subject<void>();
+
+  userClaims: SignInTokenClaims;
 
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private _msalGuardConfig: MsalGuardConfiguration,
@@ -105,6 +110,12 @@ export class AuthService {
 
   checkAccount(): void {
     this._loggedIn = this._msalAuthService.instance.getAllAccounts().length > 0;
+
+    if (this._loggedIn) {
+      this.userClaims = new SignUpTokenClaims(
+        this._msalAuthService.instance.getAllAccounts()[0].idTokenClaims as TokenClaims
+      );
+    }
   }
 
   login(userFlowRequest?: RedirectRequest | PopupRequest): void {
@@ -151,6 +162,15 @@ export class AuthService {
 
   handleRedirect(): Observable<AuthenticationResult> {
     return this._msalAuthService.handleRedirectObservable();
+  }
+
+  getAuthenticationToken(): Promise<AuthenticationResult> {
+    var silentRequest: SilentRequest = {
+      scopes: environment.b2cScopes,
+      account: this._msalAuthService.instance.getAllAccounts()[0]
+    };
+
+    return this._msalAuthService.instance.acquireTokenSilent(silentRequest);
   }
 
   async processAuthResult(result: AuthenticationResult) {

@@ -6,10 +6,12 @@
   </button>
 </div>
 <unp-data-table
+  (onSelect)="gotoOrganizationBatches($event)"
   (onEdit)="editOrganization($event)"
   (onDelete)="deleteOrganization($event)"
   [title]="'Organizations'"
   [tableColumns]="tableColumns"
   [tableData]="tableData"
   [searchDisplay]="true"
+  [additionalActions]="tableActions"
 ></unp-data-table>

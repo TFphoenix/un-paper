@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web.Resource;
+using System;
+using System.Threading.Tasks;
 using UNpaper.Registry.API.Parameters;
 using UNpaper.Registry.Interface.Services;
 using UNpaper.Registry.Model.Entities;
@@ -15,13 +13,13 @@ namespace UNpaper.Registry.API.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route(Routes.OrganizationRoute)]
-    public class OrganizationController : ControllerBase
+    [Route(Routes.OrganizationsRoute)]
+    public class OrganizationsController : ControllerBase
     {
-        private readonly ILogger<OrganizationController> _logger;
+        private readonly ILogger<OrganizationsController> _logger;
         private readonly IOrganizationService _organizationService;
 
-        public OrganizationController(ILogger<OrganizationController> logger, IOrganizationService organizationService)
+        public OrganizationsController(ILogger<OrganizationsController> logger, IOrganizationService organizationService)
         {
             _logger = logger;
             _organizationService = organizationService;
@@ -64,7 +62,11 @@ namespace UNpaper.Registry.API.Controllers
             {
                 var updated = await _organizationService.ModifyOrganization(organization);
                 return updated
-                    ? (IActionResult)Ok(ResponseMessages.OrganizationUpdateSuccess)
+                    ? (IActionResult)Ok(new ResponseMessages.Response()
+                    {
+                        Status = ResponseMessages.ResponseStatus.Success,
+                        Message = ResponseMessages.OrganizationUpdateSuccess
+                    })
                     : NotFound(ResponseMessages.OrganizationNotFoundError);
             }
             catch
@@ -81,7 +83,11 @@ namespace UNpaper.Registry.API.Controllers
             var deleted = await _organizationService.DeleteOrganization(new Guid(id));
 
             return deleted ?
-                (IActionResult)Ok(ResponseMessages.OrganizationDeleteSuccess) :
+                (IActionResult)Ok(new ResponseMessages.Response()
+                {
+                    Status = ResponseMessages.ResponseStatus.Success,
+                    Message = ResponseMessages.OrganizationDeleteSuccess
+                }) :
                 NotFound(ResponseMessages.OrganizationNotFoundError);
         }
     }

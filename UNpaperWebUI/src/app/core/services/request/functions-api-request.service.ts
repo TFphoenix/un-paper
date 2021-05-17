@@ -34,7 +34,7 @@ export class FunctionsApiRequestService implements RequestMethods {
     body: any,
     headers: HttpHeaders = this.getHeadersByEnvironment()
   ): Observable<T> {
-    return this._requestService.post(this.getUrl(url), headers);
+    return this._requestService.post(this.getUrl(url), body, headers);
   }
   put<T = any>(
     url: string,
@@ -56,6 +56,13 @@ export class FunctionsApiRequestService implements RequestMethods {
     headers: HttpHeaders = this.getHeadersByEnvironment()
   ): Observable<T> {
     return this._requestService.delete(this.getUrl(url), id, headers);
+  }
+  deleteByBody<T = any>(
+    url: string,
+    body: any,
+    headers: HttpHeaders = this.getHeadersByEnvironment()
+  ): Observable<T> {
+    return this._requestService.deleteByBody(this.getUrl(url), body, headers);
   }
 
   /**

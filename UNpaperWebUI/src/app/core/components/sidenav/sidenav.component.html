@@ -3,44 +3,56 @@
   <mat-sidenav class="unp-sidenav box-shadow-right" mode="side" opened>
     <mat-nav-list>
       <!-- Organizations -->
-      <a matLine routerLink="/organizations">
-        <mat-list-item class="unp-nav-list-item">
-          <div class="unp-nav-item">
-            <img class="mr-10px nav-icon" src="./assets/icons/organization.svg" alt="" />
-            <span>Organizations</span>
-          </div>
-        </mat-list-item>
-      </a>
+      <mat-list-item
+        class="unp-nav-list-item"
+        matLine
+        routerLink="/organizations"
+        [routerLinkActive]="['is-active']"
+      >
+        <div class="unp-nav-item">
+          <img class="mr-10px nav-icon" src="./assets/icons/organization.svg" alt="" />
+          <span>Organizations</span>
+        </div>
+      </mat-list-item>
       <mat-divider></mat-divider>
       <!-- Batches -->
-      <a matLine routerLink="/batches">
-        <mat-list-item class="unp-nav-list-item">
-          <div class="unp-nav-item">
-            <img class="mr-10px nav-icon" src="./assets/icons/batch.svg" alt="" />
-            <span>Batches</span>
-          </div>
-        </mat-list-item>
-      </a>
+      <mat-list-item
+        class="unp-nav-list-item"
+        matLine
+        routerLink="/batches"
+        [routerLinkActive]="['is-active']"
+      >
+        <div class="unp-nav-item">
+          <img class="mr-10px nav-icon" src="./assets/icons/batch.svg" alt="" />
+          <span>Batches</span>
+        </div>
+      </mat-list-item>
       <mat-divider></mat-divider>
       <!-- Quick Upload -->
-      <a matLine routerLink="/prebuilt">
-        <mat-list-item class="unp-nav-list-item">
-          <div class="unp-nav-item">
-            <img class="mr-10px nav-icon" src="./assets/icons/prebuilt.svg" alt="" />
-            <span>Prebuilt Analyze</span>
-          </div>
-        </mat-list-item>
-      </a>
+      <mat-list-item
+        class="unp-nav-list-item"
+        matLine
+        routerLink="/prebuilt"
+        [routerLinkActive]="['is-active']"
+      >
+        <div class="unp-nav-item">
+          <img class="mr-10px nav-icon" src="./assets/icons/prebuilt.svg" alt="" />
+          <span>Prebuilt Analyze</span>
+        </div>
+      </mat-list-item>
       <mat-divider></mat-divider>
       <!-- Layout Analyze -->
-      <a matLine routerLink="/layout">
-        <mat-list-item class="unp-nav-list-item">
-          <div class="unp-nav-item">
-            <img class="mr-10px nav-icon" src="./assets/icons/layout.svg" alt="" />
-            <span>Layout Analyze</span>
-          </div>
-        </mat-list-item>
-      </a>
+      <mat-list-item
+        class="unp-nav-list-item"
+        matLine
+        routerLink="/layout"
+        [routerLinkActive]="['is-active']"
+      >
+        <div class="unp-nav-item">
+          <img class="mr-10px nav-icon" src="./assets/icons/layout.svg" alt="" />
+          <span>Layout Analyze</span>
+        </div>
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 

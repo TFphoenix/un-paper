@@ -1,13 +1,32 @@
 <div class="actions-container">
+  <div *ngIf="selectedOrganization" class="selected-organization">
+    <button
+      (click)="removeSelectedOrganization()"
+      class="action-button m-10px"
+      mat-raised-button
+      color="primary"
+    >
+      <mat-icon>visibility</mat-icon>
+      See All
+    </button>
+    <div class="organization-name">
+      <span class="info">Currently seeing batches for:</span>
+      <span class="name">{{ selectedOrganization.name }}</span>
+    </div>
+  </div>
   <div class="spacer"></div>
-  <button class="add-button m-10px" mat-raised-button color="primary">
+  <button (click)="addBatch()" class="action-button m-10px" mat-raised-button color="primary">
     <mat-icon>add</mat-icon>
     Add Batch
   </button>
 </div>
 <unp-data-table
+  (onSelect)="gotoBatchDocuments($event)"
+  (onEdit)="editBatch($event)"
+  (onDelete)="deleteBatch($event)"
   [title]="'Batches'"
   [tableColumns]="tableColumns"
   [tableData]="tableData"
+  [additionalActions]="tableActions"
   [searchDisplay]="true"
 ></unp-data-table>

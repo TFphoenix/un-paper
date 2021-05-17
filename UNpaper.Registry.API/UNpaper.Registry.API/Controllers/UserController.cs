@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web.Resource;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UNpaper.Registry.API.Parameters;
-using UNpaper.Registry.Interface.Repositories;
 using UNpaper.Registry.Interface.Services;
 using UNpaper.Registry.Model.Entities;
 
@@ -24,12 +19,14 @@ namespace UNpaper.Registry.API.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
         private readonly IOrganizationService _organizationService;
+        private readonly IBatchService _batchService;
 
-        public UserController(ILogger<UserController> logger, IUserService userService, IOrganizationService organizationService)
+        public UserController(ILogger<UserController> logger, IUserService userService, IOrganizationService organizationService, IBatchService batchService)
         {
             _logger = logger;
             _userService = userService;
             _organizationService = organizationService;
+            _batchService = batchService;
         }
 
         [HttpGet]
@@ -65,9 +62,20 @@ namespace UNpaper.Registry.API.Controllers
         {
             HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
 
-            return batches.HasValue?
-                await _organizationService.GetUserOrganizations(User, batches.Value):
+            return batches.HasValue ?
+                await _organizationService.GetUserOrganizations(User, batches.Value) :
                 await _organizationService.GetUserOrganizations(User);
+        }
+
+        [HttpGet]
+        [ActionName(Routes.UserBatchesAction)]
+        public async Task<IEnumerable<Batch>> GetUserBatches(bool? organization)
+        {
+            HttpContext.VerifyUserHasAnyAcceptedScope(Scopes.ReadScope);
+
+            return organization.HasValue ?
+                await _batchService.GetUserBatches(User, organization.Value) :
+                await _batchService.GetUserBatches(User);
         }
     }
 }

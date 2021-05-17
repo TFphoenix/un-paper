@@ -1,0 +1,201 @@
+<form
+  class="form-container"
+  (ngSubmit)="save()"
+  [formGroup]="form"
+  spellcheck="false"
+  autocomplete="off"
+>
+  <!-- Header -->
+  <div class="header" fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <h2 class="headline" fxFlex="auto">Upload Documents</h2>
+
+    <button class="text-secondary close-button" mat-dialog-close mat-icon-button type="button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <!-- Uploader -->
+  <div class="uploader-container mt-16px" *ngIf="uploader">
+    <div>
+      <div>
+        <div
+          ng2FileDrop
+          [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+          (fileOver)="fileOverBase($event)"
+          (click)="chooseFiles()"
+          [uploader]="uploader"
+          class="well drop-zone"
+        >
+          <img class="mb-16px documents-icon" src="./assets/icons/documents.svg" alt="" />
+          <img
+            class="mb-16px documents-icon file-over"
+            src="./assets/icons/documents-primary.svg"
+            alt=""
+          />
+          Upload your documents here
+        </div>
+
+        <input
+          #fileInput
+          type="file"
+          class="file-input"
+          ng2FileSelect
+          [uploader]="uploader"
+          multiple
+          accept="application/json, application/pdf, image/jpeg, image/png, image/tiff"
+        />
+      </div>
+
+      <div *ngIf="uploader?.queue?.length > 0">
+        <h3 class="unp-primary bold mb-3px">Documents: {{ uploader?.queue?.length }}</h3>
+
+        <div id="table-wrapper" class="mb-16px">
+          <div id="table-scroll">
+            <table class="table documents-table">
+              <thead>
+                <tr>
+                  <th class="unp-primary bold name-col"><span class="text">Name</span></th>
+                  <th class="unp-primary bold"><span class="text">Size</span></th>
+                  <th class="unp-primary bold"><span class="text">Progress</span></th>
+                  <th class="unp-primary bold"><span class="text">Status</span></th>
+                  <th class="unp-primary bold"><span class="text">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of uploader.queue">
+                  <td class="name-data">
+                    <strong>{{ item?.file?.name }}</strong>
+                  </td>
+                  <td *ngIf="uploader.options.isHTML5" nowrap>
+                    {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                  </td>
+                  <td *ngIf="uploader.options.isHTML5">
+                    <div class="progress" style="margin-bottom: 0">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        [ngStyle]="{ width: item.progress + '%' }"
+                      ></div>
+                    </div>
+                  </td>
+                  <td class="center">
+                    <div class="status-icon-container">
+                      <div *ngIf="item.isUploading" class="status-icon unp-primary">
+                        <mat-icon class="rotating">autorenew</mat-icon>
+                      </div>
+                      <div *ngIf="item.isSuccess" class="status-icon unp-green">
+                        <mat-icon>check_circle</mat-icon>
+                      </div>
+                      <div *ngIf="item.isCancel" class="status-icon unp-yellow">
+                        <mat-icon>do_disturb_on</mat-icon>
+                      </div>
+                      <div *ngIf="item.isError" class="status-icon unp-red">
+                        <mat-icon>cancel</mat-icon>
+                      </div>
+                    </div>
+                  </td>
+                  <td nowrap>
+                    <button
+                      class="action-button"
+                      type="button"
+                      mat-icon-button
+                      matTooltip="Upload"
+                      (click)="item.upload()"
+                      [disabled]="item.isReady || item.isUploading || item.isSuccess"
+                    >
+                      <mat-icon>upload</mat-icon>
+                    </button>
+                    <button
+                      class="action-button"
+                      type="button"
+                      mat-icon-button
+                      matTooltip="Cancel"
+                      (click)="item.cancel()"
+                      [disabled]="!item.isUploading"
+                    >
+                      <mat-icon>remove_circle_outline</mat-icon>
+                    </button>
+                    <button
+                      class="action-button"
+                      type="button"
+                      mat-icon-button
+                      matTooltip="Remove"
+                      (click)="item.remove()"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="mb-16px">
+          <div>
+            <h3 class="unp-primary bold mb-3px">Overall Progress:</h3>
+            <div class="progress" style="">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                [ngStyle]="{ width: uploader.progress + '%' }"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="uploader?.queue?.length > 0">
+      <h3 class="unp-primary bold mb-3px">Response:</h3>
+      <div class="response-content">
+        {{ response }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Placeholder -->
+  <div *ngIf="!uploader" class="loading-placeholder">
+    <mat-progress-spinner
+      class="loading-spinner mb-16px"
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+      [diameter]="32"
+    ></mat-progress-spinner>
+    <div class="unp-primary">Loading document manager...</div>
+  </div>
+
+  <!-- Actions -->
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CLOSE</button>
+    <button
+      mat-button
+      type="button"
+      (click)="uploader.cancelAll()"
+      [disabled]="!uploader || !uploader.isUploading"
+    >
+      CANCEL ALL
+    </button>
+    <button
+      color="primary"
+      mat-button
+      type="button"
+      (click)="uploader.clearQueue()"
+      [disabled]="!uploader || !uploader.queue.length"
+    >
+      REMOVE ALL
+    </button>
+    <button
+      color="primary"
+      mat-button
+      type="button"
+      (click)="uploader.uploadAll()"
+      [disabled]="!uploader || !uploader.getNotUploadedItems().length"
+    >
+      UPLOAD ALL
+    </button>
+    <!-- <button *ngIf="isUpdateMode()" color="primary" mat-button type="button">OVERWRITE ALL</button> -->
+  </mat-dialog-actions>
+</form>

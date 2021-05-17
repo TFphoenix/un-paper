@@ -54,7 +54,7 @@ namespace UNpaper.Registry.Data.Repositories
         public async Task<Organization> AddAsyncEntity(Organization organization)
         {
             var createdOrganization = await _organizations.AddAsync(organization);
-            
+
             var created = await _context.SaveChangesAsync();
 
             return createdOrganization.Entity;
@@ -67,13 +67,26 @@ namespace UNpaper.Registry.Data.Repositories
                              ou.User.IsDeleted == false &&
                              ou.Organization.IsDeleted == false);
 
-            return includeBatches ?
-                organizations
+            if (includeBatches)
+            {
+                var result = organizations
                     .Include(ou => ou.Organization.Batches
                         .Where(b => b.IsDeleted == false))
-                    .Select(ou => ou.Organization) :
-                organizations
                     .Select(ou => ou.Organization);
+
+                // To prevent parsing errors because of cyclic dependencies
+                foreach (var organization in result)
+                {
+                    foreach (var batch in organization.Batches)
+                    {
+                        batch.Organization = null;
+                    }
+                }
+
+                return result;
+            }
+
+            return organizations.Select(ou => ou.Organization);
         }
     }
 }

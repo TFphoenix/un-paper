@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { OrganizationService } from 'src/app/core/services/organization/organization.service';
 import { FunctionsApiRequestService } from 'src/app/core/services/request/functions-api-request.service';
 import { UserService } from 'src/app/core/services/user/user.service';
@@ -7,6 +8,7 @@ import { ConfirmationDialogDeleteComponent } from 'src/app/shared/components/con
 import { TableColumn } from 'src/app/shared/interfaces/table-column.interface';
 import { OrganizationData } from 'src/app/shared/models/organization-data.model';
 import { OrganizationRequest } from 'src/app/shared/models/organization-request.model';
+import { TableAction } from 'src/app/shared/models/table-action.model';
 import { OrganizationCreateUpdateComponent } from '../organization-create-update/organization-create-update.component';
 
 @Component({
@@ -26,20 +28,31 @@ export class OrganizationsComponent implements OnInit {
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
+  onBatchesAction = new EventEmitter<any>();
+  tableActions: TableAction[] = [
+    {
+      name: 'Batches',
+      icon: 'icBatch',
+      onClick: this.onBatchesAction
+    }
+  ];
+
   constructor(
     private readonly _organizationService: OrganizationService,
     private readonly _userService: UserService,
-    private readonly _dialog: MatDialog
-  ) {}
+    private readonly _dialog: MatDialog,
+    private readonly _router: Router
+  ) {
+    // Table actions subscriptions
+    this.onBatchesAction.subscribe(organization => {
+      this.gotoOrganizationBatches(organization);
+    });
+  }
 
   ngOnInit(): void {
-    this._userService.getUserOrganizations().subscribe(organizations => {
-      const data: OrganizationData[] = [];
-      organizations.forEach(organization => {
-        data.push(OrganizationData.getFromRequest(organization));
-      });
-      this.tableData = data;
-    });
+    document.title = 'UNpaper - Organizations';
+
+    this.populateOrganizations();
   }
 
   addOrganization() {
@@ -55,7 +68,7 @@ export class OrganizationsComponent implements OnInit {
               this.tableData = data;
             },
             error: errorMessage => {
-              console.log(errorMessage);
+              console.error(errorMessage);
             }
           });
         }
@@ -72,15 +85,10 @@ export class OrganizationsComponent implements OnInit {
         if (updatedOrganization) {
           this._organizationService.update(updatedOrganization).subscribe({
             next: result => {
-              // BUG: Entering error branch because of text format
               this.updateOrganization(updatedOrganization);
             },
             error: errorMessage => {
-              // OK
-              if (errorMessage.status === 200) {
-                this.updateOrganization(updatedOrganization);
-              }
-              // console.log(errorMessage);
+              console.error(errorMessage);
             }
           });
         }
@@ -95,18 +103,27 @@ export class OrganizationsComponent implements OnInit {
       if (dialogResult) {
         this._organizationService.delete(organization.id).subscribe({
           next: result => {
-            // BUG: Entering error branch because of text format
             this.removeOrganization(organization);
           },
           error: errorMessage => {
-            // OK
-            if (errorMessage.status === 200) {
-              this.removeOrganization(organization);
-            }
-            // console.log(errorMessage);
+            console.error(errorMessage);
           }
         });
       }
+    });
+  }
+
+  gotoOrganizationBatches(organization: OrganizationData) {
+    this._router.navigate(['/batches'], { state: { selectedOrganization: organization } });
+  }
+
+  private populateOrganizations() {
+    this._userService.getUserOrganizations().subscribe(organizations => {
+      const data: OrganizationData[] = [];
+      organizations.forEach(organization => {
+        data.push(OrganizationData.getFromRequest(organization));
+      });
+      this.tableData = data;
     });
   }
 

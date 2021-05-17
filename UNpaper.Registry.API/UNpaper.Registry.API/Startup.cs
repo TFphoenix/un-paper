@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using UNpaper.Registry.API.Swagger;
 using UNpaper.Registry.Business.Services;
 using UNpaper.Registry.Data;
 using UNpaper.Registry.Interface.Services;
@@ -32,9 +34,33 @@ namespace UNpaper.Registry.API
 
             // API configuration
             services.AddControllers();
+
+            // Swagger configuration
             services.AddSwaggerGen(c =>
             {
+                // Version
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UNpaper.Registry.API", Version = "v1" });
+
+                // Authentication
+                var authenticationCredentials = this.Configuration.GetSection("AzureAdB2C");
+                var instance = authenticationCredentials.GetValue<string>("Instance");
+                var url = instance.Remove(instance.Length - 4);
+                var domain = authenticationCredentials.GetValue<string>("Domain");
+                var signUpSignInPolicyId = authenticationCredentials.GetValue<string>("SignUpSignInPolicyId").ToLower();
+                var clientId = authenticationCredentials.GetValue<string>("ServiceClientId");
+                c.AddSecurityDefinition(
+                    "Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Description = "Enter the authentication token recieved from the Azure AD B2C Instance" +
+                                      "<br><a href=\"" +
+                                      $"{url}{domain}/oauth2/v2.0/authorize?p={signUpSignInPolicyId}&client_id={clientId}&response_type=token&redirect_uri=https://jwt.ms&state=anything&nounce=12345&scope=https://{domain}/api/demo.read https://{domain}/api/demo.write https://{domain}/api/functions.read https://{domain}/api/functions.write&response_mode=fragment" +
+                                      "\" target=\"_blank\">Click here to obtain the authentication token</a>",
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                    });
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
 
             // CORS configuration

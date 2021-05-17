@@ -1,0 +1,46 @@
+@import 'theme-colors';
+
+.form-container {
+  min-width: 312px;
+
+  .header {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+    padding: 10px;
+    margin: 0px;
+    color: $unpPink2;
+
+    $closeButton: 40px; // REMEMBER: This won't change the actual diameter
+
+    .headline {
+      max-width: calc(100% - $closeButton);
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      flex: 1 1 auto;
+      box-sizing: border-box;
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .close-button {
+      width: $closeButton;
+      height: $closeButton;
+    }
+  }
+
+  .fields {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    padding: 10px;
+    margin: 0px;
+
+    textarea {
+      min-height: 64px;
+    }
+  }
+}

@@ -13,9 +13,14 @@ import icClose from '@iconify/icons-ic/twotone-close';
 import icUnknown from '@iconify/icons-ic/help-outline';
 import icPending from '@iconify/icons-ic/round-pending';
 import icInfo from '@iconify/icons-ic/sharp-warning';
+import icDocument from '@iconify/icons-ic/round-description';
+import icLayout from '@iconify/icons-ic/round-auto-awesome-mosaic';
+import icPrebuilt from '@iconify/icons-ic/round-article';
+import icVisibility from '@iconify/icons-ic/round-visibility';
 
 export const appIcons = {
   icArtifacts,
+  icDocument,
   icLogs,
   icFilterList,
   icMoreHoriz,
@@ -29,5 +34,8 @@ export const appIcons = {
   icClose,
   icUnknown,
   icPending,
-  icInfo
+  icInfo,
+  icLayout,
+  icPrebuilt,
+  icVisibility
 };

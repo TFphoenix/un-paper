@@ -9,5 +9,14 @@ namespace UNpaper.AzureFunctions.Common
         // Prefixes
         public const string GeneralPrefix = "unpaper-";
         public const string OrganizationPrefix = GeneralPrefix + "org-";
+        public const string BatchPrefix = GeneralPrefix + "bch-";
+
+        // Accepted document formats
+        public static readonly string[] AcceptedDocumentFormats = {
+            "application/json", "application/pdf", "image/jpeg", "image/png", "image/tiff"
+        };
+
+        // Other
+        public const string Delimiter = "/";
     }
 }
