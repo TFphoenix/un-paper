@@ -30,8 +30,6 @@ export class DocumentManagerComponent implements OnInit {
     private fb: FormBuilder,
     private readonly _authService: AuthService
   ) {
-    console.log(defaults);
-
     // Ensure user authentication then initialize uploader
     _authService.getAuthenticationToken().then(result => {
       this.initializeUploader(

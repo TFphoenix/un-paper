@@ -50,12 +50,12 @@
   <unp-data-table
     *ngIf="currentBatch"
     (onSelect)="previewDocument($event)"
+    (onEdit)="editDocument($event)"
     (onDelete)="deleteDocument($event)"
     [title]="'Documents'"
     [tableColumns]="tableColumns"
     [tableData]="tableData"
     [searchDisplay]="true"
-    [editAction]="false"
     [additionalActions]="tableActions"
   ></unp-data-table>
 </div>

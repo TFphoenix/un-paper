@@ -80,6 +80,11 @@ export class BatchDocumentsComponent implements OnInit {
 
   previewDocument(document: DocumentData) {
     // TODO
+    console.log(document);
+  }
+
+  editDocument(document: DocumentData) {
+    // TODO
   }
 
   deleteDocument(document: DocumentData) {
@@ -111,7 +116,7 @@ export class BatchDocumentsComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(documentManagerData => {
-        // TODO: Update data-table accordingly
+        this.populateBatchDocuments();
       });
   }
 
