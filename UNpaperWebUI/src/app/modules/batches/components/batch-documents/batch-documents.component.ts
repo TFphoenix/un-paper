@@ -9,6 +9,8 @@ import { TableAction } from 'src/app/shared/models/table-action.model';
 import { DocumentManagerComponent } from 'src/app/shared/components/document-manager/document-manager.component';
 import { DocumentManagerData } from 'src/app/shared/models/document-manager-data.model';
 import { DocumentService } from 'src/app/core/services/document/document.service';
+import { ConfirmationDialogDeleteComponent } from 'src/app/shared/components/confirmation-dialog-delete/confirmation-dialog-delete.component';
+import { DocumentRequest } from 'src/app/shared/models/document-request.model';
 
 @Component({
   selector: 'unp-batch-documents',
@@ -18,17 +20,6 @@ import { DocumentService } from 'src/app/core/services/document/document.service
 export class BatchDocumentsComponent implements OnInit {
   currentBatch: BatchRequest;
   tableData: DocumentData[] = [];
-  // [
-  //   {
-  //     icon: 'icDocument',
-  //     name: 'Document Name',
-  //     length: 5064,
-  //     contentType: 'PDF',
-  //     createdOn: new Date(),
-  //     lastModifiedOn: new Date(),
-  //     blobPath: 'test/blob/path/document.pdf'
-  //   }
-  // ];
 
   tableColumns: TableColumn<DocumentData>[] = [
     { label: '', property: 'icon', type: 'badge', visible: true },
@@ -87,9 +78,29 @@ export class BatchDocumentsComponent implements OnInit {
     this.populateBatchData();
   }
 
-  previewDocument(document: DocumentData) {}
+  previewDocument(document: DocumentData) {
+    // TODO
+  }
 
-  deleteDocument(document: DocumentData) {}
+  deleteDocument(document: DocumentData) {
+    const deleteDialogRef = this._dialog.open(ConfirmationDialogDeleteComponent, {
+      data: { type: 'Document', name: document.name }
+    });
+    deleteDialogRef.afterClosed().subscribe(dialogResult => {
+      if (dialogResult) {
+        this._documentService
+          .delete(this.currentBatch.organizationId, this.currentBatch.id, [document])
+          .subscribe({
+            next: result => {
+              this.removeDocument(document);
+            },
+            error: errorMessage => {
+              console.error(errorMessage);
+            }
+          });
+      }
+    });
+  }
 
   uploadDocument() {
     this._dialog
@@ -143,5 +154,14 @@ export class BatchDocumentsComponent implements OnInit {
   private openInPrebuilt(document: any) {
     // TODO
     throw new Error('Method not implemented.');
+  }
+
+  private removeDocument(removeDocument: DocumentRequest) {
+    const data = [...this.tableData];
+    data.splice(
+      data.findIndex(doc => doc.name === removeDocument.name),
+      1
+    );
+    this.tableData = data;
   }
 }

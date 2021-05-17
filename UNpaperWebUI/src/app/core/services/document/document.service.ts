@@ -12,4 +12,11 @@ export class DocumentService {
   getDocuments(organizationId: string, batchId: string): Observable<DocumentRequest[]> {
     return this._functionsRequestService.get(`/blobs/${organizationId}/${batchId}`);
   }
+
+  delete(organizationId: string, batchId: string, documents: DocumentRequest[]) {
+    return this._functionsRequestService.deleteByBody(
+      `/blobs/${organizationId}/${batchId}`,
+      documents
+    );
+  }
 }

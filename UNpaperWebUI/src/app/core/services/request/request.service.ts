@@ -63,6 +63,12 @@ export class RequestService implements RequestMethods {
       .pipe(this.retryRequest<T>());
   }
 
+  deleteByBody<T = any>(url: string, body: any, headers: HttpHeaders = this._defaultHeaders) {
+    return this._http
+      .request<T>('delete', url, { body: body, headers: headers, reportProgress: true })
+      .pipe(this.retryRequest<T>());
+  }
+
   private retryRequest<T = any>(): MonoTypeOperatorFunction<T> {
     return retryWhen(errors =>
       errors.pipe(

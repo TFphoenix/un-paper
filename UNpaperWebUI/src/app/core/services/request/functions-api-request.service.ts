@@ -57,6 +57,13 @@ export class FunctionsApiRequestService implements RequestMethods {
   ): Observable<T> {
     return this._requestService.delete(this.getUrl(url), id, headers);
   }
+  deleteByBody<T = any>(
+    url: string,
+    body: any,
+    headers: HttpHeaders = this.getHeadersByEnvironment()
+  ): Observable<T> {
+    return this._requestService.deleteByBody(this.getUrl(url), body, headers);
+  }
 
   /**
    * @returns prefixed url

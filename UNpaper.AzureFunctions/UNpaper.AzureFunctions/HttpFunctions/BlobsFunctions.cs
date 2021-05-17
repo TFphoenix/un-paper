@@ -26,7 +26,8 @@ namespace UNpaper.AzureFunctions.HttpFunctions
 
         [FunctionName("BlobsListAll")]
         public async Task<IActionResult> ListAllBlobs(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = Routes.BlobsRoute)]
+            [HttpTrigger(AuthorizationLevel.Function, "get",
+            Route = Routes.BlobsRoute)]
             HttpRequest req,
             ILogger log)
         {
@@ -138,7 +139,8 @@ namespace UNpaper.AzureFunctions.HttpFunctions
 
         [FunctionName("BlobsGet")]
         public async Task<IActionResult> GetDocument(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = Routes.BlobsRoute + "/{id}")]
+            [HttpTrigger(AuthorizationLevel.Function, "get",
+            Route = Routes.BlobsRoute + "/{id}")]
             HttpRequest req,
             ILogger log,
             string id)
@@ -147,40 +149,79 @@ namespace UNpaper.AzureFunctions.HttpFunctions
         }
 
         [FunctionName("BlobsDelete")]
-        public async Task<IActionResult> DeleteDocument(
-            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = Routes.BlobsRoute + "/{organization}/{batch}/{fileName}")]
+        public async Task<IActionResult> DeleteDocuments(
+            [HttpTrigger(AuthorizationLevel.Function, "delete",
+            Route = Routes.BlobsRoute + "/{organization}/{batch}")]
             HttpRequest req,
             ILogger log,
             string organization,
-            string batch,
-            string fileName)
+            string batch)
         {
+            // Prepare results
+            var succeeded = 0;
+            var results = new List<ResponseModel>();
+            var documents = new List<DocumentModel>();
+
             try
             {
-                // Delete blob
+                // Get file names
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                documents = JsonConvert.DeserializeObject<List<DocumentModel>>(requestBody);
+
+                // Define blob paths
                 var containerName = $"{BlobConstants.OrganizationPrefix}{organization}";
-                var blobPath = $"{BlobConstants.BatchPrefix}{batch}/{fileName}";
-                await _storageService.DeleteBlob(containerName, blobPath);
+                var blobPath = $"{BlobConstants.BatchPrefix}{batch}/";
+
+                // Delete blobs
+                foreach (var document in documents)
+                {
+                    var result = await DeleteDocument(containerName, blobPath, document.Name);
+
+                    if (result.Status.Equals("SUCCESS")) ++succeeded;
+
+                    results.Add(result);
+                }
             }
             catch
             {
                 return new BadRequestObjectResult(new ResponseModel
                 {
                     Status = "ERROR",
-                    Message = $"[{fileName}]: Can't delete blob"
+                    Message = $"Can't delete documents because of parameters recieved"
                 });
             }
 
-            return new OkObjectResult(new ResponseModel
+            // Verify results
+            if (succeeded == 0)
             {
-                Status = "SUCCESS",
-                Message = $"[{fileName}]: Successfully deleted blob"
-            });
+                return new BadRequestObjectResult(new
+                {
+                    OverallStatus = "ERROR",
+                    Results = results
+                });
+            }
+            else if (succeeded == documents.Count)
+            {
+                return new OkObjectResult(new
+                {
+                    OverallStatus = "SUCCESS",
+                    Results = results
+                });
+            }
+            else
+            {
+                return new OkObjectResult(new
+                {
+                    OverallStatus = "PARTIAL-SUCCESS",
+                    Results = results
+                });
+            }
         }
 
         [FunctionName("OrganizationsCreate")]
         public async Task<IActionResult> CreateOrganization(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = Routes.BlobsRoute + "/organizations")]
+            [HttpTrigger(AuthorizationLevel.Function, "post",
+            Route = Routes.BlobsRoute + "/organizations")]
             HttpRequest req,
             ILogger log)
         {
@@ -255,6 +296,29 @@ namespace UNpaper.AzureFunctions.HttpFunctions
                 Status = "SUCCESS",
                 Message = $"[{file.FileName}]: Successfully uploaded document to blob ({(file.Length / 1048576.0):0.00} MB)"
             };
+        }
+
+        private async Task<ResponseModel> DeleteDocument(string containerName, string blobPath, string fileName)
+        {
+            try
+            {
+                // Delete blob
+                await _storageService.DeleteBlob(containerName, blobPath + fileName);
+
+                return new ResponseModel
+                {
+                    Status = "SUCCESS",
+                    Message = $"[{fileName}]: Successfully deleted document"
+                };
+            }
+            catch
+            {
+                return new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = $"[{fileName}]: Error deleting document"
+                };
+            }
         }
     }
 }
