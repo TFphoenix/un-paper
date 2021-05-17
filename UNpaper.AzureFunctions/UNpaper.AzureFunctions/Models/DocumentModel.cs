@@ -14,15 +14,17 @@ namespace UNpaper.AzureFunctions.Models
 
         [JsonRequired]
         [JsonPropertyName("length")]
-        public long Length { get; set; }
+        public long? Length { get; set; }
 
         [JsonRequired]
         [JsonPropertyName("contentType")]
         public string ContentType { get; set; }
 
-        [JsonRequired]
-        [JsonPropertyName("date")]
-        public DateTime Date { get; set; }
+        [JsonPropertyName("createdOn")]
+        public DateTime? CreatedOn { get; set; }
+
+        [JsonPropertyName("lastModifiedOn")]
+        public DateTime? LastModifiedOn { get; set; }
 
         [JsonPropertyName("blobPath")]
         public string BlobPath { get; set; }

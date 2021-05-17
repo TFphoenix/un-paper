@@ -7,20 +7,23 @@ import { ConfirmationDialogDeleteComponent } from './components/confirmation-dia
 import { LoadingSplashscreenComponent } from './components/loading-splashscreen/loading-splashscreen.component';
 import { DocumentManagerComponent } from './components/document-manager/document-manager.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { FileSizeFormatPipe } from './pipes/file-size-format/file-size-format.pipe';
 
 @NgModule({
   declarations: [
     DataTableComponent,
     ConfirmationDialogDeleteComponent,
     LoadingSplashscreenComponent,
-    DocumentManagerComponent
+    DocumentManagerComponent,
+    FileSizeFormatPipe
   ],
   imports: [CommonModule, MaterialModule, IconModule, FileUploadModule],
   exports: [
     DataTableComponent,
     ConfirmationDialogDeleteComponent,
     LoadingSplashscreenComponent,
-    DocumentManagerComponent
+    DocumentManagerComponent,
+    FileSizeFormatPipe
   ]
 })
 export class SharedModule {}

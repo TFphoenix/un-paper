@@ -24,7 +24,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
             _storageService = storageService;
         }
 
-        [FunctionName("Blobs")]
+        [FunctionName("BlobsListAll")]
         public async Task<IActionResult> ListAllBlobs(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = Routes.BlobsRoute)]
             HttpRequest req,
@@ -40,8 +40,35 @@ namespace UNpaper.AzureFunctions.HttpFunctions
             return new OkObjectResult(data);
         }
 
-        [FunctionName("BlobsUploadForm")]
-        public async Task<IActionResult> UploadDocumentsByForm(
+        [FunctionName("BlobsGetByPath")]
+        public async Task<IActionResult> GetDocuments(
+            [HttpTrigger(AuthorizationLevel.Function, "get",
+            Route = Routes.BlobsRoute + "/{organization}/{batch}")]
+            HttpRequest req,
+            ILogger log,
+            string organization,
+            string batch)
+        {
+            try
+            {
+                var containerName = $"{BlobConstants.OrganizationPrefix}{organization}";
+                var blobPath = $"{BlobConstants.BatchPrefix}{batch}";
+                var documents = await _storageService.GetBlobs(containerName, blobPath);
+
+                return new OkObjectResult(documents);
+            }
+            catch
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = "Can't get documents! Ensure given organization and batch are correct"
+                });
+            }
+        }
+
+        [FunctionName("BlobsUpload")]
+        public async Task<IActionResult> UploadDocuments(
             [HttpTrigger(AuthorizationLevel.Function, "post",
             Route = Routes.BlobsRoute + "/{organization}/{batch}")]
             HttpRequest req,

@@ -25,6 +25,7 @@
         <!-- <mat-icon class="cancel-search">close</mat-icon> -->
 
         <button
+          *ngIf="filteringEnabled"
           [matMenuTriggerFor]="columnFilterMenu"
           class="filter-icon ml-4"
           fxFlex="none"
@@ -96,6 +97,19 @@
           </th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" class="pr-12px" mat-cell>
             <mat-icon [icIcon]="row[column.property]"></mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- FileSize Columns -->
+        <ng-container *ngIf="column.type === 'fileSize'" [matColumnDef]="column.property">
+          <th class="uppercase" *matHeaderCellDef mat-header-cell mat-sort-header>
+            {{ column.label }}
+          </th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" class="p-h-12px" mat-cell>
+            <a href="" *ngIf="column.property === 'planName'; else noLink" target="_blank">
+              {{ row[column.property] }}
+            </a>
+            <ng-template #noLink>{{ row[column.property] | fileSizeFormat }}</ng-template>
           </td>
         </ng-container>
       </ng-container>

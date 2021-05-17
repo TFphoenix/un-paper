@@ -34,7 +34,7 @@ export class FunctionsApiRequestService implements RequestMethods {
     body: any,
     headers: HttpHeaders = this.getHeadersByEnvironment()
   ): Observable<T> {
-    return this._requestService.post(this.getUrl(url), headers);
+    return this._requestService.post(this.getUrl(url), body, headers);
   }
   put<T = any>(
     url: string,

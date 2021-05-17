@@ -1,8 +1,11 @@
-export class DocumentData {
-  icon? = 'icDocument';
+import { DocumentRequest } from './document-request.model';
 
-  name: string;
-  //   status: DocumentStatus
-  //   createdOn: Date;
-  //   updatedOn: Date;
+export class DocumentData extends DocumentRequest {
+  icon?: string;
+
+  static getFromRequest(request: DocumentRequest): DocumentData {
+    const data: DocumentData = request;
+    data.icon = 'icDocument';
+    return data;
+  }
 }

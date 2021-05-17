@@ -45,6 +45,7 @@ import { environment } from 'src/environments/environment';
 import { FunctionsApiRequestService } from './services/request/functions-api-request.service';
 import { IconService } from '@visurel/iconify-angular';
 import { OrganizationService } from './services/organization/organization.service';
+import { DocumentService } from './services/document/document.service';
 
 // MSAL FACTORIES
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -90,6 +91,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     FunctionsApiRequestService,
     UserService,
     OrganizationService,
+    DocumentService,
 
     // guards
     HomeGuard,

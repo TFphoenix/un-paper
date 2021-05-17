@@ -7,6 +7,8 @@ import { BatchRequest } from 'src/app/shared/models/batch-request.model';
 import { DocumentData } from 'src/app/shared/models/document-data.model';
 import { TableAction } from 'src/app/shared/models/table-action.model';
 import { DocumentManagerComponent } from 'src/app/shared/components/document-manager/document-manager.component';
+import { DocumentManagerData } from 'src/app/shared/models/document-manager-data.model';
+import { DocumentService } from 'src/app/core/services/document/document.service';
 
 @Component({
   selector: 'unp-batch-documents',
@@ -15,16 +17,25 @@ import { DocumentManagerComponent } from 'src/app/shared/components/document-man
 })
 export class BatchDocumentsComponent implements OnInit {
   currentBatch: BatchRequest;
-  tableData: DocumentData[] = [
-    {
-      icon: 'icDocument',
-      name: 'Test Document Name #1'
-    }
-  ];
+  tableData: DocumentData[] = [];
+  // [
+  //   {
+  //     icon: 'icDocument',
+  //     name: 'Document Name',
+  //     length: 5064,
+  //     contentType: 'PDF',
+  //     createdOn: new Date(),
+  //     lastModifiedOn: new Date(),
+  //     blobPath: 'test/blob/path/document.pdf'
+  //   }
+  // ];
 
   tableColumns: TableColumn<DocumentData>[] = [
     { label: '', property: 'icon', type: 'badge', visible: true },
     { label: 'Name', property: 'name', type: 'text', visible: true },
+    { label: 'Size', property: 'length', type: 'fileSize', visible: true },
+    { label: 'Created', property: 'createdOn', type: 'date', visible: true },
+    { label: 'Last Modified', property: 'lastModifiedOn', type: 'date', visible: true },
     { label: 'Actions', property: 'actions', type: 'button', visible: true }
   ];
 
@@ -51,6 +62,7 @@ export class BatchDocumentsComponent implements OnInit {
 
   constructor(
     private readonly _batchService: BatchService,
+    private readonly _documentService: DocumentService,
     private readonly _route: ActivatedRoute,
     private readonly _router: Router,
     private readonly _dialog: MatDialog
@@ -81,21 +93,14 @@ export class BatchDocumentsComponent implements OnInit {
 
   uploadDocument() {
     this._dialog
-      .open(DocumentManagerComponent)
+      .open(DocumentManagerComponent, {
+        data: {
+          activeBatch: this.currentBatch
+        } as DocumentManagerData
+      })
       .afterClosed()
-      .subscribe(documents => {
-        // if (organization) {
-        //   this._organizationService.create(organization).subscribe({
-        //     next: createdOrganization => {
-        //       const data = [...this.tableData];
-        //       data.push(OrganizationData.getFromRequest(createdOrganization));
-        //       this.tableData = data;
-        //     },
-        //     error: errorMessage => {
-        //       console.error(errorMessage);
-        //     }
-        //   });
-        // }
+      .subscribe(documentManagerData => {
+        // TODO: Update data-table accordingly
       });
   }
 
@@ -104,6 +109,7 @@ export class BatchDocumentsComponent implements OnInit {
       this._batchService.getById(params['id'], true).subscribe({
         next: batch => {
           this.currentBatch = batch;
+          this.populateBatchDocuments();
 
           document.title = `UNpaper - Batch: ${this.currentBatch.name}`;
         },
@@ -115,13 +121,27 @@ export class BatchDocumentsComponent implements OnInit {
     });
   }
 
-  private populateBatchDocuments() {}
+  private populateBatchDocuments() {
+    this._documentService
+      .getDocuments(this.currentBatch.organizationId, this.currentBatch.id)
+      .subscribe(documents => {
+        const data: DocumentData[] = [];
+
+        documents.forEach(document => {
+          data.push(DocumentData.getFromRequest(document));
+        });
+
+        this.tableData = data;
+      });
+  }
 
   private openInLayout(document: any) {
+    // TODO
     throw new Error('Method not implemented.');
   }
 
   private openInPrebuilt(document: any) {
+    // TODO
     throw new Error('Method not implemented.');
   }
 }

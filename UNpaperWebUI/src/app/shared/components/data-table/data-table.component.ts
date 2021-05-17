@@ -56,7 +56,8 @@ export class DataTableComponent implements OnInit {
   @Input() hideComponent: boolean = false;
   @Input() showToggleIcon: boolean = false;
   @Input() pageSize: number = 10;
-  @Input() searchDisplay: Boolean;
+  @Input() searchDisplay: boolean = true;
+  @Input() filteringEnabled: boolean = true;
   @Input()
   get tableData() {
     return this.dataSource.data;

@@ -5,8 +5,7 @@ import { DocumentData } from '../../models/document-data.model';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
-
-const URL = `${environment.services.functionsApi}/blobs/be3ba1f5-474d-4298-8aa6-8cba865fd216/bth`;
+import { DocumentManagerData } from '../../models/document-manager-data.model';
 
 @Component({
   selector: 'unp-document-manager',
@@ -26,15 +25,19 @@ export class DocumentManagerComponent implements OnInit {
   response: string = 'No response yet';
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public defaults: DocumentData,
-    private dialogRef: MatDialogRef<DocumentManagerComponent, DocumentData>,
+    @Inject(MAT_DIALOG_DATA) public defaults: DocumentManagerData,
+    private dialogRef: MatDialogRef<DocumentManagerComponent, DocumentManagerData>,
     private fb: FormBuilder,
     private readonly _authService: AuthService
   ) {
-    // Ensure user authentication and get token
+    console.log(defaults);
+
+    // Ensure user authentication then initialize uploader
     _authService.getAuthenticationToken().then(result => {
-      console.log(result);
-      this.initializeUploader(`Bearer ${result.accessToken}`);
+      this.initializeUploader(
+        `${environment.services.functionsApi}/blobs/${defaults.activeBatch.organizationId}/${defaults.activeBatch.id}`,
+        `Bearer ${result.accessToken}`
+      );
     });
   }
 
@@ -42,11 +45,11 @@ export class DocumentManagerComponent implements OnInit {
     if (this.defaults) {
       this.mode = 'update';
     } else {
-      this.defaults = {} as DocumentData;
+      this.defaults = {} as DocumentManagerData;
     }
 
     this.form = this.fb.group({
-      name: [this.defaults.name, Validators.required]
+      // name: [this.defaults.name, Validators.required]
       // description: [this.defaults.description, Validators.required],
       // foundationDate: [this.defaults.foundationDate, Validators.required],
       // identificationCode: [this.defaults.identificationCode, Validators.required]
@@ -90,9 +93,9 @@ export class DocumentManagerComponent implements OnInit {
     return this.mode === 'update';
   }
 
-  private initializeUploader(authToken: string) {
+  private initializeUploader(url: string, authToken: string) {
     this.uploader = new FileUploader({
-      url: URL,
+      url: url,
       authToken: authToken,
       headers: [{ name: 'Ocp-Apim-Subscription-Key', value: environment.apimSubscriptionKey }],
       // disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.

@@ -15,5 +15,8 @@ namespace UNpaper.AzureFunctions.Common
         public static readonly string[] AcceptedDocumentFormats = {
             "application/json", "application/pdf", "image/jpeg", "image/png", "image/tiff"
         };
+
+        // Other
+        public const string Delimiter = "/";
     }
 }
