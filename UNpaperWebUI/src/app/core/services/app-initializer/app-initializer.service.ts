@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { IconService } from '@visurel/iconify-angular';
 import * as React from 'react';
 import { registerIcons } from 'src/@fott/common/registerIcons';
+import registerProviders from 'src/@fott/common/registerProviders';
+import registerMixins from 'src/@fott/common/registerMixins';
 import { appIcons } from 'src/app/configs/app-icons';
 import { ConfigService } from '../config/config.service';
 
@@ -32,8 +34,10 @@ export class AppInitializerService {
     // Register React
     window.React = React;
 
-    // Register icons for @fott
+    // Registers for @fott
     registerIcons();
+    registerMixins();
+    registerProviders();
 
     // Register @iconify icons
     this._iconService.registerAll(appIcons);

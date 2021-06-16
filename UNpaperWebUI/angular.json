@@ -31,7 +31,18 @@
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             },
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "react",
+              "react-dom",
+              "rbush",
+              "react-transition-group",
+              "reactcss",
+              "@babel",
+              "babel-runtime",
+              "deep-equal",
+              "hoist-non-react-statics"
+            ]
           },
           "configurations": {
             "production": {
