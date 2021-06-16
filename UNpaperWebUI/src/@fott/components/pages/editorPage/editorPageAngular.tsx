@@ -29,8 +29,8 @@ const containerElementName = 'fottEditorPageContainer';
   `,
   styleUrls: [
     './editorPage.scss',
-    '../../../fott.scss'
-    //   '../../../common/scss/canvas.scss',
+    '../../../fott.scss',
+    '../../../common/scss/canvas.scss'
     //   '../../../common/scss/condensedList.scss',
     //   '../../common/documentFilePicker/documentFilePicker.scss',
     //   '../../common/predictionFilePicker/predictionFilePicker.scss',

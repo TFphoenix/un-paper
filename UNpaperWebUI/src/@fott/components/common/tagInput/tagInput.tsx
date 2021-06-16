@@ -296,7 +296,7 @@ export class TagInput extends React.Component<ITagInputProps, ITagInputState> {
                       />
                     )}
                   </Customizer>
-                  {this.getColorPickerPortal()}
+                  {/* {this.getColorPickerPortal()} */}
                 </div>
                 {this.state.addTags && (
                   <div className="tag-input-text-input-row new-tag-input">

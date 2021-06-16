@@ -379,7 +379,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
                 </div>
               </div>
               <div className="editor-page-right-sidebar">
-                {/* <TagInput
+                <TagInput
                   tagsLoaded={this.state.tagsLoaded}
                   tags={this.props.project.tags}
                   lockedTags={this.state.lockedTags}
@@ -410,7 +410,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
                   reconfigureTableConfirm={this.reconfigureTableConfirm}
                   addRowToDynamicTable={this.addRowToDynamicTable}
                   onTagDoubleClick={this.onLabelDoubleClicked}
-                /> */}
+                />
                 <Confirm
                   title={strings.editorPage.tags.rename.title}
                   loadMessage={'Renaming...'}
