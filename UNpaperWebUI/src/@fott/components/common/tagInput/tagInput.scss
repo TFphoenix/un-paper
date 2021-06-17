@@ -154,6 +154,11 @@
         font-weight: 600;
         background: $darker-10 !important;
       }
+
+      & + .tag-item-label-container .tag-item-label {
+        font-weight: bold;
+        color: $unpPink2;
+      }
     }
     &-highlight {
       .tag-content {
