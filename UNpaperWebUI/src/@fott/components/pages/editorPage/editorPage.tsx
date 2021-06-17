@@ -652,7 +652,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       thumbnailSize: this.state.thumbnailSize
     };
 
-    this.props.applicationActions.saveAppSettings(appSettings);
+    // REMEMBER: Temporary disabled
+    // this.props.applicationActions.saveAppSettings(appSettings);
   };
 
   /**

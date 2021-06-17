@@ -3,6 +3,7 @@
 
 @import 'src/@fott/common/scss/theme.scss';
 @import '../../common/tagInput/tagInputSize.scss';
+@import 'theme-colors';
 
 .editor-page {
   flex-grow: 1;
@@ -82,9 +83,13 @@
     }
 
     &.selected {
-      color: #fff;
-      background-color: $lighter-4;
-      font-weight: 600;
+      color: $unpPink2 !important;
+      background-color: $unpNeuLight4;
+      font-weight: bold;
+
+      .asset-item-image {
+        border: 3px solid $unpPink2;
+      }
     }
 
     &-image {
@@ -112,7 +117,7 @@
     &-metadata {
       display: flex;
       flex-direction: row;
-      font-size: 70%;
+      font-size: 90%;
       white-space: nowrap;
 
       .asset-filename {
@@ -124,6 +129,37 @@
         margin: auto;
       }
     }
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    border-radius: 10px;
+    // background: rgba(255, 255, 255, 0.2);
+    background-color: $unpPink2;
+    box-shadow: 0 0 6px rgb(0 0 0 / 15%);
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgb(0 0 0 / 15%);
+    // background-color: rgba(255, 255, 255, 0.05);
+    background-color: $unpNeuMid1;
+    border-radius: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
   }
 }
 

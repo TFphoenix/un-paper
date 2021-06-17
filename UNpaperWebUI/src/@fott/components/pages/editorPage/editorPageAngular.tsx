@@ -30,15 +30,14 @@ const containerElementName = 'fottEditorPageContainer';
   styleUrls: [
     './editorPage.scss',
     '../../../fott.scss',
-    '../../../common/scss/canvas.scss'
-    //   '../../../common/scss/condensedList.scss',
-    //   '../../common/documentFilePicker/documentFilePicker.scss',
-    //   '../../common/predictionFilePicker/predictionFilePicker.scss',
-    //   '../../common/imageMap/imageMap.scss',
-    //   '../../common/pageRange/pageRange.scss',
-    //   '../../common/canvasCommandBar/canvasCommandBar.scss',
-    //   '../../common/tableView/tableView.scss',
-    //   '../../common/predictResult/predictResult.scss'
+    '../../../common/scss/canvas.scss',
+    '../../../common/scss/condensedList.scss',
+    '../../common/imageMap/imageMap.scss',
+    '../../common/pageRange/pageRange.scss',
+    '../../common/canvasCommandBar/canvasCommandBar.scss',
+    '../../common/tableView/tableView.scss',
+    '../../common/tagInput/tagInput.scss',
+    '../../common/tagInput/tagInputSize.scss'
   ],
   encapsulation: ViewEncapsulation.None
 })

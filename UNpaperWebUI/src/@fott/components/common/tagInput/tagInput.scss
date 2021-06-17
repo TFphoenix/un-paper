@@ -3,6 +3,7 @@
 
 @import 'src/@fott/common/scss/theme.scss';
 @import './tagInputSize.scss';
+@import 'theme-colors';
 
 .tag {
   &-input {
@@ -18,7 +19,7 @@
       display: flex;
       flex-direction: row;
       text-shadow: none;
-      font-size: 80%;
+      // font-size: 80%;
       color: #f1f1f1;
       background: $darker-2;
       margin: 0;
@@ -28,6 +29,8 @@
 
     &-title {
       flex: 1;
+      color: $unpPink2;
+      font-weight: bold;
     }
 
     &-body {
@@ -57,14 +60,14 @@
       flex-direction: row;
       align-items: center;
       margin: 2px;
-      background: $darker-2;
-      border: solid 1px $lighter-2;
+      background: $white;
+      border: solid 1px $unpPink2;
       min-height: 2em;
       padding: 0.25em 0.5em;
       font-size: 90%;
 
       input {
-        color: #fff;
+        color: $unpPink2;
         flex-grow: 1;
         background: none;
         border: none;
@@ -72,6 +75,10 @@
         &:focus {
           outline: none;
         }
+      }
+
+      i {
+        color: $unpPink2;
       }
 
       input::placeholder {
@@ -115,12 +122,29 @@
     flex-direction: row;
     .tag-content {
       transition: 1s;
+
+      // expand iconbutton
+      .tag-input-toolbar-iconbutton {
+        color: $unpNeuMid1;
+
+        &.active,
+        &:hover {
+          background-color: transparent;
+          color: $white;
+        }
+      }
     }
 
     &-selected {
       .tag-content {
         color: white;
+        font-weight: bold;
         background: $darker-10 !important;
+      }
+
+      & + .tag-item-label-container .tag-item-label {
+        font-weight: bold;
+        color: $unpPink2;
       }
     }
 
@@ -157,6 +181,7 @@
 
   &-name {
     &-body {
+      color: $white;
       display: inline-flex;
       flex-grow: 1;
       align-items: center;
@@ -174,6 +199,7 @@
     }
 
     &-container {
+      color: $white;
       display: flex;
       flex-direction: row;
       min-height: 1.8em;
@@ -194,6 +220,7 @@
   }
 
   &-icons-container {
+    color: $white;
     display: inline-flex;
     font-weight: 600;
     margin-left: 5px;
@@ -207,9 +234,9 @@
   }
 
   &-item-label {
-    color: #a0a0a0;
+    color: $unpNeuDark4;
     &:hover {
-      color: #fff;
+      font-weight: bold;
       background: $lighter-4;
       cursor: pointer;
     }
@@ -268,7 +295,7 @@
       }
 
       &-iconbutton {
-        color: #ccc;
+        color: $unpNeuDark3;
         width: auto;
         height: auto;
         padding: 0 0.25em;
@@ -277,17 +304,17 @@
         &.active,
         &:hover {
           background-color: transparent;
-          color: #fff;
+          color: $unpPink2;
         }
 
         &-disabled {
           i {
-            color: $lighter-5;
+            color: $unpNeuMid1;
           }
         }
 
         i {
-          font-size: 80%;
+          // font-size: 80%;
           margin: 0;
           padding: 0;
         }
