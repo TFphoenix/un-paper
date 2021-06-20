@@ -219,28 +219,29 @@ export class AssetService {
       }
 
       // TEST
-      fileType = 'pdf';
-      mimeType = 'application/pdf';
+      // fileType = 'pdf';
+      // mimeType = 'application/pdf';
 
-      if (!fileType) {
-        console.error(
-          interpolate(strings.editorPage.assetWarning.incorrectFileExtension.failedToFetch, {
-            fileName: corruptFileName.toLocaleUpperCase()
-          })
-        );
-      }
-      // If file was renamed/spoofed - fix file extension to true MIME if it's type is in supported file types and show message
-      else if (fileType !== assetFormat) {
-        assetFormat = fileType;
-        assetMimeType = mimeType;
-        console.error(
-          `${
-            strings.editorPage.assetWarning.incorrectFileExtension.attention
-          } ${corruptFileName.toLocaleUpperCase()} ${
-            strings.editorPage.assetWarning.incorrectFileExtension.text
-          } ${corruptFileName.toLocaleUpperCase()}`
-        );
-      }
+      // BUG: checkFileType is undefined, probably because file-type npm package version. You need the code below for avoiding spoofing attacks and format missmatches
+      // if (!fileType) {
+      //   console.error(
+      //     interpolate(strings.editorPage.assetWarning.incorrectFileExtension.failedToFetch, {
+      //       fileName: corruptFileName.toLocaleUpperCase()
+      //     })
+      //   );
+      // }
+      // // If file was renamed/spoofed - fix file extension to true MIME if it's type is in supported file types and show message
+      // else if (fileType !== assetFormat) {
+      //   assetFormat = fileType;
+      //   assetMimeType = mimeType;
+      //   console.error(
+      //     `${
+      //       strings.editorPage.assetWarning.incorrectFileExtension.attention
+      //     } ${corruptFileName.toLocaleUpperCase()} ${
+      //       strings.editorPage.assetWarning.incorrectFileExtension.text
+      //     } ${corruptFileName.toLocaleUpperCase()}`
+      //   );
+      // }
     }
 
     const assetType = this.getAssetType(assetFormat);

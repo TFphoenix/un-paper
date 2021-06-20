@@ -263,7 +263,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
             tableToView={this.state.tableToView}
           />
         )}
-        {tagIndexKeys.map(index => (
+        {/* REMEMBER: Temporary disabled */}
+        {/* {tagIndexKeys.map(index => (
           <KeyboardBinding
             displayName={strings.editorPage.tags.hotKey.apply}
             key={index}
@@ -272,7 +273,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
             icon={'fa-tag'}
             handler={this.handleTagHotKey}
           />
-        ))}
+        ))} */}
         <SplitPane
           split="vertical"
           defaultSize={this.state.thumbnailSize.width}

@@ -38,10 +38,16 @@
               "rbush",
               "react-transition-group",
               "reactcss",
-              "@babel",
+              "@babel/*",
+              "@babel/runtime/helpers/toConsumableArray",
+              "@babel/runtime/helpers/inherits",
+              "@babel/runtime/helpers/possibleConstructorReturn",
               "babel-runtime",
               "deep-equal",
-              "hoist-non-react-statics"
+              "hoist-non-react-statics",
+              "shortid",
+              "@opentelemetry/api",
+              "@hypnosphi/create-react-context"
             ]
           },
           "configurations": {
