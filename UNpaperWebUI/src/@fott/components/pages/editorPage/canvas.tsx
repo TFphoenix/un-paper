@@ -529,7 +529,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
    * Toggles tag on all selected regions
    * @param selectedTag Tag name
    */
-  public applyTag = (tag: string, rowIndex?: number, columnIndex?: number) => {
+  public applyTag = (tag: string, tags: ITag[], rowIndex?: number, columnIndex?: number) => {
     const selectedRegions: IRegion[] = this.getSelectedRegions();
     const regionsEmpty = !selectedRegions || !selectedRegions.length;
     if (!tag || regionsEmpty) {
@@ -540,7 +540,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
       return;
     }
     let regions: IRegion[] = [];
-    const inputTag: ITag[] = this.props.project.tags.filter(t => t.name === tag);
+    const inputTag: ITag[] = tags.filter(t => t.name === tag);
     if (selectedRegions.length > 0) {
       const labelsData = this.state.currentAsset.labelData;
       if (labelsData) {

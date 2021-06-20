@@ -661,7 +661,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         selectedTag: tag.name,
         lockedTags: []
       },
-      () => this.canvas.current.applyTag(tag.name)
+      () => this.canvas.current.applyTag(tag.name, this.tagInputRef.current.state.tags)
     );
   };
 
@@ -671,7 +671,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         selectedTag: tag.name,
         lockedTags: []
       },
-      () => this.canvas.current.applyTag(tag.name, rowIndex, columnIndex)
+      () => this.canvas.current.applyTag(tag.name, this.tagInputRef.current.state.tags)
     );
   };
 
@@ -812,7 +812,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         selectedTag: tag.name,
         lockedTags: CanvasHelpers.toggleTag(locked, tag.name)
       },
-      () => this.canvas.current.applyTag(tag.name)
+      () => this.canvas.current.applyTag(tag.name, this.tagInputRef.current.state.tags)
     );
   };
 
