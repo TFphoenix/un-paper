@@ -221,7 +221,9 @@ export default class TagInputToolbar extends React.Component<
   };
 
   private handleAddTable = () => {
-    this.props.setTagInputMode(TagInputMode.ConfigureTable, null, null);
+    window.alert('Functionality not implemented yet');
+    // TODO: Implement Table tagging functionality
+    // this.props.setTagInputMode(TagInputMode.ConfigureTable, null, null);
   };
 
   private handleSearch = () => {
