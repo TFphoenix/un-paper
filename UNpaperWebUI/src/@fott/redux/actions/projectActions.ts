@@ -90,157 +90,302 @@ export default interface IProjectActions {
  * Dispatches Load Project action and resolves with IProject
  * @param project - Project to load
  */
-export function loadProject(
+// export function loadProject(
+//   project: IProject,
+//   sharedToken?: ISecurityToken
+// ): (dispatch: Dispatch, getState: () => IApplicationState) => Promise<IProject> {
+//   return async (dispatch: Dispatch, getState: () => IApplicationState) => {
+//     const appState = getState();
+//     const projectService = new ProjectService();
+
+//     let projectToken: ISecurityToken;
+//     // Lookup security token used to decrypt project settings
+//     if (sharedToken) {
+//       projectToken = sharedToken;
+//       const existingToken = appState.appSettings.securityTokens.find(
+//         token => token.name === projectToken.name
+//       );
+
+//       if (!existingToken) {
+//         // if we do not have project sharedToken, we need update security tokens in appState
+//         dispatch(
+//           saveAppSettingsAction({
+//             securityTokens: [...appState.appSettings.securityTokens, sharedToken]
+//           })
+//         );
+//       } else if (existingToken.key !== sharedToken.key) {
+//         const reason = interpolate(strings.shareProject.errors.tokenNameExist, {
+//           sharedTokenName: sharedToken.name
+//         });
+//         toast.error(reason, { autoClose: false, closeOnClick: false });
+//         return null;
+//       }
+//     } else {
+//       projectToken = appState.appSettings.securityTokens.find(
+//         token => token.name === project.securityToken
+//       );
+//     }
+
+//     if (!projectToken) {
+//       throw new AppError(ErrorCode.SecurityTokenNotFound, 'Security Token Not Found');
+//     }
+//     const loadedProject = await projectService.load(project, projectToken);
+//     await ProjectService.checkAndUpdateSchema(loadedProject);
+//     const schemaUpdatedProject = await AssetService.checkAndUpdateSchema(loadedProject);
+//     dispatch(loadProjectAction(schemaUpdatedProject));
+//     return schemaUpdatedProject;
+//   };
+// }
+
+/**
+ * Dispatches Load Project action and resolves with IProject
+ * @param project - Project to load
+ */
+// REMEMBER: EXPERIMENTAL VERSION
+export async function loadProject(
   project: IProject,
+  appState: any,
   sharedToken?: ISecurityToken
-): (dispatch: Dispatch, getState: () => IApplicationState) => Promise<IProject> {
-  return async (dispatch: Dispatch, getState: () => IApplicationState) => {
-    const appState = getState();
-    const projectService = new ProjectService();
+): Promise<IProject> {
+  // const appState = getState();
+  const projectService = new ProjectService();
 
-    let projectToken: ISecurityToken;
-    // Lookup security token used to decrypt project settings
-    if (sharedToken) {
-      projectToken = sharedToken;
-      const existingToken = appState.appSettings.securityTokens.find(
-        token => token.name === projectToken.name
-      );
+  let projectToken: ISecurityToken;
+  // Lookup security token used to decrypt project settings
+  if (sharedToken) {
+    projectToken = sharedToken;
+    const existingToken = appState.appSettings.securityTokens.find(
+      token => token.name === projectToken.name
+    );
 
-      if (!existingToken) {
-        // if we do not have project sharedToken, we need update security tokens in appState
-        dispatch(
-          saveAppSettingsAction({
-            securityTokens: [...appState.appSettings.securityTokens, sharedToken]
-          })
-        );
-      } else if (existingToken.key !== sharedToken.key) {
-        const reason = interpolate(strings.shareProject.errors.tokenNameExist, {
-          sharedTokenName: sharedToken.name
-        });
-        toast.error(reason, { autoClose: false, closeOnClick: false });
-        return null;
-      }
-    } else {
-      projectToken = appState.appSettings.securityTokens.find(
-        token => token.name === project.securityToken
-      );
+    if (!existingToken) {
+      // if we do not have project sharedToken, we need update security tokens in appState
+      saveAppSettingsAction({
+        securityTokens: [...appState.appSettings.securityTokens, sharedToken]
+      });
+    } else if (existingToken.key !== sharedToken.key) {
+      const reason = interpolate(strings.shareProject.errors.tokenNameExist, {
+        sharedTokenName: sharedToken.name
+      });
+      toast.error(reason, { autoClose: false, closeOnClick: false });
+      return null;
     }
+  } else {
+    projectToken = appState.appSettings.securityTokens.find(
+      token => token.name === project.securityToken
+    );
+  }
 
-    if (!projectToken) {
-      throw new AppError(ErrorCode.SecurityTokenNotFound, 'Security Token Not Found');
-    }
-    const loadedProject = await projectService.load(project, projectToken);
-    await ProjectService.checkAndUpdateSchema(loadedProject);
-    const schemaUpdatedProject = await AssetService.checkAndUpdateSchema(loadedProject);
-    dispatch(loadProjectAction(schemaUpdatedProject));
-    return schemaUpdatedProject;
-  };
+  if (!projectToken) {
+    throw new AppError(ErrorCode.SecurityTokenNotFound, 'Security Token Not Found');
+  }
+  const loadedProject = await projectService.load(project, projectToken);
+  await ProjectService.checkAndUpdateSchema(loadedProject);
+  const schemaUpdatedProject = await AssetService.checkAndUpdateSchema(loadedProject);
+  loadProjectAction(schemaUpdatedProject);
+  return schemaUpdatedProject;
 }
 
 /**
  * Dispatches Save Project action and resolves with IProject
  * @param project - Project to save
  */
-export function saveProject(
+// export function saveProject(
+//   project: IProject,
+//   saveTags?: boolean,
+//   updateTagsFromFiles?: boolean
+// ): (dispatch: Dispatch, getState: () => IApplicationState) => Promise<IProject> {
+//   return async (dispatch: Dispatch, getState: () => IApplicationState) => {
+//     project = Object.assign({}, project);
+//     const appState = getState();
+//     const projectService = new ProjectService();
+//     if (projectService.isDuplicate(project, appState.recentProjects)) {
+//       throw new AppError(
+//         ErrorCode.ProjectDuplicateName,
+//         `Project with name '${project.name}
+//                 already exists with the same target connection '${project.sourceConnection.name}'`
+//       );
+//     }
+//     const findMatchToken = (tokens, project) => {
+//       const tokenFinded = tokens.find(
+//         securityToken => securityToken.name === project.securityToken
+//       );
+//       if (!tokenFinded) {
+//         throw new AppError(ErrorCode.SecurityTokenNotFound, 'Security Token Not Found');
+//       }
+//       return tokenFinded;
+//     };
+
+//     const projectToken = findMatchToken(appState.appSettings.securityTokens, project);
+//     const savedProject = await projectService.save(
+//       project,
+//       projectToken,
+//       saveTags,
+//       updateTagsFromFiles
+//     );
+//     dispatch(saveProjectAction(savedProject));
+//     dispatch(loadProjectAction(await decryptProject(savedProject, projectToken)));
+//     return savedProject;
+//   };
+// }
+
+/**
+ * Dispatches Save Project action and resolves with IProject
+ * @param project - Project to save
+ */
+// REMEMBER: EXPERIMENTAL VERSION
+export async function saveProject(
   project: IProject,
+  appState: any,
   saveTags?: boolean,
   updateTagsFromFiles?: boolean
-): (dispatch: Dispatch, getState: () => IApplicationState) => Promise<IProject> {
-  return async (dispatch: Dispatch, getState: () => IApplicationState) => {
-    project = Object.assign({}, project);
-    const appState = getState();
-    const projectService = new ProjectService();
-    if (projectService.isDuplicate(project, appState.recentProjects)) {
-      throw new AppError(
-        ErrorCode.ProjectDuplicateName,
-        `Project with name '${project.name}
+): Promise<IProject> {
+  project = Object.assign({}, project);
+  // const appState = getState();
+  const projectService = new ProjectService();
+  if (projectService.isDuplicate(project, appState.recentProjects)) {
+    throw new AppError(
+      ErrorCode.ProjectDuplicateName,
+      `Project with name '${project.name}
                 already exists with the same target connection '${project.sourceConnection.name}'`
-      );
-    }
-    const findMatchToken = (tokens, project) => {
-      const tokenFinded = tokens.find(
-        securityToken => securityToken.name === project.securityToken
-      );
-      if (!tokenFinded) {
-        throw new AppError(ErrorCode.SecurityTokenNotFound, 'Security Token Not Found');
-      }
-      return tokenFinded;
-    };
-
-    const projectToken = findMatchToken(appState.appSettings.securityTokens, project);
-    const savedProject = await projectService.save(
-      project,
-      projectToken,
-      saveTags,
-      updateTagsFromFiles
     );
-    dispatch(saveProjectAction(savedProject));
-    dispatch(loadProjectAction(await decryptProject(savedProject, projectToken)));
-    return savedProject;
-  };
-}
-
-export function updateProjectTagsFromFiles(
-  project: IProject,
-  asset?: string
-): (dispatch: Dispatch) => Promise<void> {
-  return async (dispatch: Dispatch) => {
-    const projectService = new ProjectService();
-    const updatedProject = await projectService.updateProjectTagsFromFiles(project, asset);
-    if (updatedProject !== project) {
-      dispatch(updateProjectTagsFromFilesAction(updatedProject));
+  }
+  const findMatchToken = (tokens, project) => {
+    const tokenFinded = tokens.find(securityToken => securityToken.name === project.securityToken);
+    if (!tokenFinded) {
+      throw new AppError(ErrorCode.SecurityTokenNotFound, 'Security Token Not Found');
     }
+    return tokenFinded;
   };
+
+  const projectToken = findMatchToken(appState.appSettings.securityTokens, project);
+  const savedProject = await projectService.save(
+    project,
+    projectToken,
+    saveTags,
+    updateTagsFromFiles
+  );
+  saveProjectAction(savedProject);
+  loadProjectAction(await decryptProject(savedProject, projectToken));
+  return savedProject;
 }
 
-export function updatedAssetMetadata(
+// export function updateProjectTagsFromFiles(
+//   project: IProject,
+//   asset?: string
+// ): (dispatch: Dispatch) => Promise<void> {
+//   return async (dispatch: Dispatch) => {
+//     const projectService = new ProjectService();
+//     const updatedProject = await projectService.updateProjectTagsFromFiles(project, asset);
+//     if (updatedProject !== project) {
+//       dispatch(updateProjectTagsFromFilesAction(updatedProject));
+//     }
+//   };
+// }
+
+// REMEMBER: EXPERIMENTAL VERSION
+export async function updateProjectTagsFromFiles(project: IProject, asset?: string): Promise<void> {
+  const projectService = new ProjectService();
+  const updatedProject = await projectService.updateProjectTagsFromFiles(project, asset);
+  if (updatedProject !== project) {
+    updateProjectTagsFromFilesAction(updatedProject);
+  }
+}
+
+// export function updatedAssetMetadata(
+//   project: IProject,
+//   assetDocumentCountDifference: any,
+//   columnDocumentCountDifference?: any,
+//   rowDocumentCountDifference?: any
+// ): (dispatch: Dispatch) => Promise<void> {
+//   return async (dispatch: Dispatch) => {
+//     const projectService = new ProjectService();
+//     const updatedProject = await projectService.updatedAssetMetadata(
+//       project,
+//       assetDocumentCountDifference,
+//       columnDocumentCountDifference,
+//       rowDocumentCountDifference
+//     );
+//     if (updatedProject !== project) {
+//       dispatch(updatedAssetMetadataAction(updatedProject));
+//     }
+//   };
+// }
+
+// REMEMBER: EXPERIMENTAL VERSION
+export async function updatedAssetMetadata(
   project: IProject,
   assetDocumentCountDifference: any,
   columnDocumentCountDifference?: any,
   rowDocumentCountDifference?: any
-): (dispatch: Dispatch) => Promise<void> {
-  return async (dispatch: Dispatch) => {
-    const projectService = new ProjectService();
-    const updatedProject = await projectService.updatedAssetMetadata(
-      project,
-      assetDocumentCountDifference,
-      columnDocumentCountDifference,
-      rowDocumentCountDifference
-    );
-    if (updatedProject !== project) {
-      dispatch(updatedAssetMetadataAction(updatedProject));
-    }
-  };
+): Promise<void> {
+  const projectService = new ProjectService();
+  const updatedProject = await projectService.updatedAssetMetadata(
+    project,
+    assetDocumentCountDifference,
+    columnDocumentCountDifference,
+    rowDocumentCountDifference
+  );
+  if (updatedProject !== project) {
+    updatedAssetMetadataAction(updatedProject);
+  }
 }
 
 /**
  * Dispatches Delete Project action and resolves with project
  * @param project - Project to delete
  */
-export function deleteProject(
-  project: IProject
-): (dispatch: Dispatch, getState: () => IApplicationState) => Promise<void> {
-  return async (dispatch: Dispatch, getState: () => IApplicationState) => {
-    const appState = getState();
-    const projectService = new ProjectService();
+// export function deleteProject(
+//   project: IProject
+// ): (dispatch: Dispatch, getState: () => IApplicationState) => Promise<void> {
+//   return async (dispatch: Dispatch, getState: () => IApplicationState) => {
+//     const appState = getState();
+//     const projectService = new ProjectService();
 
-    // Lookup security token used to decrypt project settings
-    const projectToken = appState.appSettings.securityTokens.find(
-      securityToken => securityToken.name === project.securityToken
+//     // Lookup security token used to decrypt project settings
+//     const projectToken = appState.appSettings.securityTokens.find(
+//       securityToken => securityToken.name === project.securityToken
+//     );
+
+//     if (!projectToken) {
+//       dispatch(deleteProjectAction(project));
+//       throw new AppError(
+//         ErrorCode.SecurityTokenNotFound,
+//         interpolate(strings.errors.projectDeleteErrorSecurityTokenNotFound.message, { project })
+//       );
+//     }
+
+//     const decryptedProject = await projectService.load(project, projectToken);
+//     await projectService.delete(decryptedProject);
+//     dispatch(deleteProjectAction(decryptedProject));
+//   };
+// }
+
+/**
+ * Dispatches Delete Project action and resolves with project
+ * @param project - Project to delete
+ */
+// REMEMBER: EXPERIMENTAL VERSION
+export async function deleteProject(project: IProject, appState: any): Promise<void> {
+  // const appState = getState();
+  const projectService = new ProjectService();
+
+  // Lookup security token used to decrypt project settings
+  const projectToken = appState.appSettings.securityTokens.find(
+    securityToken => securityToken.name === project.securityToken
+  );
+
+  if (!projectToken) {
+    deleteProjectAction(project);
+    throw new AppError(
+      ErrorCode.SecurityTokenNotFound,
+      interpolate(strings.errors.projectDeleteErrorSecurityTokenNotFound.message, { project })
     );
+  }
 
-    if (!projectToken) {
-      dispatch(deleteProjectAction(project));
-      throw new AppError(
-        ErrorCode.SecurityTokenNotFound,
-        interpolate(strings.errors.projectDeleteErrorSecurityTokenNotFound.message, { project })
-      );
-    }
-
-    const decryptedProject = await projectService.load(project, projectToken);
-    await projectService.delete(decryptedProject);
-    dispatch(deleteProjectAction(decryptedProject));
-  };
+  const decryptedProject = await projectService.load(project, projectToken);
+  await projectService.delete(decryptedProject);
+  deleteProjectAction(decryptedProject);
 }
 
 /**
@@ -251,42 +396,78 @@ export function closeProject(): (dispatch: Dispatch) => void {
     dispatch({ type: ActionTypes.CLOSE_PROJECT_SUCCESS });
   };
 }
+
 /**
  * add asset, ocr data, labels to project storage.
  */
-export function addAssetToProject(
+// export function addAssetToProject(
+//   project: IProject,
+//   fileName: string,
+//   buffer: Buffer,
+//   analyzeResult: any
+// ): (dispatch: Dispatch) => Promise<IAsset> {
+//   return async (dispatch: Dispatch) => {
+//     const assetService = new AssetService(project);
+//     await assetService.uploadBuffer(fileName, buffer);
+//     const assets = await assetService.getAssets();
+//     const assetName = project.folderPath ? `${project.folderPath}/${fileName}` : fileName;
+//     const asset = assets.find(a => a.name === assetName);
+
+//     await assetService.syncAssetPredictResult(asset, analyzeResult);
+//     dispatch(addAssetToProjectAction(asset));
+//     return asset;
+//   };
+// }
+
+/**
+ * add asset, ocr data, labels to project storage.
+ */
+// REMEMBER: EXPERIMENTAL VERSION
+export async function addAssetToProject(
   project: IProject,
   fileName: string,
   buffer: Buffer,
   analyzeResult: any
-): (dispatch: Dispatch) => Promise<IAsset> {
-  return async (dispatch: Dispatch) => {
-    const assetService = new AssetService(project);
-    await assetService.uploadBuffer(fileName, buffer);
-    const assets = await assetService.getAssets();
-    const assetName = project.folderPath ? `${project.folderPath}/${fileName}` : fileName;
-    const asset = assets.find(a => a.name === assetName);
+): Promise<IAsset> {
+  const assetService = new AssetService(project);
+  await assetService.uploadBuffer(fileName, buffer);
+  const assets = await assetService.getAssets();
+  const assetName = project.folderPath ? `${project.folderPath}/${fileName}` : fileName;
+  const asset = assets.find(a => a.name === assetName);
 
-    await assetService.syncAssetPredictResult(asset, analyzeResult);
-    dispatch(addAssetToProjectAction(asset));
-    return asset;
-  };
+  await assetService.syncAssetPredictResult(asset, analyzeResult);
+  addAssetToProjectAction(asset);
+  return asset;
 }
+
 /**
  * Dispatches Delete Asset action
  */
-export function deleteAsset(
-  project: IProject,
-  assetMetadata: IAssetMetadata
-): (dispatch: Dispatch) => void {
-  return async (dispatch: Dispatch) => {
-    const assetService = new AssetService(project);
-    await assetService.delete(assetMetadata);
-    const assets = await assetService.getAssets();
-    if (!areAssetsEqual(assets, project.assets)) {
-      dispatch(deleteProjectAssetAction(assets));
-    }
-  };
+// export function deleteAsset(
+//   project: IProject,
+//   assetMetadata: IAssetMetadata
+// ): (dispatch: Dispatch) => void {
+//   return async (dispatch: Dispatch) => {
+//     const assetService = new AssetService(project);
+//     await assetService.delete(assetMetadata);
+//     const assets = await assetService.getAssets();
+//     if (!areAssetsEqual(assets, project.assets)) {
+//       dispatch(deleteProjectAssetAction(assets));
+//     }
+//   };
+// }
+
+/**
+ * Dispatches Delete Asset action
+ */
+// REMEMBER: EXPERIMENTAL VERSION
+export async function deleteAsset(project: IProject, assetMetadata: IAssetMetadata): Promise<void> {
+  const assetService = new AssetService(project);
+  await assetService.delete(assetMetadata);
+  const assets = await assetService.getAssets();
+  if (!areAssetsEqual(assets, project.assets)) {
+    deleteProjectAssetAction(assets);
+  }
 }
 
 /**
@@ -357,15 +538,22 @@ function areAssetsEqual(assets: IAsset[], projectAssets: { [index: string]: IAss
   return JSON.stringify(assetsMap) === JSON.stringify(projectAssets);
 }
 
-export function refreshAsset(
-  project: IProject,
-  assetName: string
-): (dispatch: Dispatch) => Promise<void> {
-  return async (dispatch: Dispatch) => {
-    const assetService = new AssetService(project);
-    const asset = await assetService.getAsset(assetName);
-    dispatch(refreshAssetAction(asset));
-  };
+// export function refreshAsset(
+//   project: IProject,
+//   assetName: string
+// ): (dispatch: Dispatch) => Promise<void> {
+//   return async (dispatch: Dispatch) => {
+//     const assetService = new AssetService(project);
+//     const asset = await assetService.getAsset(assetName);
+//     dispatch(refreshAssetAction(asset));
+//   };
+// }
+
+// REMEMBER: EXPERIMENTAL VERSION
+export async function refreshAsset(project: IProject, assetName: string): Promise<void> {
+  const assetService = new AssetService(project);
+  const asset = await assetService.getAsset(assetName);
+  refreshAssetAction(asset);
 }
 
 /**
@@ -438,22 +626,39 @@ export async function saveAssetMetadata(
   return { ...savedMetadata };
 }
 
-export function saveAssetMetadataAndCleanEmptyLabel(
+// export function saveAssetMetadataAndCleanEmptyLabel(
+//   project: IProject,
+//   assetMetadata: IAssetMetadata
+// ): (dispatch: Dispatch) => Promise<IAssetMetadata> {
+//   const newAssetMetadata: IAssetMetadata = {
+//     ..._.cloneDeep(assetMetadata),
+//     version: appInfo.version
+//   };
+
+//   return async (dispatch: Dispatch) => {
+//     const assetService = new AssetService(project);
+//     const savedMetadata = await assetService.save(newAssetMetadata, true);
+//     dispatch(saveAssetMetadataAction(savedMetadata));
+
+//     return { ...savedMetadata };
+//   };
+// }
+
+// REMEMBER: EXPERIMENTAL VERSION
+export async function saveAssetMetadataAndCleanEmptyLabel(
   project: IProject,
   assetMetadata: IAssetMetadata
-): (dispatch: Dispatch) => Promise<IAssetMetadata> {
+): Promise<IAssetMetadata> {
   const newAssetMetadata: IAssetMetadata = {
     ..._.cloneDeep(assetMetadata),
     version: appInfo.version
   };
 
-  return async (dispatch: Dispatch) => {
-    const assetService = new AssetService(project);
-    const savedMetadata = await assetService.save(newAssetMetadata, true);
-    dispatch(saveAssetMetadataAction(savedMetadata));
+  const assetService = new AssetService(project);
+  const savedMetadata = await assetService.save(newAssetMetadata, true);
+  saveAssetMetadataAction(savedMetadata);
 
-    return { ...savedMetadata };
-  };
+  return { ...savedMetadata };
 }
 
 /**
@@ -862,6 +1067,7 @@ export interface IDeleteProjectAssetAction extends IPayloadAction<string, IAsset
 export interface IRefreshAssetAction extends IPayloadAction<string, IAsset> {
   type: ActionTypes.REFRESH_ASSET_SUCCESS;
 }
+
 /**
  * Load asset metadata action type
  */
@@ -896,36 +1102,42 @@ export interface IDeleteProjectTagAction extends IPayloadAction<string, IProject
 export const loadProjectAction = createPayloadAction<ILoadProjectAction>(
   ActionTypes.LOAD_PROJECT_SUCCESS
 );
+
 /**
  * Instance of Close Project action
  */
 export const closeProjectAction = createAction<ICloseProjectAction>(
   ActionTypes.CLOSE_PROJECT_SUCCESS
 );
+
 /**
  * Instance of Save Project action
  */
 export const saveProjectAction = createPayloadAction<ISaveProjectAction>(
   ActionTypes.SAVE_PROJECT_SUCCESS
 );
+
 /**
  * Instance of Delete Project action
  */
 export const deleteProjectAction = createPayloadAction<IDeleteProjectAction>(
   ActionTypes.DELETE_PROJECT_SUCCESS
 );
+
 /**
  * Instance of Add Asset to Project action
  */
 export const addAssetToProjectAction = createPayloadAction<IAddAssetToProjectAction>(
   ActionTypes.ADD_ASSET_TO_PROJECT_SUCCESS
 );
+
 /**
  * Instance of Load Project Assets action
  */
 export const loadProjectAssetsAction = createPayloadAction<ILoadProjectAssetsAction>(
   ActionTypes.LOAD_PROJECT_ASSETS_SUCCESS
 );
+
 /**
  * Instance of Delete Project Asset action
  */
@@ -936,18 +1148,21 @@ export const deleteProjectAssetAction = createPayloadAction<IDeleteProjectAssetA
 export const refreshAssetAction = createPayloadAction<IRefreshAssetAction>(
   ActionTypes.REFRESH_ASSET_SUCCESS
 );
+
 /**
  * Instance of Load Asset Metadata action
  */
 export const loadAssetMetadataAction = createPayloadAction<ILoadAssetMetadataAction>(
   ActionTypes.LOAD_ASSET_METADATA_SUCCESS
 );
+
 /**
  * Instance of Save Asset Metadata action
  */
 export const saveAssetMetadataAction = createPayloadAction<ISaveAssetMetadataAction>(
   ActionTypes.SAVE_ASSET_METADATA_SUCCESS
 );
+
 /**
  * Instance of Update project tag action
  */

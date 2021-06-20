@@ -64,12 +64,6 @@ import clone from 'rfdc';
 import HtmlFileReader from 'src/@fott/common/htmlFileReader';
 import { strings, interpolate } from 'src/@fott/common/strings';
 import { TableView } from '../../common/tableView/tableView';
-import {
-  loadAssetMetadata,
-  loadAssets,
-  saveAssetMetadata,
-  saveProject
-} from '../../../redux/actions/projectActions';
 
 /**
  * Properties for Editor Page
@@ -208,8 +202,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       // this.props.appTitleActions.setTitle(this.props.project.name);
     } else if (projectId) {
       const project = this.props.recentProjects.find(project => project.id === projectId);
-      await this.props.actions.loadProject(project); // REMEMBER
-      //   await projectActions.loadProject(project);
+      // await this.props.actions.loadProject(project); // REMEMBER
+      await projectActions.loadProject(project, this.props);
       // this.props.appTitleActions.setTitle(project.name);
     }
     document.title = strings.editorPage.title + ' - ' + strings.appName;
@@ -697,7 +691,19 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
   private onTagRenamed = async (tag: ITag, newTag: ITag): Promise<void> => {
     this.renameCanceled = null;
     if (tag.type === FieldType.Object || tag.type === FieldType.Array) {
-      const assetUpdates = await this.props.actions.reconfigureTableTag(
+      // const assetUpdates = await this.props.actions.reconfigureTableTag(
+      //   this.props.project,
+      //   tag.name,
+      //   newTag.name,
+      //   newTag.type,
+      //   newTag.format,
+      //   (newTag as ITableTag).visualizationHint,
+      //   undefined,
+      //   undefined,
+      //   undefined,
+      //   undefined
+      // );
+      const assetUpdates = await projectActions.reconfigureTableTag(
         this.props.project,
         tag.name,
         newTag.name,
@@ -725,11 +731,12 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         );
       }
     } else {
-      const assetUpdates = await this.props.actions.updateProjectTag(
-        this.props.project,
-        tag,
-        newTag
-      );
+      // const assetUpdates = await this.props.actions.updateProjectTag(
+      //   this.props.project,
+      //   tag,
+      //   newTag
+      // );
+      const assetUpdates = await projectActions.updateProjectTag(this.props.project, tag, newTag);
       const selectedAsset = assetUpdates.find(
         am => am.asset.id === this.state.selectedAsset.asset.id
       );
@@ -777,7 +784,13 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
     tagType: FieldType,
     tagFormat: FieldFormat
   ): Promise<void> => {
-    const assetUpdates = await this.props.actions.deleteProjectTag(
+    // const assetUpdates = await this.props.actions.deleteProjectTag(
+    //   this.props.project,
+    //   tagName,
+    //   tagType,
+    //   tagFormat
+    // );
+    const assetUpdates = await projectActions.deleteProjectTag(
       this.props.project,
       tagName,
       tagType,
@@ -929,7 +942,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
 
       assetMetadata.asset = asset;
 
-      const newMeta = await saveAssetMetadata(this.props.project, assetMetadata);
+      const newMeta = await projectActions.saveAssetMetadata(this.props.project, assetMetadata);
 
       if (this.props.project.lastVisitedAssetId === asset.id) {
         // Get regions from label data since meta data will not have regions when loaded.
@@ -942,7 +955,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
           this.props.project.tags
         )
       ) {
-        await this.props.actions.updateProjectTagsFromFiles(
+        await projectActions.updateProjectTagsFromFiles(
           this.props.project,
           assetMetadata.asset.name
         );
@@ -999,6 +1012,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
   private onSelectedRegionsChanged = (selectedRegions: IRegion[]) => {
     this.setState({ selectedRegions });
   };
+
   private onRegionDoubleClick = (region: IRegion) => {
     if (region.tags?.length > 0) {
       this.tagInputRef.current.focusTag(region.tags[0]);
@@ -1010,7 +1024,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       ...this.props.project,
       tags
     };
-    await saveProject(project, true, false);
+    await projectActions.saveProject(project, this.props, true, false);
   };
 
   private onPageLoaded = async (pageNumber: number) => {
@@ -1046,7 +1060,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       return;
     }
 
-    const assetMetadata = await loadAssetMetadata(this.props.project, asset);
+    const assetMetadata = await projectActions.loadAssetMetadata(this.props.project, asset);
 
     try {
       if (!assetMetadata.asset.size) {
@@ -1054,7 +1068,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         assetMetadata.asset.size = { width: assetProps.width, height: assetProps.height };
       }
     } catch (err) {
-      console.warn('Error computing asset size');
+      // REMEMBER: Appearing to often (on files that are not images)
+      // console.warn('Error computing asset size');
     }
 
     // Get regions from label data since meta data will not have regions when loaded.
@@ -1069,7 +1084,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       },
       async () => {
         await this.onAssetMetadataChanged(assetMetadata);
-        await saveProject(this.props.project, false, false);
+        await projectActions.saveProject(this.props.project, this.props, false, false);
       }
     );
   };
@@ -1110,7 +1125,19 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
     newRows: ITableConfigItem[],
     newColumns: ITableConfigItem[]
   ) => {
-    const assetUpdates = await this.props.actions.reconfigureTableTag(
+    // const assetUpdates = await this.props.actions.reconfigureTableTag(
+    //   this.props.project,
+    //   originalTagName,
+    //   tagName,
+    //   tagType,
+    //   tagFormat,
+    //   visualizationHint,
+    //   deletedColumns,
+    //   deletedRows,
+    //   newRows,
+    //   newColumns
+    // );
+    const assetUpdates = await projectActions.reconfigureTableTag(
       this.props.project,
       originalTagName,
       tagName,
@@ -1162,7 +1189,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
     try {
       // const assets = _(await this.props.actions.loadAssets(this.props.project)) // REMEMBER
 
-      const assets = _(await loadAssets(this.props.project))
+      const assets = _(await projectActions.loadAssets(this.props.project))
         .uniqBy(asset => asset.id)
         .value();
       if (
@@ -1182,7 +1209,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         },
         async () => {
           // await this.props.actions.saveProject(this.props.project, false, true);
-          await saveProject(this.props.project, false, true);
+          await projectActions.saveProject(this.props.project, this.props, false, true);
           this.setState({ tagsLoaded: true });
           if (assets.length > 0) {
             await this.selectAsset(lastVisited ? lastVisited : assets[0]);
@@ -1232,7 +1259,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
                 );
                 if (ocrResult) {
                   this.updateAssetOCRAndAutoLabelingState({ id: asset.id, isRunningOCR: false });
-                  await this.props.actions.refreshAsset(this.props.project, asset.name);
+                  // await this.props.actions.refreshAsset(this.props.project, asset.name);
+                  await projectActions.refreshAsset(this.props.project, asset.name);
                 }
               } catch (err) {
                 this.updateAssetOCRAndAutoLabelingState({ id: asset.id, isRunningOCR: false });
@@ -1293,7 +1321,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
               assetMetadata.asset.isRunningAutoLabeling = false;
               await this.onAssetMetadataChanged(assetMetadata);
               allAssets[asset.id] = assetMetadata.asset;
-              await this.props.actions.updatedAssetMetadata(this.props.project, assetMetadata);
+              await projectActions.updatedAssetMetadata(this.props.project, assetMetadata);
             } catch (err) {
               this.updateAssetOCRAndAutoLabelingState({
                 id: asset.id,
@@ -1309,7 +1337,12 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
           }
         );
       } finally {
-        await saveProject({ ...this.props.project, assets: allAssets }, true, false);
+        await projectActions.saveProject(
+          { ...this.props.project, assets: allAssets },
+          this.props,
+          true,
+          false
+        );
         this.setState({ isRunningAutoLabelings: false });
         this.isOCROrAutoLabelingBatchRunning = false;
       }
@@ -1400,7 +1433,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
   };
 
   private updateSelectAsset = async (asset: IAsset) => {
-    const assetMetadata = await loadAssetMetadata(this.props.project, asset);
+    const assetMetadata = await projectActions.loadAssetMetadata(this.props.project, asset);
 
     try {
       if (!assetMetadata.asset.size) {
@@ -1408,7 +1441,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         assetMetadata.asset.size = { width: assetProps.width, height: assetProps.height };
       }
     } catch (err) {
-      console.warn('Error computing asset size');
+      // REMEMBER: Appearing to often (on files that are not images)
+      // console.warn('Error computing asset size');
     }
     assetMetadata.regions = [...this.state.selectedAsset.regions];
     this.setState(
@@ -1419,7 +1453,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       },
       async () => {
         await this.onAssetMetadataChanged(assetMetadata);
-        await saveProject(this.props.project, false, false);
+        await projectActions.saveProject(this.props.project, this.props, false, false);
       }
     );
   };
@@ -1446,7 +1480,14 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       );
       if (asset) {
         asset.state = AssetState.Visited;
-        Promise.all([saveProject({ ...this.props.project, assets: allAssets }, false, false)]);
+        Promise.all([
+          projectActions.saveProject(
+            { ...this.props.project, assets: allAssets },
+            this.props,
+            false,
+            false
+          )
+        ]);
       }
     }
     this.setState({ isCanvasRunningOCR: ocrStatus === OcrStatus.runningOCR });
@@ -1461,17 +1502,21 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
   };
 
   private onAssetDeleted = () => {
-    this.props.actions.deleteAsset(this.props.project, this.state.selectedAsset).then(() => {
+    // this.props.actions.deleteAsset(this.props.project, this.state.selectedAsset).then(() => {
+    //   this.loadProjectAssets();
+    // });
+    projectActions.deleteAsset(this.props.project, this.state.selectedAsset).then(() => {
       this.loadProjectAssets();
     });
   };
 
   private onTagChanged = async (oldTag: ITag, newTag: ITag) => {
-    const assetUpdates = await this.props.actions.updateProjectTag(
-      this.props.project,
-      oldTag,
-      newTag
-    );
+    // const assetUpdates = await this.props.actions.updateProjectTag(
+    //   this.props.project,
+    //   oldTag,
+    //   newTag
+    // );
+    const assetUpdates = await projectActions.updateProjectTag(this.props.project, oldTag, newTag);
     const selectedAsset = assetUpdates.find(
       am => am.asset.id === this.state.selectedAsset.asset.id
     );
@@ -1602,7 +1647,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         assetDocumentCountDifference[label] = 1;
       }
     });
-    await this.props.actions.updatedAssetMetadata(
+    await projectActions.updatedAssetMetadata(
       this.props.project,
       assetDocumentCountDifference,
       columnDocumentCountDifference,
