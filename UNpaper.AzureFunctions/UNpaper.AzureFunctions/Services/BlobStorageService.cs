@@ -140,7 +140,8 @@ namespace UNpaper.AzureFunctions.Services
         {
             // Set parameters
             string containerName = BlobConstants.OrganizationPrefix + batch.OrganizationId;
-            string blobName = $"{BlobConstants.BatchPrefix}{batch.Id}.fott";
+            string blobName = $"{BlobConstants.BatchPrefix}{batch.Id}";
+            string metadataName = $"{BlobConstants.MetadataPrefix}{BlobConstants.BatchPrefix}{batch.Id}{BlobConstants.MetadataFileType}";
             var metadata = new BatchMetadataModel
             {
                 SourceConnection = new BatchMetadataModel.SourceConnectionModel
@@ -150,11 +151,11 @@ namespace UNpaper.AzureFunctions.Services
                         Sas = BlobConstants.HiddenAttribute
                     },
                     Id = batch.OrganizationId,
-                    Name = batch.OrganizationName,
+                    Name = containerName,
                     ProviderType = "azureBlobStorage"
                 },
                 ApiKey = BlobConstants.HiddenAttribute,
-                Name = batch.Name,
+                Name = $"{BlobConstants.MetadataPrefix}{BlobConstants.BatchPrefix}{batch.Id}",
                 FolderPath = blobName,
                 ApiUriBase = BlobConstants.HiddenAttribute,
                 SecurityToken = $"token-{batch.Id}",
@@ -164,7 +165,7 @@ namespace UNpaper.AzureFunctions.Services
 
             // Get blob
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
-            BlobClient blob = container.GetBlobClient(blobName);
+            BlobClient blob = container.GetBlobClient(metadataName);
 
             // Write metadata to blob
             await using (MemoryStream stream = new MemoryStream())
@@ -181,7 +182,7 @@ namespace UNpaper.AzureFunctions.Services
         {
             // Set parameters
             var containerName = $"{BlobConstants.OrganizationPrefix}{batch.OrganizationId}";
-            var blobPath = $"{BlobConstants.BatchPrefix}{batch.Id}.fott";
+            var blobPath = $"{BlobConstants.MetadataPrefix}{BlobConstants.BatchPrefix}{batch.Id}{BlobConstants.MetadataFileType}";
             var container = _blobServiceClient.GetBlobContainerClient(containerName);
             var blob = container.GetBlobClient(blobPath);
 

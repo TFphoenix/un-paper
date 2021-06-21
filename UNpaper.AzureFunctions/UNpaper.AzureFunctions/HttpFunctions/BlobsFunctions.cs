@@ -255,19 +255,23 @@ namespace UNpaper.AzureFunctions.HttpFunctions
             }
         }
 
-        [FunctionName("BatchesCreate")]
-        public async Task<IActionResult> CreateBatch(
+        [FunctionName("BatchesMetadataCreate")]
+        public async Task<IActionResult> CreateBatchMetadata(
             [HttpTrigger(AuthorizationLevel.Function, "post",
-                Route = Routes.BlobsRoute + "/batches")]
+                Route = Routes.BlobsRoute + "/{organization}/{batch}/metadata")]
             HttpRequest req,
-            ILogger log)
+            ILogger log,
+            string organization,
+            string batch)
         {
             try
             {
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                var batch = JsonConvert.DeserializeObject<BatchModel>(requestBody);
+                await _storageService.CreateBatchMetadata(new BatchModel
+                {
+                    Id = batch,
+                    OrganizationId = organization
+                });
 
-                await _storageService.CreateBatchMetadata(batch);
                 return new OkObjectResult(new ResponseModel
                 {
                     Status = "SUCCESS",
@@ -292,7 +296,7 @@ namespace UNpaper.AzureFunctions.HttpFunctions
             }
         }
 
-        [FunctionName("BatchesMetadata")]
+        [FunctionName("BatchesMetadataGet")]
         public async Task<IActionResult> GetBatchMetadata(
             [HttpTrigger(AuthorizationLevel.Function, "get",
                 Route = Routes.BlobsRoute + "/{organization}/{batch}/metadata")]

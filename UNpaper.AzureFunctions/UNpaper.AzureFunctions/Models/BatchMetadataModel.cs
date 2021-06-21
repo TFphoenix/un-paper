@@ -20,7 +20,7 @@ namespace UNpaper.AzureFunctions.Models
         }
 
         public SourceConnectionModel SourceConnection { get; set; }
-        public string ApiKey { get; set; }
+        public object ApiKey { get; set; }
         public string Name { get; set; }
         public string FolderPath { get; set; }
         public string ApiUriBase { get; set; }

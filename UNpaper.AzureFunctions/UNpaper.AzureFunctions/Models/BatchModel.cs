@@ -19,7 +19,7 @@ namespace UNpaper.AzureFunctions.Models
         public string Description { get; set; }
 
         [JsonPropertyName("version")]
-        public string Version { get; set; } = "0.0.0";
+        public string Version { get; set; } = "2.1.3";
 
         [JsonRequired]
         [JsonPropertyName("organizationId")]
