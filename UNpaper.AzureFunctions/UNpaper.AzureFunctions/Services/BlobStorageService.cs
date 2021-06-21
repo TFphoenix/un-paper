@@ -225,10 +225,11 @@ namespace UNpaper.AzureFunctions.Services
                 if (storedPolicyName == null)
                 {
                     sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddHours(BlobConstants.SasExpirationHours);
-                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
-                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Write);
-                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Delete);
-                    sasBuilder.SetPermissions(BlobContainerSasPermissions.List);
+                    sasBuilder.SetPermissions(BlobContainerSasPermissions.All);
+                    //sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+                    //sasBuilder.SetPermissions(BlobContainerSasPermissions.Write);
+                    //sasBuilder.SetPermissions(BlobContainerSasPermissions.Delete);
+                    //sasBuilder.SetPermissions(BlobContainerSasPermissions.List);
                 }
                 else
                 {

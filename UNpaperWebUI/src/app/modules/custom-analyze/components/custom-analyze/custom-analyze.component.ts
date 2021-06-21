@@ -8,7 +8,7 @@ import { IProject } from 'src/@fott/models/applicationState';
   styleUrls: ['./custom-analyze.component.scss']
 })
 export class CustomAnalyzeComponent implements OnInit {
-  private batchMetadata: IProject;
+  batchMetadata: IProject;
 
   constructor(private readonly _route: ActivatedRoute) {}
 
