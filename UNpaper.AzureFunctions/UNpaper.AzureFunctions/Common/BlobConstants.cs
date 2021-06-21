@@ -18,5 +18,7 @@ namespace UNpaper.AzureFunctions.Common
 
         // Other
         public const string Delimiter = "/";
+        public const string HiddenAttribute = "HIDDEN";
+        public const int SasExpirationHours = 2;
     }
 }

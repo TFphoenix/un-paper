@@ -255,6 +255,72 @@ namespace UNpaper.AzureFunctions.HttpFunctions
             }
         }
 
+        [FunctionName("BatchesCreate")]
+        public async Task<IActionResult> CreateBatch(
+            [HttpTrigger(AuthorizationLevel.Function, "post",
+                Route = Routes.BlobsRoute + "/batches")]
+            HttpRequest req,
+            ILogger log)
+        {
+            try
+            {
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+                var batch = JsonConvert.DeserializeObject<BatchModel>(requestBody);
+
+                await _storageService.CreateBatchMetadata(batch);
+                return new OkObjectResult(new ResponseModel
+                {
+                    Status = "SUCCESS",
+                    Message = "Successfully created batch metadata"
+                });
+            }
+            catch (JsonSerializationException e)
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = e.Message
+                });
+            }
+            catch
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = "Can't create batch metadata"
+                });
+            }
+        }
+
+        [FunctionName("BatchesMetadata")]
+        public async Task<IActionResult> GetBatchMetadata(
+            [HttpTrigger(AuthorizationLevel.Function, "get",
+                Route = Routes.BlobsRoute + "/{organization}/{batch}/metadata")]
+            HttpRequest req,
+            ILogger log,
+            string organization,
+            string batch)
+        {
+            try
+            {
+                var batchMetadata = await _storageService.GetBatchMetadata(new BatchModel
+                {
+                    Id = batch,
+                    OrganizationId = organization
+                });
+
+                return new OkObjectResult(batchMetadata);
+            }
+            catch
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = "Can't get batch metadata! Ensure given organization and batch are correct"
+                });
+            }
+        }
+
         private async Task<ResponseModel> UploadDocument(IFormFile file, string organization, string batch)
         {
             try

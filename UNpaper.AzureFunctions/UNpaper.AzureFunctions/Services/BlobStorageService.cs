@@ -5,18 +5,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Storage.Sas;
+using Newtonsoft.Json;
 using UNpaper.AzureFunctions.Common;
 using UNpaper.AzureFunctions.Models;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace UNpaper.AzureFunctions.Services
 {
     public class BlobStorageService
     {
         private readonly BlobServiceClient _blobServiceClient;
+        private readonly CredentialsModel.FormRecognizerCredentials _formRecognizerCredentials;
 
-        public BlobStorageService(string blobStorageConnectionString)
+        public BlobStorageService(string blobStorageConnectionString, CredentialsModel.FormRecognizerCredentials formRecognizerCredentials)
         {
             _blobServiceClient = new BlobServiceClient(blobStorageConnectionString);
+            _formRecognizerCredentials = formRecognizerCredentials;
         }
 
         public async Task CreateContainer(string containerName)
@@ -128,6 +133,114 @@ namespace UNpaper.AzureFunctions.Services
                 Console.WriteLine(e.Message);
                 Console.ReadLine();
                 throw;
+            }
+        }
+
+        public async Task CreateBatchMetadata(BatchModel batch)
+        {
+            // Set parameters
+            string containerName = BlobConstants.OrganizationPrefix + batch.OrganizationId;
+            string blobName = $"{BlobConstants.BatchPrefix}{batch.Id}.fott";
+            var metadata = new BatchMetadataModel
+            {
+                SourceConnection = new BatchMetadataModel.SourceConnectionModel
+                {
+                    ProviderOptions = new BatchMetadataModel.ProviderOptionsModel
+                    {
+                        Sas = BlobConstants.HiddenAttribute
+                    },
+                    Id = batch.OrganizationId,
+                    Name = batch.OrganizationName,
+                    ProviderType = "azureBlobStorage"
+                },
+                ApiKey = BlobConstants.HiddenAttribute,
+                Name = batch.Name,
+                FolderPath = blobName,
+                ApiUriBase = BlobConstants.HiddenAttribute,
+                SecurityToken = $"token-{batch.Id}",
+                Version = batch.Version,
+                Id = batch.Id
+            };
+
+            // Get blob
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            BlobClient blob = container.GetBlobClient(blobName);
+
+            // Write metadata to blob
+            await using (MemoryStream stream = new MemoryStream())
+            {
+                await JsonSerializer.SerializeAsync(stream, metadata);
+
+                stream.Position = 0;
+                await blob.UploadAsync(stream, true);
+                stream.Close();
+            }
+        }
+
+        public async Task<object> GetBatchMetadata(BatchModel batch)
+        {
+            // Set parameters
+            var containerName = $"{BlobConstants.OrganizationPrefix}{batch.OrganizationId}";
+            var blobPath = $"{BlobConstants.BatchPrefix}{batch.Id}.fott";
+            var container = _blobServiceClient.GetBlobContainerClient(containerName);
+            var blob = container.GetBlobClient(blobPath);
+
+            // Download blob and populate metadata
+            BatchMetadataModel metadata;
+            BlobDownloadInfo download = await blob.DownloadAsync();
+            await using (MemoryStream stream = new MemoryStream())
+            {
+                await download.Content.CopyToAsync(stream);
+
+                stream.Position = 0;
+                var streamReader = new StreamReader(stream);
+                var content = streamReader.ReadToEnd();
+                metadata = JsonConvert.DeserializeObject<BatchMetadataModel>(content);
+
+                stream.Close();
+            }
+
+            // Replace hidden metadata attributes
+            var containerClient = _blobServiceClient.GetBlobContainerClient(containerName);
+            metadata.ApiKey = _formRecognizerCredentials.ApiKey;
+            metadata.ApiUriBase = _formRecognizerCredentials.ServiceUri;
+            metadata.SourceConnection.ProviderOptions.Sas = GetSasUriForContainer(containerClient).ToString();
+
+            return metadata;
+        }
+
+        private static Uri GetSasUriForContainer(BlobContainerClient containerClient, string storedPolicyName = null)
+        {
+            // Check whether this BlobContainerClient object has been authorized with Shared Key.
+            if (containerClient.CanGenerateSasUri)
+            {
+                // Create a SAS token that's valid for one hour.
+                BlobSasBuilder sasBuilder = new BlobSasBuilder()
+                {
+                    BlobContainerName = containerClient.Name,
+                    Resource = "c"
+                };
+
+                if (storedPolicyName == null)
+                {
+                    sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddHours(BlobConstants.SasExpirationHours);
+                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Write);
+                    sasBuilder.SetPermissions(BlobContainerSasPermissions.Delete);
+                    sasBuilder.SetPermissions(BlobContainerSasPermissions.List);
+                }
+                else
+                {
+                    sasBuilder.Identifier = storedPolicyName;
+                }
+
+                Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+
+                return sasUri;
+            }
+            else
+            {
+                throw new AccessViolationException("BlobContainerClient must be authorized with Shared Key credentials to create a service SAS.");
             }
         }
     }
