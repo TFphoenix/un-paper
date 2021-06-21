@@ -311,6 +311,14 @@ namespace UNpaper.AzureFunctions.HttpFunctions
 
                 return new OkObjectResult(batchMetadata);
             }
+            catch (AccessViolationException exception)
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = $"Can't get batch metadata! Error generating SAS authorization: {exception.Message}"
+                });
+            }
             catch
             {
                 return new BadRequestObjectResult(new ResponseModel
