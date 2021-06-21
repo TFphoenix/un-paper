@@ -47,7 +47,8 @@
               "hoist-non-react-statics",
               "shortid",
               "@opentelemetry/api",
-              "@hypnosphi/create-react-context"
+              "@hypnosphi/create-react-context",
+              "src/@fott/services/assetService"
             ]
           },
           "configurations": {

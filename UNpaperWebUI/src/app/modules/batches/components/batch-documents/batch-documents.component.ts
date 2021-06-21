@@ -121,7 +121,9 @@ export class BatchDocumentsComponent implements OnInit {
   }
 
   labelData() {
-    this._router.navigate([`/custom/${this.currentBatch.id}`]);
+    this._router.navigate([`/custom/${this.currentBatch.id}`], {
+      state: { selectedBatch: this.currentBatch }
+    });
   }
 
   analyzeData() {
