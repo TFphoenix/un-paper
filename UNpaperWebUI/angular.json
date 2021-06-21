@@ -31,7 +31,24 @@
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             },
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "react",
+              "react-dom",
+              "rbush",
+              "react-transition-group",
+              "reactcss",
+              "@babel/*",
+              "@babel/runtime/helpers/toConsumableArray",
+              "@babel/runtime/helpers/inherits",
+              "@babel/runtime/helpers/possibleConstructorReturn",
+              "babel-runtime",
+              "deep-equal",
+              "hoist-non-react-statics",
+              "shortid",
+              "@opentelemetry/api",
+              "@hypnosphi/create-react-context"
+            ]
           },
           "configurations": {
             "production": {

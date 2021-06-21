@@ -227,7 +227,7 @@ samp {
   -ms-overflow-style: scrollbar;
 } */
 
-figure {
+/* figure {
   margin: 0 0 1rem;
 }
 
@@ -239,7 +239,7 @@ img {
 svg {
   overflow: hidden;
   vertical-align: middle;
-}
+} */
 
 table {
   border-collapse: collapse;

@@ -38,7 +38,8 @@
         }
 
         .right-column {
-          margin-left: 64px;
+          max-width: 328px;
+          margin-left: 32px;
           display: flex;
           align-items: flex-end;
           text-align: right;
@@ -54,6 +55,11 @@
             }
           }
         }
+      }
+
+      .action-buttons {
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }
