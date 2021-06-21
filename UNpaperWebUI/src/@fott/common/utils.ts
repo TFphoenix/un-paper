@@ -9,7 +9,15 @@ import { constants } from './constants';
 import _ from 'lodash';
 import * as JsZip from 'jszip';
 import { match, compile, pathToRegexp } from 'path-to-regexp';
-import { IProject, ISecurityToken, IProviderOptions, ISecureString, FieldType, FieldFormat, ITag } from '../models/applicationState';
+import {
+  IProject,
+  ISecurityToken,
+  IProviderOptions,
+  ISecureString,
+  FieldType,
+  FieldFormat,
+  ITag
+} from '../models/applicationState';
 
 // tslint:disable-next-line:no-var-requires
 const tagColors = require('../components/common/tagColors.json');
@@ -90,15 +98,16 @@ export function normalizeSlashes(path: string): string {
  * @param project The project to encrypt
  * @param securityToken The security token used to encrypt the project
  */
+// REMEMBER: Currently disabled project encryption
 export async function encryptProject(project: IProject, securityToken: ISecurityToken) {
   const encrypted: IProject = {
     ...project,
     sourceConnection: { ...project.sourceConnection }
   };
 
-  encrypted.sourceConnection.providerOptions = await encryptProviderOptions(project.sourceConnection.providerOptions, securityToken.key);
+  // encrypted.sourceConnection.providerOptions = await encryptProviderOptions(project.sourceConnection.providerOptions, securityToken.key);
 
-  encrypted.apiKey = await encryptString(project.apiKey, securityToken.key);
+  // encrypted.apiKey = await encryptString(project.apiKey, securityToken.key);
 
   return encrypted;
 }
@@ -108,20 +117,24 @@ export async function encryptProject(project: IProject, securityToken: ISecurity
  * @param project The project to decrypt
  * @param securityToken The security token used to decrypt the project
  */
+// REMEMBER: Currently disabled project decryption
 export async function decryptProject(project: IProject, securityToken: ISecurityToken) {
   const decrypted: IProject = {
     ...project,
     sourceConnection: { ...project.sourceConnection }
   };
 
-  decrypted.sourceConnection.providerOptions = await decryptProviderOptions(decrypted.sourceConnection.providerOptions, securityToken.key);
+  // decrypted.sourceConnection.providerOptions = await decryptProviderOptions(decrypted.sourceConnection.providerOptions, securityToken.key);
 
-  decrypted.apiKey = await decryptString(project.apiKey, securityToken.key);
+  // decrypted.apiKey = await decryptString(project.apiKey, securityToken.key);
 
   return decrypted;
 }
 
-async function encryptProviderOptions(providerOptions: IProviderOptions | ISecureString, secret: string) {
+async function encryptProviderOptions(
+  providerOptions: IProviderOptions | ISecureString,
+  secret: string
+) {
   if (!providerOptions) {
     return null;
   }
@@ -135,7 +148,10 @@ async function encryptProviderOptions(providerOptions: IProviderOptions | ISecur
   } as ISecureString;
 }
 
-async function decryptProviderOptions<T = IProviderOptions>(providerOptions: IProviderOptions | ISecureString, secret: string) {
+async function decryptProviderOptions<T = IProviderOptions>(
+  providerOptions: IProviderOptions | ISecureString,
+  secret: string
+) {
   const secureString = providerOptions as ISecureString;
   if (!(secureString && secureString.encrypted)) {
     return providerOptions as T;
@@ -247,11 +263,24 @@ export function resizeCanvas(canvas: HTMLCanvasElement, maxWidth: number, maxHei
   const copyContext = canvasCopy.getContext('2d');
   canvasCopy.width = canvas.width * ratio;
   canvasCopy.height = canvas.height * ratio;
-  copyContext.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, canvasCopy.width, canvasCopy.height);
+  copyContext.drawImage(
+    canvas,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    0,
+    0,
+    canvasCopy.width,
+    canvasCopy.height
+  );
   return canvasCopy;
 }
 
-export function renderRotatedImageToCanvas(image: HTMLImageElement, orientation: number): HTMLCanvasElement {
+export function renderRotatedImageToCanvas(
+  image: HTMLImageElement,
+  orientation: number
+): HTMLCanvasElement {
   const width = image.width;
   const height = image.height;
 
@@ -400,7 +429,9 @@ export function useDebounce(value: any, delay: number) {
   return debouncedValue;
 }
 export function getAPIVersion(projectAPIVersion: string): string {
-  return constants.enableAPIVersionSelection && projectAPIVersion ? projectAPIVersion : constants.apiVersion;
+  return constants.enableAPIVersionSelection && projectAPIVersion
+    ? projectAPIVersion
+    : constants.apiVersion;
 }
 
 /**
@@ -419,7 +450,13 @@ export function poll(func, timeout, interval): Promise<any> {
       if (response.data.status.toLowerCase() === constants.statusCodeSucceeded) {
         resolve(response.data);
       } else if (response.data.status.toLowerCase() === constants.statusCodeFailed) {
-        reject(_.get(response, 'data.analyzeResult.errors[0].errorMessage', 'Generic error during prediction'));
+        reject(
+          _.get(
+            response,
+            'data.analyzeResult.errors[0].errorMessage',
+            'Generic error during prediction'
+          )
+        );
       } else if (Number(new Date()) < endTime) {
         // If the request isn't succeeded and the timeout hasn't elapsed, go again
         setTimeout(checkSucceeded, interval, resolve, reject);
@@ -494,9 +531,17 @@ export class URIUtils {
     return (result && result.params) || {};
   }
 
-  public static compilePath(pathTemplate: string, params: object, defaultPathParams: object): string {
+  public static compilePath(
+    pathTemplate: string,
+    params: object,
+    defaultPathParams: object
+  ): string {
     /* Add required default key, value pairs for the "toPath" function into a cloned params object. */
-    const withDefaultParams = (pathTemplate: string, params: object, defaultPathParams: object): object => {
+    const withDefaultParams = (
+      pathTemplate: string,
+      params: object,
+      defaultPathParams: object
+    ): object => {
       const requiredKeys = [];
       const retParams = { ...params };
       pathToRegexp(pathTemplate, requiredKeys);
