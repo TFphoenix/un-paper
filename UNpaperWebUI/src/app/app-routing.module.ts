@@ -52,6 +52,10 @@ const ROUTES: Routes = [
         path: 'custom',
         loadChildren: () =>
           import('./modules/custom-analyze/custom-analyze.module').then(m => m.CustomAnalyzeModule)
+      },
+      {
+        path: 'train',
+        loadChildren: () => import('./modules/train/train.module').then(m => m.TrainModule)
       }
     ]
   },

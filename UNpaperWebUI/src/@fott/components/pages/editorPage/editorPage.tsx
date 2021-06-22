@@ -42,7 +42,6 @@ import { tagIndexKeys } from '../../common/tagInput/tagIndexKeys';
 
 import Canvas from './canvas';
 import CanvasHelpers from './canvasHelpers';
-import './editorPage.scss';
 import EditorSideBar from './editorSideBar';
 import Alert from '../../common/alert/alert';
 import Confirm from '../../common/confirm/confirm';

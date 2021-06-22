@@ -107,7 +107,7 @@ export default class ProjectService implements IProjectService {
   ): Promise<IProject> {
     Guard.null(project);
 
-    project.version = 'VERSION HERE';
+    project.version = '2.1.3';
 
     if (!project.id) {
       project.id = shortid.generate();

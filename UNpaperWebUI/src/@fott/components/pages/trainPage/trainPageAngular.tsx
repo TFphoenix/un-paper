@@ -12,33 +12,26 @@ import {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { IAppSettings, IProject } from 'src/@fott/models/applicationState';
-// import IProjectActions, { loadAssets, loadProject } from 'src/@fott/redux/actions/projectActions';
+import { IProject, IAppSettings } from 'src/@fott/models/applicationState';
 import IProjectActions from 'src/@fott/redux/actions/projectActions';
-import { EditorPage, IEditorPageProps } from './editorPage';
+import TrainPage, { ITrainPageProps } from './trainPage';
 
-const containerElementName = 'fottEditorPageContainer';
+const containerElementName = 'fottTrainPageContainer';
 
 @Component({
-  selector: 'fott-editor-page',
+  selector: 'fott-train-page',
   template: `
     <span #${containerElementName}></span>
   `,
   styleUrls: [
-    './editorPage.scss',
+    './trainPage.scss',
     '../../../fott.scss',
-    '../../../common/scss/canvas.scss',
     '../../../common/scss/condensedList.scss',
-    '../../common/imageMap/imageMap.scss',
-    '../../common/pageRange/pageRange.scss',
-    '../../common/canvasCommandBar/canvasCommandBar.scss',
-    '../../common/tableView/tableView.scss',
-    '../../common/tagInput/tagInput.scss',
-    '../../common/tagInput/tagInputSize.scss'
+    '../../common/tableView/tableView.scss'
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewInit {
+export class TrainPagePageAngular implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
   @Input() project: IProject;
 
@@ -62,9 +55,8 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
       return;
     }
 
-    const editorProperties: IEditorPageProps = {
-      project: this.project,
-      recentProjects: [],
+    const trainProperties: ITrainPageProps = {
+      connections: [this.project.sourceConnection], //REMEMBER: Don't know if it works correctly
       appSettings: {
         securityTokens: [
           {
@@ -73,8 +65,10 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
           }
         ]
       } as IAppSettings,
+      project: this.project,
       actions: {} as IProjectActions,
       applicationActions: null,
+      recentProjects: [],
       appTitleActions: null,
       history: null,
       location: null,
@@ -85,17 +79,18 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
     };
 
     ReactDOM.render(
-      <div className={'fott-editor-page'}>
-        <EditorPage
-          project={editorProperties.project}
-          recentProjects={editorProperties.recentProjects}
-          appSettings={editorProperties.appSettings}
-          actions={editorProperties.actions}
-          applicationActions={editorProperties.applicationActions}
-          appTitleActions={editorProperties.appTitleActions}
-          history={editorProperties.history}
-          location={editorProperties.location}
-          match={editorProperties.match}
+      <div className={'fott-train-page'}>
+        <TrainPage
+          connections={trainProperties.connections}
+          project={trainProperties.project}
+          recentProjects={trainProperties.recentProjects}
+          appSettings={trainProperties.appSettings}
+          actions={trainProperties.actions}
+          applicationActions={trainProperties.applicationActions}
+          appTitleActions={trainProperties.appTitleActions}
+          history={trainProperties.history}
+          location={trainProperties.location}
+          match={trainProperties.match}
         />
       </div>,
       this.containerRef.nativeElement

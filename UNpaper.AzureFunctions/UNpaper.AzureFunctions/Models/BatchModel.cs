@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using UNpaper.AzureFunctions.Common;
 
 namespace UNpaper.AzureFunctions.Models
 {
@@ -19,7 +20,7 @@ namespace UNpaper.AzureFunctions.Models
         public string Description { get; set; }
 
         [JsonPropertyName("version")]
-        public string Version { get; set; } = "2.1.3";
+        public string Version { get; set; } = BlobConstants.DefaultMetadataVersion;
 
         [JsonRequired]
         [JsonPropertyName("organizationId")]

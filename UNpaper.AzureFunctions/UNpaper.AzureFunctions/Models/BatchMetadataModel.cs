@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UNpaper.AzureFunctions.Common;
 
 namespace UNpaper.AzureFunctions.Models
 {
@@ -72,7 +73,7 @@ namespace UNpaper.AzureFunctions.Models
         public string FolderPath { get; set; }
         public string ApiUriBase { get; set; }
         public string SecurityToken { get; set; }
-        public string Version { get; set; }
+        public string Version { get; set; } = BlobConstants.DefaultMetadataVersion;
         public string Id { get; set; }
         public List<Tag> Tags { get; set; }
         public object Assets { get; set; }

@@ -127,7 +127,9 @@ export class BatchDocumentsComponent implements OnInit {
   }
 
   trainData() {
-    //TODO
+    this._router.navigate([`/train/${this.currentBatch.id}`], {
+      state: { selectedBatch: this.currentBatch }
+    });
   }
 
   analyzeData() {

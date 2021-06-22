@@ -22,5 +22,6 @@ namespace UNpaper.AzureFunctions.Common
         public const string HiddenAttribute = "HIDDEN";
         public const string MetadataFileType = ".fott";
         public const int SasExpirationHours = 2;
+        public const string DefaultMetadataVersion = "2.1.3";
     }
 }
