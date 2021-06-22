@@ -42,6 +42,7 @@
               "@babel/runtime/helpers/toConsumableArray",
               "@babel/runtime/helpers/inherits",
               "@babel/runtime/helpers/possibleConstructorReturn",
+              "@babel/runtime/helpers/objectWithoutProperties",
               "babel-runtime",
               "deep-equal",
               "hoist-non-react-statics",

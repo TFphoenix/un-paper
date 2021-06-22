@@ -32,6 +32,10 @@
 
     &-run-ocr {
       width: 100%;
+
+      &:hover {
+        background-color: #ca37b4;
+      }
     }
   }
 

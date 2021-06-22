@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -321,6 +322,14 @@ namespace UNpaper.AzureFunctions.HttpFunctions
                 {
                     Status = "ERROR",
                     Message = $"Can't get batch metadata! Error generating SAS authorization: {exception.Message}"
+                });
+            }
+            catch(JsonSerializationException exception)
+            {
+                return new UnprocessableEntityObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = $"Can't process batch metadata! Error deserializing data: {exception.Message}"
                 });
             }
             catch

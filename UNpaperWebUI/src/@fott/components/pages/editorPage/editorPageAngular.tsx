@@ -71,7 +71,7 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
       appSettings: {
         securityTokens: [
           {
-            name: this.project.securityToken, //TEST: Don't know if it works correctly
+            name: this.project.securityToken, //REMEMBER: Don't know if it works correctly
             key: ''
           }
         ]

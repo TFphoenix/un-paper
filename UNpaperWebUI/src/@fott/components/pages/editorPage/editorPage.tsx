@@ -1474,7 +1474,9 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       ocrStatus === OcrStatus.done &&
       this.state.selectedAsset?.asset?.state === AssetState.NotVisited
     ) {
-      const allAssets: { [index: string]: IAsset } = _.cloneDeep(this.props.project.assets);
+      // const allAssets: { [index: string]: IAsset } = _.cloneDeep(this.props.project.assets);
+      // REMEMBER: Not sure if it's ok to bring assets from this.state
+      const allAssets: { [index: string]: IAsset } = _.cloneDeep(this.state.assets);
       const asset = Object.values(allAssets).find(
         item => item.id === this.state.selectedAsset?.asset?.id
       );
