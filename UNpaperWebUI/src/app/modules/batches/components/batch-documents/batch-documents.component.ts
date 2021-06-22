@@ -126,6 +126,10 @@ export class BatchDocumentsComponent implements OnInit {
     });
   }
 
+  trainData() {
+    //TODO
+  }
+
   analyzeData() {
     // TODO
   }

@@ -35,25 +35,19 @@
 
       <!-- Action Buttons -->
       <div class="action-buttons">
-        <button
-          (click)="uploadDocuments()"
-          class="upload-button m-8px"
-          mat-raised-button
-          color="primary"
-        >
+        <button (click)="uploadDocuments()" class="m-8px" mat-raised-button color="primary">
           <mat-icon>file_upload</mat-icon>
           Upload Documents
         </button>
-        <button (click)="labelData()" class="upload-button m-8px" mat-raised-button color="primary">
+        <button (click)="labelData()" class="m-8px" mat-raised-button color="primary">
           <mat-icon>new_label</mat-icon>
           Label Data
         </button>
-        <button
-          (click)="analyzeData()"
-          class="upload-button m-8px"
-          mat-raised-button
-          color="primary"
-        >
+        <button (click)="trainData()" class="m-8px" mat-raised-button color="primary">
+          <mat-icon>model_training</mat-icon>
+          Train Data
+        </button>
+        <button (click)="analyzeData()" class="m-8px" mat-raised-button color="primary">
           <mat-icon>find_in_page</mat-icon>
           Analyze Data
         </button>

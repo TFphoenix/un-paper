@@ -316,7 +316,10 @@ export class TagInput extends React.Component<ITagInputProps, ITagInputState> {
               </div>
             </div>
           ) : (
-            <Spinner className="loading-tag" size={SpinnerSize.large} />
+            <div>
+              <Spinner className="loading-tag" size={SpinnerSize.large} />
+              <h2 className="loading-text">Loading Tags...</h2>
+            </div>
           )}
           <Confirm
             title={strings.tags.warnings.replaceAllExitingLabelsTitle}

@@ -349,5 +349,17 @@ div.circle-picker-container {
 }
 
 .loading-tag {
+  margin-top: 64px;
   height: 100%;
+
+  .ms-Spinner-circle {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.loading-text {
+  text-align: center;
+  margin-top: 24px !important;
+  color: $unpPink2;
 }
