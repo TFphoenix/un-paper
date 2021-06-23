@@ -107,7 +107,7 @@ export class BatchDocumentsComponent implements OnInit {
     });
   }
 
-  uploadDocument() {
+  uploadDocuments() {
     this._dialog
       .open(DocumentManagerComponent, {
         data: {
@@ -118,6 +118,24 @@ export class BatchDocumentsComponent implements OnInit {
       .subscribe(documentManagerData => {
         this.populateBatchDocuments();
       });
+  }
+
+  labelData() {
+    this._router.navigate([`/custom/${this.currentBatch.id}`], {
+      state: { selectedBatch: this.currentBatch }
+    });
+  }
+
+  trainData() {
+    this._router.navigate([`/train/${this.currentBatch.id}`], {
+      state: { selectedBatch: this.currentBatch }
+    });
+  }
+
+  analyzeData() {
+    this._router.navigate([`/analyze/${this.currentBatch.id}`], {
+      state: { selectedBatch: this.currentBatch }
+    });
   }
 
   private populateBatchData() {

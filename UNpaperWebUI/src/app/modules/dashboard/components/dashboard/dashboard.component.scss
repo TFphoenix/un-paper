@@ -1,0 +1,132 @@
+@import 'theme-colors';
+
+.dashboard {
+  padding: 24px 24px 0 24px;
+
+  mat-card {
+    margin: 24px;
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+  }
+
+  // Main Card
+  .main-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 80px;
+
+    color: $white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    background: rgb(247, 37, 133);
+    background: linear-gradient(
+      270deg,
+      rgba(247, 37, 133, 1) 0%,
+      rgba(181, 23, 158, 1) 10%,
+      rgba(114, 9, 183, 1) 20%,
+      rgba(86, 11, 173, 1) 30%,
+      rgba(72, 12, 168, 1) 40%,
+      rgba(58, 12, 163, 1) 50%,
+      rgba(63, 55, 201, 1) 60%,
+      rgba(67, 97, 238, 1) 70%,
+      rgba(72, 149, 239, 1) 80%,
+      rgba(76, 201, 240, 1) 100%
+    );
+
+    // User Info
+    .user-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+
+      .user-frame {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid $white;
+        margin: 0 16px 0 8px;
+
+        .user-image {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+        }
+      }
+
+      .user-data {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        .user-name {
+          font-size: 24px;
+          font-weight: 500;
+          line-height: 26px;
+
+          margin-bottom: 12px;
+        }
+
+        .user-email {
+          font-size: 16px;
+        }
+      }
+    }
+
+    // Activity Info
+    .activity-info {
+      display: flex;
+      flex-direction: row;
+
+      &-card {
+        margin: 0 8px;
+        padding: 8px;
+        border-radius: 8px;
+        min-width: 120px;
+
+        background-color: rgba(0, 0, 0, 30%);
+
+        &-icon {
+          width: 64px;
+          height: 64px;
+        }
+
+        &-content {
+          &-number {
+            font-weight: bold;
+            margin-right: 12px;
+          }
+
+          &-label {
+          }
+        }
+      }
+    }
+  }
+
+  .cards-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    // Info Card
+    .info-card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+
+      color: $unpNeuLight3;
+      font-weight: bold;
+      font-size: 40px;
+    }
+
+    // History Card
+    .history-card {
+      &-icon {
+        font-size: 40px;
+      }
+    }
+  }
+}

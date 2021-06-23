@@ -46,11 +46,6 @@ export class OrganizationService {
             console.error(e);
           }
         });
-
-      // When the consumer unsubscribes, clean up data ready for next subscription.
-      // return {
-      //   unsubscribe() {}
-      // };
     });
   }
 

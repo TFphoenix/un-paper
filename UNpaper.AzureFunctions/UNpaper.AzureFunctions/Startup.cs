@@ -22,10 +22,16 @@ namespace UNpaper.AzureFunctions
             // Register services
             builder.Services.AddSingleton<BlobStorageService>((provider) =>
             {
-                //var blobStorageConnectionString = Environment.GetEnvironmentVariable("AzureStorage");
                 var blobStorageConnectionString =
                     builder.GetContext().Configuration.GetConnectionString("AzureStorage");
-                return new BlobStorageService(blobStorageConnectionString);
+                var formRecognizerSection = builder.GetContext().Configuration.GetSection("FormRecognizer");
+                var formRecognizerCredentials = new CredentialsModel.FormRecognizerCredentials
+                {
+                    ApiKey = formRecognizerSection.GetSection("ApiKey").Value,
+                    ServiceUri = formRecognizerSection.GetSection("ServiceUri").Value
+                };
+
+                return new BlobStorageService(blobStorageConnectionString, formRecognizerCredentials);
             });
         }
     }

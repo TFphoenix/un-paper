@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -251,6 +252,92 @@ namespace UNpaper.AzureFunctions.HttpFunctions
                 {
                     Status = "ERROR",
                     Message = "Can't create organization container"
+                });
+            }
+        }
+
+        [FunctionName("BatchesMetadataCreate")]
+        public async Task<IActionResult> CreateBatchMetadata(
+            [HttpTrigger(AuthorizationLevel.Function, "post",
+                Route = Routes.BlobsRoute + "/{organization}/{batch}/metadata")]
+            HttpRequest req,
+            ILogger log,
+            string organization,
+            string batch)
+        {
+            try
+            {
+                await _storageService.CreateBatchMetadata(new BatchModel
+                {
+                    Id = batch,
+                    OrganizationId = organization
+                });
+
+                return new OkObjectResult(new ResponseModel
+                {
+                    Status = "SUCCESS",
+                    Message = "Successfully created batch metadata"
+                });
+            }
+            catch (JsonSerializationException e)
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = e.Message
+                });
+            }
+            catch
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = "Can't create batch metadata"
+                });
+            }
+        }
+
+        [FunctionName("BatchesMetadataGet")]
+        public async Task<IActionResult> GetBatchMetadata(
+            [HttpTrigger(AuthorizationLevel.Function, "get",
+                Route = Routes.BlobsRoute + "/{organization}/{batch}/metadata")]
+            HttpRequest req,
+            ILogger log,
+            string organization,
+            string batch)
+        {
+            try
+            {
+                var batchMetadata = await _storageService.GetBatchMetadata(new BatchModel
+                {
+                    Id = batch,
+                    OrganizationId = organization
+                });
+
+                return new OkObjectResult(batchMetadata);
+            }
+            catch (AccessViolationException exception)
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = $"Can't get batch metadata! Error generating SAS authorization: {exception.Message}"
+                });
+            }
+            catch(JsonSerializationException exception)
+            {
+                return new UnprocessableEntityObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = $"Can't process batch metadata! Error deserializing data: {exception.Message}"
+                });
+            }
+            catch
+            {
+                return new BadRequestObjectResult(new ResponseModel
+                {
+                    Status = "ERROR",
+                    Message = "Can't get batch metadata! Ensure given organization and batch are correct"
                 });
             }
         }

@@ -1,0 +1,16 @@
+@import 'theme-colors';
+
+.model-info-container {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  .model-info-item {
+    .title {
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    .value {
+      color: $unpPink2;
+    }
+  }
+}

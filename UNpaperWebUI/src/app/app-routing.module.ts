@@ -47,6 +47,19 @@ const ROUTES: Routes = [
         path: 'layout',
         loadChildren: () =>
           import('./modules/layout-analyze/layout-analyze.module').then(m => m.LayoutAnalyzeModule)
+      },
+      {
+        path: 'custom',
+        loadChildren: () =>
+          import('./modules/custom-analyze/custom-analyze.module').then(m => m.CustomAnalyzeModule)
+      },
+      {
+        path: 'train',
+        loadChildren: () => import('./modules/train/train.module').then(m => m.TrainModule)
+      },
+      {
+        path: 'analyze',
+        loadChildren: () => import('./modules/analyze/analyze.module').then(m => m.AnalyzeModule)
       }
     ]
   },

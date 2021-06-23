@@ -46,6 +46,7 @@ import { FunctionsApiRequestService } from './services/request/functions-api-req
 import { IconService } from '@visurel/iconify-angular';
 import { OrganizationService } from './services/organization/organization.service';
 import { DocumentService } from './services/document/document.service';
+import { StoreProviderService } from './services/store-provider/store-provider.service';
 
 // MSAL FACTORIES
 export function MSALInstanceFactory(): IPublicClientApplication {
@@ -92,6 +93,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     UserService,
     OrganizationService,
     DocumentService,
+    StoreProviderService,
 
     // guards
     HomeGuard,
@@ -101,14 +103,22 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     // etc
     {
       provide: APP_INITIALIZER,
-      useFactory: (configService: ConfigService, iconService: IconService) =>
+      useFactory: (
+        configService: ConfigService,
+        iconService: IconService,
+        storeProviderService: StoreProviderService
+      ) =>
         function () {
           // if AppInitializerService is created with dependency injection then Angular will return some errors
-          const appInitializerService = new AppInitializerService(configService, iconService);
+          const appInitializerService = new AppInitializerService(
+            configService,
+            iconService,
+            storeProviderService
+          );
           return appInitializerService.load();
         },
       multi: true,
-      deps: [ConfigService, IconService]
+      deps: [ConfigService, IconService, StoreProviderService]
     },
     // MSAL
     {

@@ -42,17 +42,6 @@
         font-size: 0.9375rem !important;
       }
 
-      .separator-right-pane-main {
-        &:before {
-          background-color: $unpPink2;
-        }
-
-        div {
-          color: $unpPink2;
-          background-color: $unpNeuLight4;
-        }
-      }
-
       .prediction-menu {
         display: flex;
         flex-direction: column;

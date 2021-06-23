@@ -74,6 +74,9 @@ export class PrebuiltPredictPageAngular implements OnChanges, OnDestroy, AfterVi
           actions={{
             update: (setting: { serviceURI: string; apiKey: string }): void => {}
           }}
+          history={null}
+          location={null}
+          match={null}
         />
       </div>,
       this.containerRef.nativeElement
