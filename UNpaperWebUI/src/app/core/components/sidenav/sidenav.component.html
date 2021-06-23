@@ -2,6 +2,19 @@
   <!-- Sidenav -->
   <mat-sidenav class="unp-sidenav box-shadow-right" mode="side" opened>
     <mat-nav-list>
+      <!-- Dashboard -->
+      <mat-list-item
+        class="unp-nav-list-item"
+        matLine
+        routerLink="/dashboard"
+        [routerLinkActive]="['is-active']"
+      >
+        <div class="unp-nav-item">
+          <img class="mr-10px nav-icon" src="./assets/icons/dashboard.svg" alt="" />
+          <span>Dashboard</span>
+        </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
       <!-- Organizations -->
       <mat-list-item
         class="unp-nav-list-item"
@@ -28,7 +41,7 @@
         </div>
       </mat-list-item>
       <mat-divider></mat-divider>
-      <!-- Quick Upload -->
+      <!-- Prebuilt Analyze -->
       <mat-list-item
         class="unp-nav-list-item"
         matLine

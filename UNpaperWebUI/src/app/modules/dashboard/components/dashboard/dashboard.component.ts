@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  userName: string = 'Teodor Mihaescu';
+  userEmail: string = 'mihaescu.teodor@yahoo.com';
+
   constructor() {}
 
   ngOnInit(): void {}

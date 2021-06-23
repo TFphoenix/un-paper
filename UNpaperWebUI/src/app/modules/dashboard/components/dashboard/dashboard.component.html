@@ -1,1 +1,68 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  <!-- Main Card -->
+  <mat-card class="main-card">
+    <div class="user-info">
+      <div class="user-frame">
+        <img class="user-image" src="./assets/images/user-mockup.jpg" />
+      </div>
+      <div class="user-data m-h-10px">
+        <span class="user-name">Welcome {{ userName }}</span>
+        <span class="user-email">{{ userEmail }}</span>
+      </div>
+    </div>
+    <div class="activity-info">
+      <div class="activity-info-card">
+        <img class="activity-info-card-icon" src="./assets/icons/organization-white.svg" alt="" />
+        <div class="activity-info-card-content">
+          <span class="activity-info-card-content-number">12</span>
+          <span class="activity-info-card-content-label">Organizations</span>
+        </div>
+      </div>
+      <div class="activity-info-card">
+        <img class="activity-info-card-icon" src="./assets/icons/batch-white.svg" alt="" />
+        <div class="activity-info-card-content">
+          <span class="activity-info-card-content-number">120</span>
+          <span class="activity-info-card-content-label">Batches</span>
+        </div>
+      </div>
+      <div class="activity-info-card">
+        <img class="activity-info-card-icon" src="./assets/icons/documents-white.svg" alt="" />
+        <div class="activity-info-card-content">
+          <span class="activity-info-card-content-number">1358</span>
+          <span class="activity-info-card-content-label">Documents</span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <div class="cards-row">
+    <!-- Info Card -->
+    <mat-card class="info-card">NO NEWS AT THE MOMENT</mat-card>
+
+    <!-- History Card -->
+    <mat-card class="history-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="history-card-icon">history</mat-icon>
+        <mat-card-title>History</mat-card-title>
+        <mat-card-subtitle>Recent user actions history</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <mat-icon>chevron_right</mat-icon>
+            <span>User Action 1</span>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-icon>chevron_right</mat-icon>
+            <span>User Action 2</span>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <mat-icon>chevron_right</mat-icon>
+            <span>User Action 3</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
