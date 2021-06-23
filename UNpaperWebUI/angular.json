@@ -49,7 +49,8 @@
               "shortid",
               "@opentelemetry/api",
               "@hypnosphi/create-react-context",
-              "src/@fott/services/assetService"
+              "src/@fott/services/assetService",
+              "react-is"
             ]
           },
           "configurations": {

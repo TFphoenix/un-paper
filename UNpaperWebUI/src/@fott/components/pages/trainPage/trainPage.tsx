@@ -378,6 +378,10 @@ export default class TrainPage extends React.Component<ITrainPageProps, ITrainPa
         }));
         // reset webStorage successful train process
         await webStorage.setItem('trainPage_inputs', '{}');
+
+        // REMEMBER: Need this for the refresh
+        // TODO: Find a smarter way
+        window.location.reload();
       })
       .catch(err => {
         this.setState({
