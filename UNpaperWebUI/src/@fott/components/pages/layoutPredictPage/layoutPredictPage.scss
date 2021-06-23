@@ -51,17 +51,6 @@
         }
       }
 
-      .separator-right-pane-main {
-        &:before {
-          background-color: $unpPink2;
-        }
-
-        div {
-          color: $unpPink2;
-          background-color: $unpNeuLight4;
-        }
-      }
-
       .predict-button {
         .ms-Icon {
           color: $unpPink2;

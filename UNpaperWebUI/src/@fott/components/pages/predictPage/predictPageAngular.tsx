@@ -27,19 +27,20 @@ const containerElementName = 'fottPredictPageContainer';
     <span #${containerElementName}></span>
   `,
   styleUrls: [
+    '../../../fott.scss',
     './predictPage.scss',
     './predictModelInfo.scss',
     './predictResult.scss',
     './uploadToTrainingSetView.scss',
-    '../../../fott.scss',
-    '../../../common/scss/canvas.scss',
-    '../../../common/scss/condensedList.scss',
+    '../../common/confirm/confirm.scss',
+    '../../common/documentFilePicker/documentFilePicker.scss',
     '../../common/imageMap/imageMap.scss',
     '../../common/pageRange/pageRange.scss',
     '../../common/canvasCommandBar/canvasCommandBar.scss',
     '../../common/tableView/tableView.scss',
-    '../../common/tagInput/tagInput.scss',
-    '../../common/tagInput/tagInputSize.scss'
+    '../../../common/scss/canvas.scss',
+    '../../../common/scss/condensedList.scss',
+    '../../common/predictResult/predictResult.scss'
   ],
   encapsulation: ViewEncapsulation.None
 })

@@ -5,7 +5,13 @@ import * as React from 'react';
 import { ITag } from '../../../models/applicationState';
 import './predictResult.scss';
 import { getPrimaryGreenTheme } from '../../../common/themes';
-import { FontIcon, PrimaryButton, ContextualMenu, IContextualMenuProps } from '@fluentui/react';
+import {
+  FontIcon,
+  PrimaryButton,
+  ContextualMenu,
+  IContextualMenuProps,
+  Separator
+} from '@fluentui/react';
 import { strings } from '../../../common/strings';
 import { downloadFile, downloadZipFile, zipData } from '../../../common/utils';
 
@@ -87,9 +93,10 @@ export default class PredictResult extends React.Component<
     };
     return (
       <div>
-        <div className="container-items-center container-space-between results-container">
+        <Separator className="separator-right-pane-main">Prediction results</Separator>
+        {/* <div className="container-items-center container-space-between results-container">
           <h5 className="results-header">Prediction results</h5>
-        </div>
+        </div> */}
         <div className="container-items-center container-space-between">
           {this.props.onAddAssetToProject ? (
             <PrimaryButton

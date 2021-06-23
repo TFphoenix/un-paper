@@ -388,8 +388,12 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
                         disabled={!mostRecentModel || browseFileDisabled}
                       />
                     </div>
+                    <Separator className="separator-right-pane-main">
+                      {strings.predict.analysis}
+                    </Separator>
                     <div className="p-3" style={{ marginTop: '8px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      {/* REMEMBER: Temporary deactivated python script download functionality */}
+                      {/* <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <h5>{strings.predict.downloadScript}</h5>
                         <PrimaryButton
                           className="keep-button-80px"
@@ -400,7 +404,7 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
                           onClick={this.handleDownloadClick}
                         />
                       </div>
-                      <Separator className="separator-right-pane-main">or</Separator>
+                      <Separator className="separator-right-pane-main">or</Separator> */}
                       <h5>{strings.predict.uploadFile}</h5>
                       <DocumentFilePicker
                         disabled={this.state.isFetching || this.state.isPredicting}
@@ -420,9 +424,7 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
                           </div>
                         )}
                     </div>
-                    <Separator className="separator-right-pane-main">
-                      {strings.predict.analysis}
-                    </Separator>
+
                     <div className="p-3" style={{ marginTop: '8px' }}>
                       <div className="container-items-end predict-button">
                         <PrimaryButton
