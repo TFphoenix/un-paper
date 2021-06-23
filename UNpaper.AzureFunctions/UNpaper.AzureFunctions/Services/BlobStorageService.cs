@@ -88,15 +88,20 @@ namespace UNpaper.AzureFunctions.Services
                 if (blobItem.IsBlob && !blobItem.Blob.Deleted)
                 {
                     var parsedName = blobItem.Blob.Name.Split(BlobConstants.Delimiter)[1];
-                    acquiredBlobs.Add(new DocumentModel
+
+                    if (!Utility.IsNameExcluded(parsedName, BlobConstants.ExcludedBlobNames))
                     {
-                        Name = parsedName,
-                        Length = blobItem.Blob.Properties.ContentLength,
-                        ContentType = blobItem.Blob.Properties.ContentType,
-                        CreatedOn = blobItem.Blob.Properties.CreatedOn?.DateTime,
-                        LastModifiedOn = blobItem.Blob.Properties.LastModified?.DateTime,
-                        BlobPath = blobItem.Blob.Name
-                    });
+                        acquiredBlobs.Add(new DocumentModel
+                        {
+                            Name = parsedName,
+                            Length = blobItem.Blob.Properties.ContentLength,
+                            ContentType = blobItem.Blob.Properties.ContentType,
+                            CreatedOn = blobItem.Blob.Properties.CreatedOn?.DateTime,
+                            LastModifiedOn = blobItem.Blob.Properties.LastModified?.DateTime,
+                            BlobPath = blobItem.Blob.Name
+                        });
+                    }
+
                 }
             }
 

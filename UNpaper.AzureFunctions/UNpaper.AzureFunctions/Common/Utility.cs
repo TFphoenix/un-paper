@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -23,6 +24,11 @@ namespace UNpaper.AzureFunctions.Common
             stream.Seek(0, SeekOrigin.Begin);
             object o = formatter.Deserialize(stream);
             return o;
+        }
+
+        public static bool IsNameExcluded(string name, string[] excludedNames)
+        {
+            return excludedNames.Any(name.Contains);
         }
     }
 }
