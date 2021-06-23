@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MetadataResolver } from 'src/app/core/resolvers/metadata/metadata.resolver';
-import { CustomAnalyzeComponent } from './components/custom-analyze/custom-analyze.component';
+import { AnalyzeComponent } from './components/analyze/analyze.component';
 
 const routes: Routes = [
   {
     path: ':id',
-    component: CustomAnalyzeComponent,
+    component: AnalyzeComponent,
     resolve: {
       metadata: MetadataResolver
     }
@@ -17,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CustomAnalyzeRoutingModule {}
+export class AnalyzeRoutingModule {}

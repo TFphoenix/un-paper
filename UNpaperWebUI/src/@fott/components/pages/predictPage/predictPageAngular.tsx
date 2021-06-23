@@ -15,17 +15,20 @@ import * as ReactDOM from 'react-dom';
 import { IAppSettings, IProject } from 'src/@fott/models/applicationState';
 // import IProjectActions, { loadAssets, loadProject } from 'src/@fott/redux/actions/projectActions';
 import IProjectActions from 'src/@fott/redux/actions/projectActions';
-import { EditorPage, IEditorPageProps } from './editorPage';
+import PredictPage, { IPredictPageProps } from './predictPage';
 
-const containerElementName = 'fottEditorPageContainer';
+const containerElementName = 'fottPredictPageContainer';
 
 @Component({
-  selector: 'fott-editor-page',
+  selector: 'fott-predict-page',
   template: `
     <span #${containerElementName}></span>
   `,
   styleUrls: [
-    './editorPage.scss',
+    './predictPage.scss',
+    './predictModelInfo.scss',
+    './predictResult.scss',
+    './uploadToTrainingSetView.scss',
     '../../../fott.scss',
     '../../../common/scss/canvas.scss',
     '../../../common/scss/condensedList.scss',
@@ -38,7 +41,7 @@ const containerElementName = 'fottEditorPageContainer';
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewInit {
+export class PredictPagePageAngular implements OnChanges, OnDestroy, AfterViewInit {
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
   @Input() project: IProject;
 
@@ -62,7 +65,8 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
       return;
     }
 
-    const editorProperties: IEditorPageProps = {
+    const predictProperties: IPredictPageProps = {
+      connections: [this.project.sourceConnection], //REMEMBER: Don't know if it works correctly
       project: this.project,
       recentProjects: [this.project],
       appSettings: {
@@ -79,23 +83,28 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
       history: null,
       location: null,
       match: JSON.parse(`{
-      "params": {
-          "projectId": "${this.project.id}"
-      }}`)
+        "path": "/projects/:projectId/predict",
+        "url": "/projects/STJncKkfH/predict",
+        "isExact": true,
+        "params": {
+            "projectId": "${this.project.id}"
+        }
+    }`)
     };
 
     ReactDOM.render(
-      <div className={'fott-editor-page'}>
-        <EditorPage
-          project={editorProperties.project}
-          recentProjects={editorProperties.recentProjects}
-          appSettings={editorProperties.appSettings}
-          actions={editorProperties.actions}
-          applicationActions={editorProperties.applicationActions}
-          appTitleActions={editorProperties.appTitleActions}
-          history={editorProperties.history}
-          location={editorProperties.location}
-          match={editorProperties.match}
+      <div className={'fott-predict-page'}>
+        <PredictPage
+          connections={predictProperties.connections}
+          project={predictProperties.project}
+          recentProjects={predictProperties.recentProjects}
+          appSettings={predictProperties.appSettings}
+          actions={predictProperties.actions}
+          applicationActions={predictProperties.applicationActions}
+          appTitleActions={predictProperties.appTitleActions}
+          history={predictProperties.history}
+          location={predictProperties.location}
+          match={predictProperties.match}
         />
       </div>,
       this.containerRef.nativeElement

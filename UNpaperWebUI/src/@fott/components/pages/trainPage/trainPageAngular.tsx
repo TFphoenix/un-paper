@@ -68,7 +68,7 @@ export class TrainPagePageAngular implements OnChanges, OnDestroy, AfterViewInit
       project: this.project,
       actions: {} as IProjectActions,
       applicationActions: null,
-      recentProjects: [],
+      recentProjects: [this.project],
       appTitleActions: null,
       history: null,
       location: null,
