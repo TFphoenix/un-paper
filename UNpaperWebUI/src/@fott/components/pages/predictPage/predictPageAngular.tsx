@@ -12,9 +12,11 @@ import {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { IAppSettings, IProject } from 'src/@fott/models/applicationState';
 // import IProjectActions, { loadAssets, loadProject } from 'src/@fott/redux/actions/projectActions';
 import IProjectActions from 'src/@fott/redux/actions/projectActions';
+import { StoreProviderService } from 'src/app/core/services/store-provider/store-provider.service';
 import PredictPage, { IPredictPageProps } from './predictPage';
 
 const containerElementName = 'fottPredictPageContainer';
@@ -45,7 +47,7 @@ export class PredictPagePageAngular implements OnChanges, OnDestroy, AfterViewIn
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
   @Input() project: IProject;
 
-  constructor() {}
+  constructor(private readonly _storeProviderService: StoreProviderService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.render();
@@ -94,18 +96,20 @@ export class PredictPagePageAngular implements OnChanges, OnDestroy, AfterViewIn
 
     ReactDOM.render(
       <div className={'fott-predict-page'}>
-        <PredictPage
-          connections={predictProperties.connections}
-          project={predictProperties.project}
-          recentProjects={predictProperties.recentProjects}
-          appSettings={predictProperties.appSettings}
-          actions={predictProperties.actions}
-          applicationActions={predictProperties.applicationActions}
-          appTitleActions={predictProperties.appTitleActions}
-          history={predictProperties.history}
-          location={predictProperties.location}
-          match={predictProperties.match}
-        />
+        <Provider store={this._storeProviderService.getStore()}>
+          <PredictPage
+            connections={predictProperties.connections}
+            project={predictProperties.project}
+            recentProjects={predictProperties.recentProjects}
+            appSettings={predictProperties.appSettings}
+            actions={predictProperties.actions}
+            applicationActions={predictProperties.applicationActions}
+            appTitleActions={predictProperties.appTitleActions}
+            history={predictProperties.history}
+            location={predictProperties.location}
+            match={predictProperties.match}
+          />
+        </Provider>
       </div>,
       this.containerRef.nativeElement
     );

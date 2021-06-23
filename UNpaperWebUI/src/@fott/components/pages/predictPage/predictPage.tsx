@@ -126,24 +126,25 @@ export interface IModel {
   status: string;
 }
 
-// function mapStateToProps(state: IApplicationState) {
-//   return {
-//     recentProjects: state.recentProjects,
-//     connections: state.connections,
-//     appSettings: state.appSettings,
-//     project: state.currentProject
-//   };
-// }
+function mapStateToProps(state: IApplicationState) {
+  return {
+    // recentProjects: state.recentProjects,
+    // connections: state.connections,
+    // appSettings: state.appSettings,
+    // project: state.currentProject
+  };
+}
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: bindActionCreators(projectActions, dispatch),
-//     applicationActions: bindActionCreators(applicationActions, dispatch),
-//     appTitleActions: bindActionCreators(appTitleActions, dispatch)
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(projectActions, dispatch),
+    applicationActions: bindActionCreators(applicationActions, dispatch),
+    appTitleActions: bindActionCreators(appTitleActions, dispatch)
+  };
+}
 
-// @connect(mapStateToProps, mapDispatchToProps)
+// @ts-expect-error
+@connect(mapStateToProps, mapDispatchToProps)
 export default class PredictPage extends React.Component<IPredictPageProps, IPredictPageState> {
   private appInsights: any = null;
   private tableHelper: ITableHelper = new TableHelper(this);
@@ -152,7 +153,7 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
   public state: IPredictPageState = {
     couldNotGetRecentModel: false,
     selectionIndexTracker: -1,
-    selectedRecentModelIndex: -1,
+    selectedRecentModelIndex: 0,
     loadingRecentModel: true,
     showRecentModelsView: false,
     sourceOption: 'localFile',
@@ -208,6 +209,9 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
     }
     // this.appInsights = getAppInsights();
     document.title = strings.predict.title + ' - ' + strings.appName;
+
+    // REMEMBER: Seems to be necessary for a correct state update
+    this.componentDidUpdate(this.props, this.state);
   }
 
   public async componentDidUpdate(_prevProps: IPredictPageProps, prevState: IPredictPageState) {
