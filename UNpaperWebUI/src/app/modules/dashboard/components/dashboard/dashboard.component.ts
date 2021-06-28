@@ -53,83 +53,27 @@ export class DashboardComponent implements OnInit {
         organization.batches.forEach(batch => {
           this._documentService.getDocuments(organization.id, batch.id).subscribe(documents => {
             documentsNumber += documents.length;
+            this.documents = documentsNumber.toString();
           });
         });
       });
 
       this.batches = batchesNumber.toString();
-      this.documents = documentsNumber.toString();
     });
   }
 
   private populateUserHistory() {
     // TODO: Populate history from a real data surce
-    this.userHistory = [
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      },
-      {
-        timestamp: new Date(),
-        title: 'Created account',
-        description: 'Created present user account'
-      }
-    ];
+    this._userService.getCurrentUser().subscribe(user => {
+      this.userHistory = [
+        {
+          timestamp: user.createdOn,
+          title: 'Created account',
+          description: 'Created current user account'
+        }
+      ];
+    });
+
+    // TODO: Sort history descendent by timestamp
   }
 }

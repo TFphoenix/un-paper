@@ -149,6 +149,8 @@
 
     // History Card
     .history-card {
+      display: flex;
+      flex-direction: column;
       flex-grow: 1;
       min-width: 256px;
 
@@ -166,9 +168,10 @@
       }
 
       .mat-card-content {
-        // padding-right: 8px;
-        // max-height: 285px;
-        // overflow: auto;
+        flex-basis: 0;
+        flex-grow: 1;
+        overflow: auto;
+        padding-right: 8px;
       }
 
       .history-item-card {
@@ -214,9 +217,18 @@
     }
   }
 
-  @media only screen and (max-width: 1180px) {
+  // Smaller devices
+  @media only screen and (max-width: 1240px) {
     .cards-row {
       flex-wrap: wrap;
+
+      .history-card {
+        display: block;
+
+        .mat-card-content {
+          max-height: 512px;
+        }
+      }
     }
   }
 }
