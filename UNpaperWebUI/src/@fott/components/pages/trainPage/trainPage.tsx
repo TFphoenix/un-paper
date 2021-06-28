@@ -376,6 +376,7 @@ export default class TrainPage extends React.Component<ITrainPageProps, ITrainPa
           currTrainRecord: this.getProjectTrainRecord(),
           modelName: ''
         }));
+
         // reset webStorage successful train process
         await webStorage.setItem('trainPage_inputs', '{}');
 

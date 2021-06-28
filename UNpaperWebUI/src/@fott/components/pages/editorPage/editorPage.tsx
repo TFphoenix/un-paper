@@ -735,7 +735,12 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       //   tag,
       //   newTag
       // );
-      const assetUpdates = await projectActions.updateProjectTag(this.props.project, tag, newTag);
+      const assetUpdates = await projectActions.updateProjectTag(
+        this.props.project,
+        tag,
+        newTag,
+        this.props
+      );
       const selectedAsset = assetUpdates.find(
         am => am.asset.id === this.state.selectedAsset.asset.id
       );
@@ -793,7 +798,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       this.props.project,
       tagName,
       tagType,
-      tagFormat
+      tagFormat,
+      this.props
     );
 
     const selectedAsset = assetUpdates.find(
@@ -1517,7 +1523,12 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
     //   oldTag,
     //   newTag
     // );
-    const assetUpdates = await projectActions.updateProjectTag(this.props.project, oldTag, newTag);
+    const assetUpdates = await projectActions.updateProjectTag(
+      this.props.project,
+      oldTag,
+      newTag,
+      this.props
+    );
     const selectedAsset = assetUpdates.find(
       am => am.asset.id === this.state.selectedAsset.asset.id
     );

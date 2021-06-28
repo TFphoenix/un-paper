@@ -710,7 +710,8 @@ export async function saveAssetMetadataAndCleanEmptyLabel(
 export async function updateProjectTag(
   project: IProject,
   oldTag: ITag,
-  newTag: ITag
+  newTag: ITag,
+  appState: any
 ): Promise<IAssetMetadata[]> {
   let assetUpdates: IAssetMetadata[] = [];
 
@@ -733,7 +734,7 @@ export async function updateProjectTag(
   };
 
   // Save updated project tags
-  await saveProject(updatedProject, true, false);
+  await saveProject(updatedProject, appState, true, false);
   updateProjectTagAction(updatedProject);
 
   return assetUpdates;
@@ -784,7 +785,8 @@ export async function deleteProjectTag(
   project: IProject,
   tagName: string,
   tagType: FieldType,
-  tagFormat: FieldFormat
+  tagFormat: FieldFormat,
+  appState: any
 ): Promise<IAssetMetadata[]> {
   // Find tags to rename
   const assetService = new AssetService(project);
@@ -803,7 +805,7 @@ export async function deleteProjectTag(
   };
 
   // Save updated project tags
-  await saveProject(updatedProject, true, false);
+  await saveProject(updatedProject, appState, true, false);
   deleteProjectTagAction(updatedProject);
 
   return assetUpdates;
