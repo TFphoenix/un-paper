@@ -351,6 +351,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
                       onAssetDeleted={this.confirmDocumentDeleted}
                       editorMode={this.state.editorMode}
                       project={this.props.project}
+                      tags={this.tagInputRef.current.state.tags}
                       lockedTags={this.state.lockedTags}
                       hoveredLabel={this.state.hoveredLabel}
                       setTableToView={this.setTableToView}

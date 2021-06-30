@@ -73,6 +73,7 @@ export interface ICanvasProps extends React.Props<Canvas> {
   selectedAsset: IAssetMetadata;
   editorMode: EditorMode;
   project: IProject;
+  tags: ITag[];
   lockedTags: string[];
   hoveredLabel: ILabel | any;
   isRunningOCRs?: boolean;
@@ -150,6 +151,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
     editorMode: EditorMode.Select,
     selectedAsset: null,
     project: null,
+    tags: [],
     lockedTags: [],
     hoveredLabel: null,
     highlightedTableCell: null,
@@ -247,7 +249,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
       this.isLabelDataChanged(this.props, prevProps) ||
       this.isTableLabelDataChanged(this.props, prevProps) ||
       (prevProps.project &&
-        this.needUpdateAssetRegionsFromTags(prevProps.project.tags, this.props.project.tags))
+        this.needUpdateAssetRegionsFromTags(prevProps.project.tags, this.props.tags))
     ) {
       this.setState(
         {
@@ -1498,7 +1500,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
     const iRegion = this.getIndexOfCurrentRegions(id);
     if (iRegion >= 0) {
       const tagName = this.state.currentAsset.regions[iRegion].tags[0];
-      return this.props.project.tags.find(tag => tag.name === tagName);
+      return this.props.tags.find(tag => tag.name === tagName);
     }
     return null;
   };
@@ -1788,7 +1790,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
       if (layers?.length !== 3) {
         return null;
       }
-      const labelsTag = this.props.project.tags.find(tag => {
+      const labelsTag = this.props.tags.find(tag => {
         return tag.name === layers[0];
       });
       if (labelsTag) {
@@ -1941,7 +1943,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
         let label;
         if (region.isTableRegion) {
           const tableRegion = region as ITableRegion;
-          const tableTag = this.props.project.tags.find(
+          const tableTag = this.props.tags.find(
             projectTag => tag === projectTag.name
           ) as ITableTag;
           if (!tableTag) return;
@@ -1989,7 +1991,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
           let labelName = this.encodeLabelString(tag);
           if (region.isTableRegion) {
             const tableRegion = region as ITableRegion;
-            const tableTag = this.props.project.tags.find(
+            const tableTag = this.props.tags.find(
               projectTag => tag === projectTag.name
             ) as ITableTag;
             if (!tableTag) return;
@@ -2643,7 +2645,7 @@ export default class Canvas extends React.Component<ICanvasProps, ICanvasState> 
         y: boundingBox[i + 1]
       });
     }
-    const tag: ITag = this.props.project.tags.find(tag => tag.name === tagName);
+    const tag: ITag = this.props.tags.find(tag => tag.name === tagName);
     let regionCategory: string;
     if (labelType) {
       regionCategory = labelType;
