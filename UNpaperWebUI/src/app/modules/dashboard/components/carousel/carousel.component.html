@@ -1,0 +1,28 @@
+<div class="slideshow-container">
+  <div #slide class="slide fade">
+    <div class="numbertext">1 / 3</div>
+    <img width="100%" src="./assets/images/banner1.png" />
+    <!-- <div class="text">Caption Text</div> -->
+  </div>
+
+  <div #slide class="slide fade">
+    <div class="numbertext">2 / 3</div>
+    <img width="100%" src="./assets/images/banner2.png" />
+    <!-- <div class="text">Caption Two</div> -->
+  </div>
+
+  <div #slide class="slide fade">
+    <div class="numbertext">3 / 3</div>
+    <img width="100%" src="./assets/images/banner3.png" />
+    <!-- <div class="text">Caption Three</div> -->
+  </div>
+
+  <a class="prev-button" (click)="plusSlides(-1)">&#10094;</a>
+  <a class="next-button" (click)="plusSlides(1)">&#10095;</a>
+</div>
+
+<div class="dots">
+  <span #dot class="dot" (click)="currentSlide(1)"></span>
+  <span #dot class="dot" (click)="currentSlide(2)"></span>
+  <span #dot class="dot" (click)="currentSlide(3)"></span>
+</div>

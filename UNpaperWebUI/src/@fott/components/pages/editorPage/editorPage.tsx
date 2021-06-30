@@ -129,27 +129,28 @@ export interface IEditorPageState {
   highlightedTableCellRegions: ITableRegion[];
 }
 
-// function mapStateToProps(state: IApplicationState) {
-//   return {
-//     recentProjects: state.recentProjects,
-//     project: state.currentProject,
-//     appSettings: state.appSettings
-//   };
-// }
+function mapStateToProps(state: IApplicationState) {
+  return {
+    // recentProjects: state.recentProjects,
+    // project: state.currentProject,
+    // appSettings: state.appSettings
+  };
+}
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     actions: bindActionCreators(projectActions, dispatch),
-//     applicationActions: bindActionCreators(applicationActions, dispatch),
-//     appTitleActions: bindActionCreators(appTitleActions, dispatch)
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(projectActions, dispatch),
+    applicationActions: bindActionCreators(applicationActions, dispatch),
+    appTitleActions: bindActionCreators(appTitleActions, dispatch)
+  };
+}
 
-// /**
-//  * @name - Editor Page
-//  * @description - Page for adding/editing/removing tags to assets
-//  */
-// @connect(mapStateToProps, mapDispatchToProps)
+/**
+ * @name - Editor Page
+ * @description - Page for adding/editing/removing tags to assets
+ */
+// @ts-expect-error
+@connect(mapStateToProps, mapDispatchToProps)
 export class EditorPage extends React.Component<IEditorPageProps, IEditorPageState> {
   public state: IEditorPageState = {
     selectedTag: null,
@@ -219,6 +220,16 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
   }
 
   public componentWillUnmount() {
+    // REMEMBER: Save with state values
+    const allAssets: { [index: string]: IAsset } = _.cloneDeep(this.state.assets);
+    projectActions.saveProject(
+      { ...this.props.project, assets: allAssets },
+      this.props,
+      false,
+      false,
+      this.tagInputRef.current.state.tags
+    );
+
     this.isUnmount = true;
     window.removeEventListener('focus', this.onFocused);
   }
@@ -351,6 +362,7 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
                       onAssetDeleted={this.confirmDocumentDeleted}
                       editorMode={this.state.editorMode}
                       project={this.props.project}
+                      tags={this.tagInputRef.current.state.tags}
                       lockedTags={this.state.lockedTags}
                       hoveredLabel={this.state.hoveredLabel}
                       setTableToView={this.setTableToView}
@@ -735,7 +747,12 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       //   tag,
       //   newTag
       // );
-      const assetUpdates = await projectActions.updateProjectTag(this.props.project, tag, newTag);
+      const assetUpdates = await projectActions.updateProjectTag(
+        this.props.project,
+        tag,
+        newTag,
+        this.props
+      );
       const selectedAsset = assetUpdates.find(
         am => am.asset.id === this.state.selectedAsset.asset.id
       );
@@ -793,7 +810,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       this.props.project,
       tagName,
       tagType,
-      tagFormat
+      tagFormat,
+      this.props
     );
 
     const selectedAsset = assetUpdates.find(
@@ -1023,7 +1041,13 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       ...this.props.project,
       tags
     };
-    await projectActions.saveProject(project, this.props, true, false);
+    await projectActions.saveProject(
+      project,
+      this.props,
+      true,
+      false,
+      this.tagInputRef.current.state.tags
+    );
   };
 
   private onPageLoaded = async (pageNumber: number) => {
@@ -1083,7 +1107,13 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       },
       async () => {
         await this.onAssetMetadataChanged(assetMetadata);
-        await projectActions.saveProject(this.props.project, this.props, false, false);
+        await projectActions.saveProject(
+          this.props.project,
+          this.props,
+          false,
+          false,
+          this.tagInputRef.current.state.tags
+        );
       }
     );
   };
@@ -1208,7 +1238,13 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
         },
         async () => {
           // await this.props.actions.saveProject(this.props.project, false, true);
-          await projectActions.saveProject(this.props.project, this.props, false, true);
+          await projectActions.saveProject(
+            this.props.project,
+            this.props,
+            false,
+            true,
+            this.tagInputRef.current.state.tags
+          );
           this.setState({ tagsLoaded: true });
           if (assets.length > 0) {
             await this.selectAsset(lastVisited ? lastVisited : assets[0]);
@@ -1340,7 +1376,8 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
           { ...this.props.project, assets: allAssets },
           this.props,
           true,
-          false
+          false,
+          this.tagInputRef.current.state.tags
         );
         this.setState({ isRunningAutoLabelings: false });
         this.isOCROrAutoLabelingBatchRunning = false;
@@ -1452,7 +1489,13 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
       },
       async () => {
         await this.onAssetMetadataChanged(assetMetadata);
-        await projectActions.saveProject(this.props.project, this.props, false, false);
+        await projectActions.saveProject(
+          this.props.project,
+          this.props,
+          false,
+          false,
+          this.tagInputRef.current.state.tags
+        );
       }
     );
   };
@@ -1486,9 +1529,16 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
             { ...this.props.project, assets: allAssets },
             this.props,
             false,
-            false
+            false,
+            this.tagInputRef.current.state.tags
           )
-        ]);
+        ]).then(() => {
+          // REMEMBER: Trying to fix null assets bug on initial load
+          if (this.props.project.assets === null && ocrStatus === OcrStatus.done) {
+            // TODO: Find a smarter way
+            window.location.reload();
+          }
+        });
       }
     }
     this.setState({ isCanvasRunningOCR: ocrStatus === OcrStatus.runningOCR });
@@ -1517,7 +1567,12 @@ export class EditorPage extends React.Component<IEditorPageProps, IEditorPageSta
     //   oldTag,
     //   newTag
     // );
-    const assetUpdates = await projectActions.updateProjectTag(this.props.project, oldTag, newTag);
+    const assetUpdates = await projectActions.updateProjectTag(
+      this.props.project,
+      oldTag,
+      newTag,
+      this.props
+    );
     const selectedAsset = assetUpdates.find(
       am => am.asset.id === this.state.selectedAsset.asset.id
     );

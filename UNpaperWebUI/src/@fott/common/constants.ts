@@ -44,8 +44,8 @@ export const constants = {
   apiKeyHeader: 'Ocp-Apim-Subscription-Key',
   maxRetry: 8,
   initialRetryInterval: 1000, // ms
-  analyzeRequestTimeout: 120000, // ms
-  analyzeRequestInterval: 2000, // ms
+  analyzeRequestTimeout: 120000, // ms // REMEMBER: IMPORTANT (used for Form Rec. requests)
+  analyzeRequestInterval: 2500, // ms // REMEMBER: IMPORTANT (used for Form Rec. requests)
   convertedImageFormat: 'image/jpeg',
   convertedImageQuality: 0.7,
   convertedThumbnailQuality: 0.2,

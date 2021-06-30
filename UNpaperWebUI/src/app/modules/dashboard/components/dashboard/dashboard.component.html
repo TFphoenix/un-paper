@@ -6,29 +6,29 @@
         <img class="user-image" src="./assets/images/user-mockup.jpg" />
       </div>
       <div class="user-data m-h-10px">
-        <span class="user-name">Welcome {{ userName }}</span>
-        <span class="user-email">{{ userEmail }}</span>
+        <span class="user-welcome">Welcome</span>
+        <span class="user-name">{{ userName }}</span>
       </div>
     </div>
     <div class="activity-info">
       <div class="activity-info-card">
         <img class="activity-info-card-icon" src="./assets/icons/organization-white.svg" alt="" />
         <div class="activity-info-card-content">
-          <span class="activity-info-card-content-number">12</span>
+          <span class="activity-info-card-content-number">{{ organizations }}</span>
           <span class="activity-info-card-content-label">Organizations</span>
         </div>
       </div>
       <div class="activity-info-card">
         <img class="activity-info-card-icon" src="./assets/icons/batch-white.svg" alt="" />
         <div class="activity-info-card-content">
-          <span class="activity-info-card-content-number">120</span>
+          <span class="activity-info-card-content-number">{{ batches }}</span>
           <span class="activity-info-card-content-label">Batches</span>
         </div>
       </div>
       <div class="activity-info-card">
         <img class="activity-info-card-icon" src="./assets/icons/documents-white.svg" alt="" />
         <div class="activity-info-card-content">
-          <span class="activity-info-card-content-number">1358</span>
+          <span class="activity-info-card-content-number">{{ documents }}</span>
           <span class="activity-info-card-content-label">Documents</span>
         </div>
       </div>
@@ -37,7 +37,9 @@
 
   <div class="cards-row">
     <!-- Info Card -->
-    <mat-card class="info-card">NO NEWS AT THE MOMENT</mat-card>
+    <mat-card class="info-card">
+      <unp-carousel class="carousel"></unp-carousel>
+    </mat-card>
 
     <!-- History Card -->
     <mat-card class="history-card">
@@ -46,22 +48,32 @@
         <mat-card-title>History</mat-card-title>
         <mat-card-subtitle>Recent user actions history</mat-card-subtitle>
       </mat-card-header>
-      <mat-divider></mat-divider>
+      <mat-divider class="pos-static mb-8px"></mat-divider>
       <mat-card-content>
-        <mat-list role="list">
-          <mat-list-item role="listitem">
-            <mat-icon>chevron_right</mat-icon>
-            <span>User Action 1</span>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <mat-icon>chevron_right</mat-icon>
-            <span>User Action 2</span>
-          </mat-list-item>
-          <mat-list-item role="listitem">
-            <mat-icon>chevron_right</mat-icon>
-            <span>User Action 3</span>
+        <mat-list *ngIf="userHistory.length !== 0; else emptyHistoryPlaceholder" role="list">
+          <mat-list-item
+            class="history-item-card"
+            *ngFor="let history of userHistory"
+            role="listitem"
+          >
+            <div class="history-item">
+              <div class="history-item-header">
+                <mat-icon class="mr-8px">flag</mat-icon>
+                <div class="flex flex-col">
+                  <span class="history-item-header-timestamp">
+                    {{ history.timestamp | date: 'short' }}
+                  </span>
+                  <span class="history-item-header-title">{{ history.title }}</span>
+                </div>
+              </div>
+              <span class="history-item-description">{{ history.description }}</span>
+            </div>
           </mat-list-item>
         </mat-list>
+
+        <ng-template #emptyHistoryPlaceholder>
+          <span class="empty-history-placeholder">NO RECENT HISTORY FOUND</span>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>

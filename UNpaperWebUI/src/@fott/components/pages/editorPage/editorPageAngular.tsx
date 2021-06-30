@@ -12,9 +12,11 @@ import {
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { IAppSettings, IProject } from 'src/@fott/models/applicationState';
 // import IProjectActions, { loadAssets, loadProject } from 'src/@fott/redux/actions/projectActions';
 import IProjectActions from 'src/@fott/redux/actions/projectActions';
+import { StoreProviderService } from 'src/app/core/services/store-provider/store-provider.service';
 import { EditorPage, IEditorPageProps } from './editorPage';
 
 const containerElementName = 'fottEditorPageContainer';
@@ -42,7 +44,7 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
   @ViewChild(containerElementName, { static: false }) containerRef: ElementRef;
   @Input() project: IProject;
 
-  constructor() {}
+  constructor(private readonly _storeProviderService: StoreProviderService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     this.render();
@@ -86,17 +88,19 @@ export class EditorPagePageAngular implements OnChanges, OnDestroy, AfterViewIni
 
     ReactDOM.render(
       <div className={'fott-editor-page'}>
-        <EditorPage
-          project={editorProperties.project}
-          recentProjects={editorProperties.recentProjects}
-          appSettings={editorProperties.appSettings}
-          actions={editorProperties.actions}
-          applicationActions={editorProperties.applicationActions}
-          appTitleActions={editorProperties.appTitleActions}
-          history={editorProperties.history}
-          location={editorProperties.location}
-          match={editorProperties.match}
-        />
+        <Provider store={this._storeProviderService.getStore()}>
+          <EditorPage
+            project={editorProperties.project}
+            recentProjects={editorProperties.recentProjects}
+            appSettings={editorProperties.appSettings}
+            actions={editorProperties.actions}
+            applicationActions={editorProperties.applicationActions}
+            appTitleActions={editorProperties.appTitleActions}
+            history={editorProperties.history}
+            location={editorProperties.location}
+            match={editorProperties.match}
+          />
+        </Provider>
       </div>,
       this.containerRef.nativeElement
     );

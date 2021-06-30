@@ -251,9 +251,11 @@ export default class PredictResult extends React.Component<
   };
 
   private onAddAssetToProject = async () => {
-    if (this.props.onAddAssetToProject) {
-      this.props.onAddAssetToProject();
-    }
+    window.alert('Functionality not implemented yet');
+    // TODO: Implement add asset to project functionality
+    // if (this.props.onAddAssetToProject) {
+    //   this.props.onAddAssetToProject();
+    // }
   };
 
   private triggerJSONDownload = (): void => {

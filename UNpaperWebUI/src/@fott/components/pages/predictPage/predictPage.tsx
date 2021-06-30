@@ -378,7 +378,9 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
                           </tbody>
                         </table>
                       </div>
-                      <DefaultButton
+                      {/* TODO: Implement change model functionality */}
+                      {/* REMEMBER: Temporary disabled */}
+                      {/* <DefaultButton
                         className="keep-button-80px"
                         theme={getRightPaneDefaultButtonTheme()}
                         text="Change"
@@ -386,7 +388,7 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
                           this.setState({ showRecentModelsView: true });
                         }}
                         disabled={!mostRecentModel || browseFileDisabled}
-                      />
+                      /> */}
                     </div>
                     <Separator className="separator-right-pane-main">
                       {strings.predict.analysis}
@@ -947,8 +949,8 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
           { headers },
           this.props.project.apiKey as string
         ),
-      120000,
-      500
+      constants.analyzeRequestTimeout,
+      constants.analyzeRequestInterval
     );
   }
 

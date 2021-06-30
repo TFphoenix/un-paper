@@ -238,9 +238,18 @@ export async function saveProject(
   project: IProject,
   appState: any,
   saveTags?: boolean,
-  updateTagsFromFiles?: boolean
+  updateTagsFromFiles?: boolean,
+  tags: ITag[] = null
 ): Promise<IProject> {
+  // REMEMBER: Seems to corrupt metadata on assets null or tags null
+
   project = Object.assign({}, project);
+
+  // REMEMBER: Fix tags null exception
+  if (tags && tags.length !== 0) {
+    project.tags = tags;
+  }
+
   // const appState = getState();
   const projectService = new ProjectService();
   if (projectService.isDuplicate(project, appState.recentProjects)) {
@@ -710,7 +719,8 @@ export async function saveAssetMetadataAndCleanEmptyLabel(
 export async function updateProjectTag(
   project: IProject,
   oldTag: ITag,
-  newTag: ITag
+  newTag: ITag,
+  appState: any
 ): Promise<IAssetMetadata[]> {
   let assetUpdates: IAssetMetadata[] = [];
 
@@ -733,7 +743,7 @@ export async function updateProjectTag(
   };
 
   // Save updated project tags
-  await saveProject(updatedProject, true, false);
+  await saveProject(updatedProject, appState, true, false);
   updateProjectTagAction(updatedProject);
 
   return assetUpdates;
@@ -784,7 +794,8 @@ export async function deleteProjectTag(
   project: IProject,
   tagName: string,
   tagType: FieldType,
-  tagFormat: FieldFormat
+  tagFormat: FieldFormat,
+  appState: any
 ): Promise<IAssetMetadata[]> {
   // Find tags to rename
   const assetService = new AssetService(project);
@@ -803,7 +814,7 @@ export async function deleteProjectTag(
   };
 
   // Save updated project tags
-  await saveProject(updatedProject, true, false);
+  await saveProject(updatedProject, appState, true, false);
   deleteProjectTagAction(updatedProject);
 
   return assetUpdates;
