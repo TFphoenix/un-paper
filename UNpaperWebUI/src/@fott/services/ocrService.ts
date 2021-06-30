@@ -128,8 +128,8 @@ export class OCRService {
             { headers },
             this.project.apiKey as string
           ),
-        120000,
-        1500
+        constants.analyzeRequestTimeout,
+        constants.analyzeRequestInterval
       ).then(async data => {
         await this.save(ocrFileName, data);
         return data;

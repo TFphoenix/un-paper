@@ -949,8 +949,8 @@ export default class PredictPage extends React.Component<IPredictPageProps, IPre
           { headers },
           this.props.project.apiKey as string
         ),
-      120000,
-      500
+      constants.analyzeRequestTimeout,
+      constants.analyzeRequestInterval
     );
   }
 

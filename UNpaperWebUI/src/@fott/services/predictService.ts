@@ -49,8 +49,8 @@ export class PredictService {
             { headers },
             this.project.apiKey as string
           ),
-        120000,
-        500
+        constants.analyzeRequestTimeout,
+        constants.analyzeRequestInterval
       );
     } catch (err) {
       if (err.response?.status === 404) {
