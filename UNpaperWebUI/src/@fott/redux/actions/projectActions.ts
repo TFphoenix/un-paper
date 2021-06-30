@@ -238,9 +238,18 @@ export async function saveProject(
   project: IProject,
   appState: any,
   saveTags?: boolean,
-  updateTagsFromFiles?: boolean
+  updateTagsFromFiles?: boolean,
+  tags: ITag[] = null
 ): Promise<IProject> {
+  // REMEMBER: Seems to corrupt metadata on assets null or tags null
+
   project = Object.assign({}, project);
+
+  // REMEMBER: Fix tags null exception
+  if (tags && tags.length !== 0) {
+    project.tags = tags;
+  }
+
   // const appState = getState();
   const projectService = new ProjectService();
   if (projectService.isDuplicate(project, appState.recentProjects)) {
