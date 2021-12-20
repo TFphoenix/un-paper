@@ -2,6 +2,7 @@
 
 
 
+
 <br>
 
 <p align="center">
@@ -74,7 +75,7 @@ The following diagram describes the user flow, as initially intended. The flow i
 
 ## Projects Structure
 
-There are 3 main projects/components on which the UNpaper implementation is based upon.
+There are 3 main projects/components on which the UNpaper implementation is based upon. Below are some diagrams showing how each project is structured.
 
 ![Project Structure](showcase/repo.png)
 
@@ -86,9 +87,11 @@ There are 3 main projects/components on which the UNpaper implementation is base
 
 ![UNpaperRegistryAPI](showcase/UNpaperRegistryAPI.png)
 
-![RegistryAPI](showcase/registry-api.png)
+|Structure|Description|
+|--|--|
+|![RegistryAPI](showcase/registry-api.png)|<ul><li>**API:** Controllers and routing properties</li><li>**Business:** Business Logic</li><li>**Common:** Common classes within the project</li><li>**Data:** Data Logic classes (ex: Repositories, Database configurations, etc.)</li><li>**Interface:** Interfaces</li><li>**Model:** Entity Models</li></ul>|
 
-#### Entities Models
+#### Entity Models
 
 ![Entities Models](showcase/uml.png)
 
@@ -102,6 +105,8 @@ There are 3 main projects/components on which the UNpaper implementation is base
 
 ## Cloud Atchitecture
 
+UNpaper is entirely developed using Azure Cloud tools and technologies, below is a diagram showing how these components are organized and related to each other.
+
 ![Cloud Architecture](showcase/cloud-architecture.png)
 
 ### Blob Storage Structure
@@ -111,8 +116,44 @@ There are 3 main projects/components on which the UNpaper implementation is base
 
 ## Technologies and dependencies
 
+Some of the main tools and technologies used are listed bellow:
+- **Languages:**
+	- C#
+	- HTML, (S)CSS, JS
+	- TypeScript
+- **Frameworks:**
+	- ASP NET
+	- Angular
+	- React
+- **Packet Managers:**
+	- NuGet
+	- Node Package Manager
+- **Azure Cloud Components:**
+	- Azure App Service
+	- Azure Functions
+	- APIM (API Management Service)
+	- Form Recognizer Cognitive Service
+	- AD B2C (Active Directory Business-To-Client)
+	- Azure SQL Server & SQL Database
+	- Azure Blob Storage
+	- Azure DevOps
+- **Other:**
+	- LINQ
+	- Entity Framework Core
+	- Postman & Swagger
+
 ### Microsoft FOTT Integration
+
+At the core of UNpaper and it's functionalities are laying 2 main components:
+- [**Azure Form Recognizer**](https://azure.microsoft.com/en-us/services/form-recognizer/#overview)
+- [**Microsoft's OCR-Form-Tools (FOTT)**](https://github.com/microsoft/OCR-Form-Tools)
+
+Integrating FOTT into UNpaper's WebUI SPA frontend was a complex and uncertain (at the beginning) process. Because UNpaper WebUI is developed using Angular, while FOTT uses React.js. Below is a diagram showing all the options which were taken into consideration while trying to handle this integration, together with the considered advantages, disadvantages, and final choices/results.
 
 ![FOTT Integration](showcase/fott_integration.png)
 
 ## Future Improvements
+- Bank Sheet Templates automatic generation
+- Employees Roadmaps automation
+- Improved post-processing output management
+- Automatic synchronization with Business Databases & ERMs
