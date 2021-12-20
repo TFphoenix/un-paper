@@ -1,6 +1,7 @@
 
 
 
+
 <br>
 
 <p align="center">
@@ -52,6 +53,8 @@ The following diagram describes the user flow, as initially intended. The flow i
 - Tables extraction in CSV format
 - *Compatible with: PNG, PDF, JPG, TIFF, JSON*
 
+![Layout Analysis](showcase/layout.png)
+
 ### Prebuilt Analysis
 - Quick analyzation of documents, based on pre-trained AI models (e.g. invoices, recipes, ID cards, etc.)
 - Extraction of the analyzed data in a structured format (CSV)
@@ -69,12 +72,47 @@ The following diagram describes the user flow, as initially intended. The flow i
 |:-:|:-:|
 |![Custom Analysis 3](showcase/custom3.png)|![Custom Analysis 4](showcase/custom4.png)|
 
-## Project Structure
+## Projects Structure
+
+There are 3 main projects/components on which the UNpaper implementation is based upon.
+
+![Project Structure](showcase/repo.png)
+
+### 1. UNpaper.WebUI
+
+![UNpaperWebUI](showcase/UNpaperWebUI.png)
+
+### 2. UNpaper.RegistryAPI
+
+![UNpaperRegistryAPI](showcase/UNpaperRegistryAPI.png)
+
+![RegistryAPI](showcase/registry-api.png)
+
+#### Entities Models
+
+![Entities Models](showcase/uml.png)
+
+#### Registry API Flow
+
+![API Flow](showcase/api_flow.png)
+
+### 3. UNpaper.AzureFunctions
+
+![UNpaperAzureFunctions](showcase/UNpaperAzureFunctions.png)
 
 ## Cloud Atchitecture
 
-![Prebuilt Analysis 1](showcase/cloud-architecture.png)
+![Cloud Architecture](showcase/cloud-architecture.png)
+
+### Blob Storage Structure
+
+|![Organizations & Batches](showcase/org-bch.png)|![Organizations & Batches Blobs](showcase/org-bch-blob.png)|
+|:-:|:-:|
 
 ## Technologies and dependencies
+
+### Microsoft FOTT Integration
+
+![FOTT Integration](showcase/fott_integration.png)
 
 ## Future Improvements
